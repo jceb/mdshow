@@ -1,1 +1,116 @@
-# mdshow
+# `mdshow`
+
+> Turn markdown files into beautiful presentations quickly.
+
+`mdshow` is built to quickly turn ideas into beautiful presentations.
+
+The tool of choice for capturing ideas is the text-based
+[Markdown](https://daringfireball.net/projects/markdown/) format. The
+heavy lifting of making text beautiful is left to
+[reveal.js](https://revealjs.com/), a popular web presentation framewok.
+`mdshow` does the work in between of turning text into a presentation.
+
+
+## Table of Contents
+
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Maintainers](#maintainers)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Background
+
+I've been using various markup formats like org-mode, asciidoc and
+markdown extensively and for professional purposes, e.g. writing a
+thesis, publishing documentation or keeping notes. However, for
+presentations I usually revert back to MS PowerPoint and Libreoffice
+Impress although web browsers are obviously way better at presenting
+content!
+
+While PowerPoint & Co. get the job done, plain text is so much faster
+and more usable to me. For example, I can keep it in a repository to
+track revisions + use all the git infrastructure that exists around
+sharing content.
+
+While plain text is faster, I had a hard time finding tools that would
+make it easy for me to concentrate on creating content. Furthermore, the
+*speed* of tools is very important to me. On the side of functionality I
+value *theming*, esp. across multiple presentations as well as *no
+clutter* in my presentation directory.
+
+I took lots of inspiration from
+[markdeck](https://github.com/arnehilmann/markdeck) that I've been using
+successfully for a few years. I like the full-featured approach of
+markdeck and aim to bring many of its features to `mdshow` following an
+opinionated path.
+
+## Install
+
+Download the program:
+
+```
+curl -LO https://raw.githubusercontent.com/jceb/mdshow/master/mdshow
+```
+
+Copy the `mdshow` program to a directory in `$PATH` and make it
+executable:
+
+```
+chmod a+x mdshow
+```
+
+Test and download dependencies:
+
+```
+mdshow setup
+```
+
+## Usage
+
+Create a new presentation in a new directory:
+
+```
+mdshow scaffold
+```
+
+The command will create a `slides.md` file and an `assets directory`.
+
+Display the presentation in a [browser](http://localhost:3000):
+
+```
+mdshow serve
+```
+
+Automatically rebuild the presentation upon change:
+
+```
+mdshow watch
+```
+
+Convert the presentation to a PDF file:
+
+```
+mdshow pdf
+```
+
+More commands and information:
+
+```
+mdshow help
+```
+
+## Maintainers
+
+[@jceb](https://github.com/jceb)
+
+## Contributing
+
+PRs accepted.
+
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## License
+
+Apache-2.0 2020 Jan Christoph Ebersbach
