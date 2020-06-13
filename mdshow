@@ -1,0 +1,215 @@
+#!/usr/bin/env -S make -f
+# Author: Jan Christoph Ebersbach <jceb@e-jc.de>
+# Copyright (c) 2020 Jan Christoph Ebersbach
+# License: Apache-2.0
+
+help:
+	@echo "mdshow: the simple markdown to reveal.js converter"
+	@echo ""
+	@echo "Commands:"
+	@echo "  html: convert presentation to HTML"
+	@echo "  pdf: convert presentation to PDF"
+	@echo "  scaffold: create an empty presentation in the current folder"
+	@echo "  serve: the HTML presentation at http://localhost:3000/"
+	@echo "  themes: list all installed themes"
+	@echo "  watch: wait for changes and rebuild the HTML presentation"
+	@echo ""
+	@echo "Dependencies:"
+	@echo "  curl, decktape, jq, pandoc, sass, unzip, python3"
+
+themes: ${HOME}/.config/mdshow/reveal.js/dist $(wildcard ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css)
+	@ls -1 ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css | sed -ne 's/^.*\/\([^\/]*\).css$$/\1/p'
+
+scaffold: assets
+	@[ ! -e slides.md ] && \
+		echo "---" > slides.md && \
+		echo "title: slides by mdshow" >> slides.md && \
+		echo "subtitle: Some more" >> slides.md && \
+		echo "theme: black" >> slides.md && \
+		echo "---" >> slides.md && \
+		echo "" >> slides.md && \
+		echo "# Section title slide" >> slides.md && \
+		echo "" >> slides.md && \
+		echo "## New slide" >> slides.md && \
+		echo "" >> slides.md && \
+		echo "- Point one" >> slides.md && \
+	echo "Created 'slides.md' and folder 'assets'." && \
+	echo "Start editing your slides in 'slides.md' and run 'mdshow html' whenever you're ready." || \
+	echo "'slides.md' already exists, nothing to do here."
+
+
+html: .build/config.json sass index.html
+
+pdf: html slides.pdf
+
+slides.pdf: index.html
+	pdf="$$(jq -r '.pdf' < .build/config.json)"; \
+		pdf_size="$$(jq -r '.pdf_size' < .build/config.json)"; \
+		pdf_delay="$$(jq -r '.pdf_delay' < .build/config.json)"; \
+		decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:3000/ $@
+		# decktape -s $${pdf_size} http://localhost:3000/ $${pdf}
+
+assets:
+	mkdir -p assets
+
+assets/reveal.js: ${HOME}/.config/mdshow/reveal.js/dist assets
+	ln -s $< $@
+
+.build:
+	mkdir -p $@
+
+.template-metadata-extract: .build
+	echo '$$meta-json$$' > $@
+
+.build/defaults.yaml: .build
+	echo "---" > $@
+	echo "title: slides by mdshow" >> $@
+	echo "html: index.html" >> $@
+	echo "pdf: slides.pdf" >> $@
+	echo "pdf_size: 1189x841  # 1024x768  # 1280x720" >> $@
+	echo "pdf_delay: 100" >> $@
+	echo "width: 960" >> $@
+	echo "height: 700" >> $@
+	echo "margin: 0.1" >> $@
+	echo "minScale: 0.2" >> $@
+	echo "maxScale: 1.5" >> $@
+	echo "standalone:" >> $@
+	echo "asciinema: false" >> $@
+	echo "theme: black" >> $@
+	echo "transition: slide  # none/fade/slide/convex/concave/zoom" >> $@
+	echo "controls: false" >> $@
+	echo "controlsTutorial: false" >> $@
+	echo "controlsLayout: bottom-right" >> $@
+	echo "controlsBackArrows: faded" >> $@
+	echo "progress: true" >> $@
+	echo "defaultTiming: 120" >> $@
+	echo "slideNumber: false" >> $@
+	echo "history: true" >> $@
+	echo "keyboard: true" >> $@
+	echo "overview: true" >> $@
+	echo "center: true" >> $@
+	echo "touch: true" >> $@
+	echo "loop: false" >> $@
+	echo "rtl: false" >> $@
+	echo "shuffle: false" >> $@
+	echo "fragments: true" >> $@
+	echo "fragmentInURL: true" >> $@
+	echo "embedded: false" >> $@
+	echo "help: true" >> $@
+	echo "showNotes: false" >> $@
+	echo "autoPlayMedia: null" >> $@
+	echo "autoSlide: 0" >> $@
+	echo "autoSlideStoppable: true" >> $@
+	echo "autoSlideMethod: Reveal.navigateNext" >> $@
+	echo "mouseWheel: false" >> $@
+	echo "hideAddressBar: true" >> $@
+	echo "previewLinks: false" >> $@
+	echo "transitionSpeed: default  # default/fast/slow" >> $@
+	echo "backgroundTransition: fade  # none/fade/slide/convex/concave/zoom" >> $@
+	echo "viewDistance: 3" >> $@
+	echo "highlight_style: zenburn" >> $@
+	echo "---" >> $@
+
+
+.build/config.json: slides.md  .build/defaults.yaml .template-metadata-extract
+	pandoc --template=.template-metadata-extract -f markdown+yaml_metadata_block .build/defaults.yaml $< > $@
+	# yq . .build/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json.tmp > $@
+
+# .build/slides.md: slides.md .build/config.json
+# 	pandoc $< -o $@.tmp.md
+# 	echo '---' > $@
+# 	# yq . .build/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json | yq -y . >> $@
+# 	yq -y . .build/config.json >> $@
+# 	echo '---' >> $@
+# 	echo >> $@
+# 	# cat $@.tmp.md >> $@
+# 	cat $< >> $@
+
+index.html: slides.md .build/config.json assets/reveal.js
+	PANDOC_ARGS=; \
+	theme="$$(jq -r '.theme' < .build/config.json)"; \
+	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include-in-header" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$${HOME}/.config/mdshow/theme/$${theme}/include-in-header"; \
+	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include-before-body" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$${HOME}/.config/mdshow/theme/$${theme}/include-before-body"; \
+	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include-after-body" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$${HOME}/.config/mdshow/theme/$${theme}/include-after-body"; \
+	pandoc \
+		.build/defaults.yaml \
+		slides.md \
+		-f markdown+yaml_metadata_block \
+		-t revealjs \
+		--wrap=preserve \
+		--standalone \
+		--slide-level=2 \
+		-V revealjs-url=assets/reveal.js \
+		-o $@ \
+		$${PANDOC_ARGS} \
+
+${HOME}/.config/mdshow/theme:
+	mkdir -p $@
+
+${HOME}/.config/mdshow/reveal.js:
+	mkdir -p $@
+	curl -L https://github.com/hakimel/reveal.js/archive/master.zip -o $@/master.zip
+	unzip $@/master.zip -d $@
+	rm $@/master.zip
+	mv $@/reveal.js-master/.??* $@/reveal.js-master/* $@
+	rmdir $@/reveal.js-master
+	# workarounds for the new reveal-js release
+	cd $@/dist; \
+		ln -s . css; \
+		ln -s . js; \
+		ln -s ../plugin .;
+	cd $@/dist/plugin; \
+		ln -s zoom zoom-js;
+
+${HOME}/.config/mdshow/reveal.js/dist: ${HOME}/.config/mdshow/reveal.js
+
+sass: ${HOME}/.config/mdshow/reveal.js \
+	.sync-custom-themes \
+	.build-themes \
+	.link-theme-assets
+
+.sync-custom-themes: $(wildcard ${HOME}/.config/mdshow/theme/*/source/*.scss)
+	rsync -u $^ ${HOME}/.config/mdshow/reveal.js/css/theme/source/
+
+.build-themes: $(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$(addsuffix .css,$(basename $(notdir $(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss)))))
+
+.SECONDEXPANSION:
+.link-theme-assets: $$(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$$(basename $$(notdir $$(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss))))
+
+${HOME}/.config/mdshow/reveal.js/dist/theme/%.css: ${HOME}/.config/mdshow/reveal.js/css/theme/source/%.scss
+	sass $< $@
+
+${HOME}/.config/mdshow/theme/%/assets:
+	mkdir -p $@
+
+${HOME}/.config/mdshow/reveal.js/dist/theme/%: ${HOME}/.config/mdshow/theme/%/assets
+	ln -s $< $@
+
+clean:
+	rm -f index.html .template-metadata-extract assets/reveal.js slides.pdf
+	rm -rf .build
+
+distclean: clean
+	rm -rf ${HOME}/.config/mdshow/reveal.js
+
+watch:
+	watch -n 2 mdshow html
+
+serve:
+	python3 -m http.server 3000
+
+.PHONY: \
+	build \
+	clean \
+	distclean \
+	help \
+	sass \
+	.sync-custom-themes \
+	.build-themes \
+	.link-theme-assets \
+	scaffold \
+	serve \
+	themes \
+	watch
+
+# vi: ft=make:tw=80:sw=4:ts=4:sts=0:noet
