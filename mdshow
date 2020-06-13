@@ -37,6 +37,7 @@ programs:
 
 themes: ${HOME}/.config/mdshow/reveal.js/dist $(wildcard ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css)
 	@ls -1 ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css | sed -ne 's/^.*\/\([^\/]*\).css$$/\1/p'
+	@echo "Change theme by adding the option 'theme: <name>' between the two --- .. --- delimiters at the top of slides.md."
 
 scaffold: assets
 	@[ ! -e slides.md ] && \
