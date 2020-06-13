@@ -7,7 +7,7 @@
 The tool of choice for capturing ideas is the text-based
 [Markdown](https://daringfireball.net/projects/markdown/) format. The
 heavy lifting of making text beautiful is left to
-[reveal.js](https://revealjs.com/), a popular web presentation framewok.
+[reveal.js](https://revealjs.com/), a popular web presentation framework.
 `mdshow` does the work in between of turning text into a presentation.
 
 
@@ -75,7 +75,9 @@ Create a new presentation in a new directory:
 mdshow scaffold
 ```
 
-The command will create a `slides.md` file and an `assets directory`.
+The command will create a `slides.md` file and an `assets` directory.
+Place all assets like pictures in the `assets` directory. The content of
+the presentation lives in `slides.md`.
 
 Display the presentation in a [browser](http://localhost:3000):
 
