@@ -10,5 +10,6 @@
 
 # DONE
 
+- [x] move includes to subdirectory, 2020-06-13
 - [x] add a screenshot of a presentation / make a video that shows how it works, 2020-06-13
 - [x] move all build files to .build, 2020-06-13

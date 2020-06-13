@@ -205,9 +205,9 @@ assets:
 .build/index.html: slides.md .build .build/config.json .build/reveal.js .build/assets
 	PANDOC_ARGS=; \
 	theme="$$(jq -r '.theme' < .build/config.json)"; \
-	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include-in-header" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$${HOME}/.config/mdshow/theme/$${theme}/include-in-header"; \
-	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include-before-body" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$${HOME}/.config/mdshow/theme/$${theme}/include-before-body"; \
-	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include-after-body" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$${HOME}/.config/mdshow/theme/$${theme}/include-after-body"; \
+	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$${HOME}/.config/mdshow/theme/$${theme}/include/in-header.html"; \
+	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$${HOME}/.config/mdshow/theme/$${theme}/include/before-body.html"; \
+	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$${HOME}/.config/mdshow/theme/$${theme}/include/after-body.html"; \
 	pandoc \
 		${HOME}/.config/mdshow/defaults.yaml \
 		slides.md \
