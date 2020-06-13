@@ -113,7 +113,7 @@ sass: ${HOME}/.config/mdshow/reveal.js \
 	.build-themes
 
 .sync-custom-themes: $(wildcard ${HOME}/.config/mdshow/theme/*/source/*.scss)
-	rsync -u $^ ${HOME}/.config/mdshow/reveal.js/css/theme/source/
+	@[ -n "$^" ] && rsync -u $^ ${HOME}/.config/mdshow/reveal.js/css/theme/source/ || true
 
 .SECONDEXPANSION:
 .build-themes: $$(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$$(addsuffix .css,$$(basename $$(notdir $$(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss)))))
@@ -177,18 +177,18 @@ assets:
 	@mkdir -p assets
 
 .build/reveal.js: ${HOME}/.config/mdshow/reveal.js/dist .build
-	[ ! -e $@ ] && ln -s $< $@ || true
+	@[ ! -e $@ ] && ln -s $< $@ || true
 
 .build:
 	mkdir -p $@
 
-.build/assets: assets
-	[ ! -e $@ ] && ln -s ../assets $@ || true
+.build/assets: assets .build
+	@[ ! -e $@ ] && ln -s ../assets $@ || true
 
 .template-metadata-extract:
 	echo '$$meta-json$$' > $@
 
-.build/config.json: slides.md  ${HOME}/.config/mdshow/defaults.yaml .template-metadata-extract
+.build/config.json: slides.md  ${HOME}/.config/mdshow/defaults.yaml .template-metadata-extract .build
 	pandoc --template=.template-metadata-extract -f markdown+yaml_metadata_block ${HOME}/.config/mdshow/defaults.yaml $< > $@
 	# yq . ${HOME}/.config/mdshow/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json.tmp > $@
 
@@ -202,7 +202,7 @@ assets:
 # 	# cat $@.tmp.md >> $@
 # 	cat $< >> $@
 
-.build/index.html: slides.md .build/config.json .build/reveal.js .build/assets
+.build/index.html: slides.md .build .build/config.json .build/reveal.js .build/assets
 	PANDOC_ARGS=; \
 	theme="$$(jq -r '.theme' < .build/config.json)"; \
 	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include-in-header" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$${HOME}/.config/mdshow/theme/$${theme}/include-in-header"; \
