@@ -13,9 +13,27 @@ help:
 	@echo "  serve: the HTML presentation at http://localhost:3000/"
 	@echo "  themes: list all installed themes"
 	@echo "  watch: wait for changes and rebuild the HTML presentation"
+	@echo "  setup: test and download dependencies"
+	@echo "  upgrade: upgrade mdshow to it's latest version"
 	@echo ""
 	@echo "Dependencies:"
 	@echo "  curl, decktape, jq, pandoc, sass, unzip, python3"
+
+upgrade:
+	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/mdshow -o $(realpath $(firstword $(MAKEFILE_LIST)))
+	chmod a+x $(realpath $(firstword $(MAKEFILE_LIST)))
+
+setup: programs sass
+
+programs:
+	@echo "Testing depedencies"
+	@type curl || echo "curl is not installed, required in the setup process"
+	@type decktape || echo "decktape is not installed, required for converting the presentation to PDF: https://github.com/astefanutti/decktape"
+	@type jq || echo "jq is not installed, required for processing parameters"
+	@type pandoc || echo "pandoc is not installed, reqiured for converting markdown into a HTML presentation"
+	@type python3 || echo "python3 is not installed, required for serving the presentation"
+	@type sass || echo "sass is not installed, required for creating custom themes: https://sass-lang.com/"
+	@type unzip || echo "unzip is not installed, required in the setup process"
 
 themes: ${HOME}/.config/mdshow/reveal.js/dist $(wildcard ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css)
 	@ls -1 ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css | sed -ne 's/^.*\/\([^\/]*\).css$$/\1/p'
@@ -148,11 +166,11 @@ ${HOME}/.config/mdshow/theme:
 
 ${HOME}/.config/mdshow/reveal.js:
 	mkdir -p $@
-	curl -L https://github.com/hakimel/reveal.js/archive/master.zip -o $@/master.zip
-	unzip $@/master.zip -d $@
-	rm $@/master.zip
-	mv $@/reveal.js-master/.??* $@/reveal.js-master/* $@
-	rmdir $@/reveal.js-master
+	curl -L https://github.com/hakimel/reveal.js/archive/4.0.2.zip -o $@/revealjs.zip
+	unzip $@/revealjs.zip -d $@
+	rm $@/revealjs.zip
+	mv $@/reveal.js-4.0.2/.??* $@/reveal.js-4.0.2/* $@
+	rmdir $@/reveal.js-4.0.2
 	# workarounds for the new reveal-js release
 	cd $@/dist; \
 		ln -s . css; \
@@ -165,13 +183,14 @@ ${HOME}/.config/mdshow/reveal.js/dist: ${HOME}/.config/mdshow/reveal.js
 
 sass: ${HOME}/.config/mdshow/reveal.js \
 	.sync-custom-themes \
-	.build-themes \
-	.link-theme-assets
+	.link-theme-assets \
+	.build-themes
 
 .sync-custom-themes: $(wildcard ${HOME}/.config/mdshow/theme/*/source/*.scss)
 	rsync -u $^ ${HOME}/.config/mdshow/reveal.js/css/theme/source/
 
-.build-themes: $(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$(addsuffix .css,$(basename $(notdir $(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss)))))
+.SECONDEXPANSION:
+.build-themes: $$(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$$(addsuffix .css,$$(basename $$(notdir $$(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss)))))
 
 .SECONDEXPANSION:
 .link-theme-assets: $$(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$$(basename $$(notdir $$(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss))))
@@ -199,17 +218,20 @@ serve:
 	python3 -m http.server 3000
 
 .PHONY: \
+	.build-themes \
+	.link-theme-assets \
+	.sync-custom-themes \
 	build \
 	clean \
 	distclean \
 	help \
+	programs \
 	sass \
-	.sync-custom-themes \
-	.build-themes \
-	.link-theme-assets \
 	scaffold \
 	serve \
+	setup \
 	themes \
+	upgrade \
 	watch
 
 # vi: ft=make:tw=80:sw=4:ts=4:sts=0:noet
