@@ -10,6 +10,7 @@ heavy lifting of making text beautiful is left to
 [reveal.js](https://revealjs.com/), a popular web presentation framework.
 `mdshow` does the work in between of turning text into a presentation.
 
+[![](assets/screenshot400.png)](https://youtu.be/ZNXvQGsk_wA)
 
 ## Table of Contents
 
