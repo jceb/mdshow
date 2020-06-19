@@ -180,6 +180,38 @@ slides.pdf: .build/index.html
 		# decktape -s $${pdf_size} http://localhost:3000/ $${pdf}
 
 # {{{1 serve
+$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
+	@echo "const gulp = require('gulp')" > $@
+	@echo "const path = require('path')" >> $@
+	@echo "const connect = require('gulp-connect')" >> $@
+	@echo "const yargs = require('yargs')" >> $@
+	@echo "" >> $@
+	@echo "// Prevents warnings from opening too many test pages" >> $@
+	@echo "process.setMaxListeners(20);" >> $@
+	@echo "" >> $@
+	@echo "const root = yargs.argv.root || '.'" >> $@
+	@echo "const port = yargs.argv.port || 8000" >> $@
+	@echo "" >> $@
+	@echo "gulp.task('reload', () => gulp.src(['*.html', '*.md'])" >> $@
+	@echo "    .pipe(connect.reload()));" >> $@
+	@echo "" >> $@
+	@echo "gulp.task('serve', () => {" >> $@
+	@echo "" >> $@
+	@echo "    connect.server({" >> $@
+	@echo "        root: root," >> $@
+	@echo "        port: port," >> $@
+	@echo "        host: '127.0.0.1'," >> $@
+	@echo "        livereload: true" >> $@
+	@echo "    })" >> $@
+	@echo "" >> $@
+	@echo "    gulp.watch([" >> $@
+	@echo "      'index.html'," >> $@
+	@echo "      'assets/**'," >> $@
+	@echo "      'reveal.js/**'," >> $@
+	@echo "    ].map(glob => path.join(root, glob)), gulp.series('reload'))" >> $@
+	@echo "" >> $@
+	@echo "})" >> $@
+
 serve: .build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	(watchman-make --make mdshow -p slides.md -t html & \
 		BPID=$$!; trap "kill $${BPID}" KILL INT HUP STOP; \
