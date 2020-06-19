@@ -3,6 +3,8 @@
 # Copyright (c) 2020 Jan Christoph Ebersbach
 # License: Apache-2.0
 
+MDSHOW_CONFIG := ${HOME}/.config/mdshow
+
 # {{{1 help
 help:
 	@echo "mdshow: the simple markdown to reveal.js converter"
@@ -26,7 +28,7 @@ upgrade:
 	chmod a+x $(realpath $(firstword $(MAKEFILE_LIST)))
 
 # {{{1 setup
-setup: programs sass ${HOME}/.config/mdshow/defaults.yaml
+setup: programs sass $(MDSHOW_CONFIG)/defaults.yaml
 
 programs:
 	@echo "Testing depedencies"
@@ -38,7 +40,7 @@ programs:
 	@type sass || echo "sass is not installed, required for creating custom themes: https://sass-lang.com/"
 	@type unzip || echo "unzip is not installed, required in the setup process"
 
-${HOME}/.config/mdshow/defaults.yaml: ${HOME}/.config/mdshow/theme
+$(MDSHOW_CONFIG)/defaults.yaml: $(MDSHOW_CONFIG)/theme
 	@echo "---" > $@
 	@echo "title: slides by mdshow" >> $@
 	@echo "pdf_size: 1189x841  # 1024x768  # 1280x720" >> $@
@@ -86,10 +88,10 @@ ${HOME}/.config/mdshow/defaults.yaml: ${HOME}/.config/mdshow/theme
 	@echo "---" >> $@
 	@echo "Created $@"
 
-${HOME}/.config/mdshow/theme:
+$(MDSHOW_CONFIG)/theme:
 	mkdir -p $@
 
-${HOME}/.config/mdshow/reveal.js:
+$(MDSHOW_CONFIG)/reveal.js:
 	mkdir -p $@
 	curl -L https://github.com/hakimel/reveal.js/archive/4.0.2.zip -o $@/revealjs.zip
 	unzip $@/revealjs.zip -d $@
@@ -104,35 +106,35 @@ ${HOME}/.config/mdshow/reveal.js:
 	cd $@/dist/plugin; \
 		ln -s zoom zoom-js;
 
-${HOME}/.config/mdshow/reveal.js/dist: ${HOME}/.config/mdshow/reveal.js
+$(MDSHOW_CONFIG)/reveal.js/dist: $(MDSHOW_CONFIG)/reveal.js
 
 # {{{1 sass / theme builder
-sass: ${HOME}/.config/mdshow/reveal.js \
+sass: $(MDSHOW_CONFIG)/reveal.js \
 	.sync-custom-themes \
 	.link-theme-assets \
 	.build-themes
 
-.sync-custom-themes: $(wildcard ${HOME}/.config/mdshow/theme/*/source/*.scss)
-	@[ -n "$^" ] && rsync -u $^ ${HOME}/.config/mdshow/reveal.js/css/theme/source/ || true
+.sync-custom-themes: $(wildcard $(MDSHOW_CONFIG)/theme/*/source/*.scss)
+	@[ -n "$^" ] && rsync -u $^ $(MDSHOW_CONFIG)/reveal.js/css/theme/source/ || true
 
 .SECONDEXPANSION:
-.build-themes: $$(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$$(addsuffix .css,$$(basename $$(notdir $$(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss)))))
+.build-themes: $$(addprefix $(MDSHOW_CONFIG)/reveal.js/dist/theme/,$$(addsuffix .css,$$(basename $$(notdir $$(wildcard $(MDSHOW_CONFIG)/reveal.js/css/theme/source/*.scss)))))
 
 .SECONDEXPANSION:
-.link-theme-assets: $$(addprefix ${HOME}/.config/mdshow/reveal.js/dist/theme/,$$(basename $$(notdir $$(wildcard ${HOME}/.config/mdshow/reveal.js/css/theme/source/*.scss))))
+.link-theme-assets: $$(addprefix $(MDSHOW_CONFIG)/reveal.js/dist/theme/,$$(basename $$(notdir $$(wildcard $(MDSHOW_CONFIG)/reveal.js/css/theme/source/*.scss))))
 
-${HOME}/.config/mdshow/reveal.js/dist/theme/%.css: ${HOME}/.config/mdshow/reveal.js/css/theme/source/%.scss
+$(MDSHOW_CONFIG)/reveal.js/dist/theme/%.css: $(MDSHOW_CONFIG)/reveal.js/css/theme/source/%.scss
 	sass $< $@
 
-${HOME}/.config/mdshow/theme/%/assets:
+$(MDSHOW_CONFIG)/theme/%/assets:
 	mkdir -p $@
 
-${HOME}/.config/mdshow/reveal.js/dist/theme/%: ${HOME}/.config/mdshow/theme/%/assets
+$(MDSHOW_CONFIG)/reveal.js/dist/theme/%: $(MDSHOW_CONFIG)/theme/%/assets
 	ln -s $< $@
 
 # {{{1 themes
-themes: ${HOME}/.config/mdshow/reveal.js/dist $(wildcard ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css)
-	@ls -1 ${HOME}/.config/mdshow/reveal.js/dist/theme/*.css | sed -ne 's/^.*\/\([^\/]*\).css$$/\1/p'
+themes: $(MDSHOW_CONFIG)/reveal.js/dist $(wildcard $(MDSHOW_CONFIG)/reveal.js/dist/theme/*.css)
+	@ls -1 $(MDSHOW_CONFIG)/reveal.js/dist/theme/*.css | sed -ne 's/^.*\/\([^\/]*\).css$$/\1/p'
 	@echo "Change theme by adding the option 'theme: <name>' between the two --- .. --- delimiters at the top of slides.md."
 
 # {{{1 scaffold
@@ -176,7 +178,7 @@ serve: .build
 assets:
 	@mkdir -p assets
 
-.build/reveal.js: ${HOME}/.config/mdshow/reveal.js/dist .build
+.build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist .build
 	@[ ! -e $@ ] && ln -s $< $@ || true
 
 .build:
@@ -188,14 +190,14 @@ assets:
 .template-metadata-extract:
 	echo '$$meta-json$$' > $@
 
-.build/config.json: slides.md  ${HOME}/.config/mdshow/defaults.yaml .template-metadata-extract .build
-	pandoc --template=.template-metadata-extract -f markdown+yaml_metadata_block ${HOME}/.config/mdshow/defaults.yaml $< > $@
-	# yq . ${HOME}/.config/mdshow/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json.tmp > $@
+.build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml .template-metadata-extract .build
+	pandoc --template=.template-metadata-extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
+	# yq . $(MDSHOW_CONFIG)/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json.tmp > $@
 
 # .build/slides.md: slides.md .build/config.json
 # 	pandoc $< -o $@.tmp.md
 # 	echo '---' > $@
-# 	# yq . ${HOME}/.config/mdshow/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json | yq -y . >> $@
+# 	# yq . $(MDSHOW_CONFIG)/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json | yq -y . >> $@
 # 	yq -y . .build/config.json >> $@
 # 	echo '---' >> $@
 # 	echo >> $@
@@ -205,11 +207,11 @@ assets:
 .build/index.html: slides.md .build .build/config.json .build/reveal.js .build/assets
 	PANDOC_ARGS=; \
 	theme="$$(jq -r '.theme' < .build/config.json)"; \
-	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$${HOME}/.config/mdshow/theme/$${theme}/include/in-header.html"; \
-	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$${HOME}/.config/mdshow/theme/$${theme}/include/before-body.html"; \
-	[ -e "$${HOME}/.config/mdshow/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$${HOME}/.config/mdshow/theme/$${theme}/include/after-body.html"; \
+	[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
+	[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
+	[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
 	pandoc \
-		${HOME}/.config/mdshow/defaults.yaml \
+		$(MDSHOW_CONFIG)/defaults.yaml \
 		slides.md \
 		-f markdown+yaml_metadata_block \
 		-t revealjs \
@@ -226,7 +228,7 @@ clean:
 	rm -rf .build
 
 distclean: clean
-	rm -rf ${HOME}/.config/mdshow/reveal.js
+	rm -rf $(MDSHOW_CONFIG)/reveal.js
 
 # {{{1 .PHONY
 .PHONY: \
