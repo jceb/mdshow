@@ -1,11 +1,13 @@
 # TODO
 
+- [ ] integrate fontawesome
 - [ ] fix pandoc template so that options can be disabled, e.g. controls
+- [ ] remove sass dependency since it's already provided by reveal.js
 - [ ] describe custom theming
 - [ ] integrate plantuml
-- [ ] integrate fontawesome
 - [ ] build a fully standalone HTML file that contains all pictures, css, and js
-- [ ] support work on multiple presentations at the same time
+- [ ] support work on multiple presentations at the same time, basically
+  allowing to pick a different port number for running the server at
 
 # DONE
 
