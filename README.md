@@ -80,16 +80,11 @@ The command will create a `slides.md` file and an `assets` directory.
 Place all assets like pictures in the `assets` directory. The content of
 the presentation lives in `slides.md`.
 
-Display the presentation in a [browser](http://localhost:3000):
+Display the presentation in a [browser](http://localhost:3000) with
+live-reload:
 
 ```
 mdshow serve
-```
-
-Automatically rebuild the presentation upon change:
-
-```
-mdshow watch
 ```
 
 Convert the presentation to a PDF file:

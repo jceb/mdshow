@@ -3,6 +3,8 @@
 # Copyright (c) 2020 Jan Christoph Ebersbach
 # License: Apache-2.0
 
+SHELL := /bin/bash
+
 MDSHOW_CONFIG := ${HOME}/.config/mdshow
 
 # {{{1 help
@@ -15,12 +17,11 @@ help:
 	@echo "  scaffold: create an empty presentation in the current folder"
 	@echo "  serve: the HTML presentation at http://localhost:3000/"
 	@echo "  themes: list all installed themes"
-	@echo "  watch: wait for changes and rebuild the HTML presentation"
 	@echo "  setup: test and download dependencies"
 	@echo "  upgrade: upgrade mdshow to it's latest version"
 	@echo ""
 	@echo "Dependencies:"
-	@echo "  curl, decktape, jq, pandoc, sass, unzip, python3"
+	@echo "  curl, decktape, jq, pandoc, sass, unzip, watchman, yarn"
 
 # {{{1 upgrade
 upgrade:
@@ -36,9 +37,10 @@ programs:
 	@type decktape || echo "decktape is not installed, required for converting the presentation to PDF: https://github.com/astefanutti/decktape"
 	@type jq || echo "jq is not installed, required for processing parameters"
 	@type pandoc || echo "pandoc is not installed, reqiured for converting markdown into a HTML presentation"
-	@type python3 || echo "python3 is not installed, required for serving the presentation"
 	@type sass || echo "sass is not installed, required for creating custom themes: https://sass-lang.com/"
 	@type unzip || echo "unzip is not installed, required in the setup process"
+	@type watchman-make || echo "watchman-make is not installed, required for serving the presentation"
+	@type yarn || echo "yarn is not installed, required for serving the presentation"
 
 $(MDSHOW_CONFIG)/defaults.yaml: $(MDSHOW_CONFIG)/theme
 	@echo "---" > $@
@@ -98,6 +100,8 @@ $(MDSHOW_CONFIG)/reveal.js:
 	rm $@/revealjs.zip
 	mv $@/reveal.js-4.0.2/.??* $@/reveal.js-4.0.2/* $@
 	rmdir $@/reveal.js-4.0.2
+	cd $@; \
+		yarn;
 	# workarounds for the new reveal-js release
 	cd $@/dist; \
 		ln -s . css; \
@@ -168,11 +172,10 @@ slides.pdf: .build/index.html
 		# decktape -s $${pdf_size} http://localhost:3000/ $${pdf}
 
 # {{{1 serve
-watch:
-	watch -n 2 mdshow html
-
-serve: .build
-	python3 -m http.server -d $< 3000
+serve: .build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
+	(watchman-make --make mdshow -p slides.md -t html & \
+		BPID=$$!; trap "kill $${BPID}" KILL INT HUP STOP; \
+		cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build" serve)
 
 # {{{1 local directory
 assets:
