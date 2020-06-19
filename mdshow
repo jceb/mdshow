@@ -7,21 +7,29 @@ SHELL := /bin/bash
 
 MDSHOW_CONFIG := ${HOME}/.config/mdshow
 
+VERSION := v0.1
+
 # {{{1 help
 help:
 	@echo "mdshow: the simple markdown to reveal.js converter"
+	@echo "$(VERSION)"
 	@echo ""
 	@echo "Commands:"
 	@echo "  html: convert presentation to HTML"
 	@echo "  pdf: convert presentation to PDF"
 	@echo "  scaffold: create an empty presentation in the current folder"
 	@echo "  serve: the HTML presentation at http://localhost:3000/"
-	@echo "  themes: list all installed themes"
 	@echo "  setup: test and download dependencies"
+	@echo "  themes: list all installed themes"
 	@echo "  upgrade: upgrade mdshow to it's latest version"
+	@echo "  version: prints the current version"
 	@echo ""
 	@echo "Dependencies:"
 	@echo "  curl, decktape, jq, pandoc, sass, unzip, watchman, yarn"
+
+# {{{1 version
+version:
+	@echo "$(VERSION)"
 
 # {{{1 upgrade
 upgrade:
@@ -249,6 +257,7 @@ distclean: clean
 	setup \
 	themes \
 	upgrade \
+	version \
 	watch
 
 # vi: ft=make:tw=80:sw=4:ts=4:sts=0:noet:fdm=marker
