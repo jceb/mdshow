@@ -37,7 +37,7 @@ upgrade:
 	chmod a+x $(realpath $(firstword $(MAKEFILE_LIST)))
 
 # {{{1 setup
-setup: programs sass $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/scaffold.md $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
+setup: programs sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/scaffold.md $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 
 programs:
 	@echo "Testing depedencies"
@@ -50,6 +50,12 @@ $(MDSHOW_CONFIG)/defaults.yaml:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
+
+$(MDSHOW_CONFIG)/reveal.js/dist/fontawesome:
+	curl -L https://use.fontawesome.com/releases/v5.13.1/fontawesome-free-5.13.1-web.zip -o $(dir $@)/fontawesome-free-web.zip
+	unzip $(dir $@)/fontawesome-free-web.zip -d $(dir $@)
+	mv fontawesome-free-5.13.1-web $@
+	rm $(dir $@)/fontawesome-free-web.zip
 
 $(MDSHOW_CONFIG)/reveal.js:
 	mkdir -p $@
@@ -128,7 +134,7 @@ scaffold: $(MDSHOW_CONFIG)/scaffold.md
 		echo "'slides.md' and or 'assets' already exists, nothing to do here."
 
 # {{{1 html
-html: .build/config.json sass .build/index.html
+html: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
 
 # {{{1 pdf
 pdf: html slides.pdf
@@ -172,6 +178,7 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 				--data-dir=$(MDSHOW_CONFIG)/pandoc \
 				-f markdown+yaml_metadata_block \
 				-t revealjs \
+				--lua-filter fontawesome.lua \
 				--wrap=preserve \
 				--standalone \
 				--slide-level=2 \
