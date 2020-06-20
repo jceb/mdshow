@@ -37,7 +37,7 @@ upgrade:
 	chmod a+x $(realpath $(firstword $(MAKEFILE_LIST)))
 
 # {{{1 setup
-setup: programs sass $(MDSHOW_CONFIG)/defaults.yaml
+setup: programs sass $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 
 programs:
 	@echo "Testing depedencies"
