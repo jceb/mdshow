@@ -25,7 +25,7 @@ help:
 	@echo "  version: prints the current version"
 	@echo ""
 	@echo "Dependencies:"
-	@echo "  curl, pandoc, unzip, watchman, yarn"
+	@echo "  curl, pandoc, unzip, yarn"
 
 # {{{1 version
 version:
@@ -44,7 +44,6 @@ programs:
 	@type curl || echo "curl is not installed, required in the setup process"
 	@type pandoc || echo "pandoc is not installed, reqiured for converting markdown into a HTML presentation"
 	@type unzip || echo "unzip is not installed, required in the setup process"
-	@type watchman-make || echo "watchman-make is not installed, required for serving the presentation"
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
 
 $(MDSHOW_CONFIG)/defaults.yaml:
@@ -146,9 +145,7 @@ $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js: $(MDSHOW_CONFIG)/reveal.js
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
-	(watchman-make --make $(realpath $(firstword $(MAKEFILE_LIST))) -p slides.md -t html & \
-		BPID=$$!; trap "kill $${BPID}" KILL INT HUP STOP; \
-		cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build" serve)
+	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build" serve
 
 # {{{1 local directory
 .build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist
@@ -208,7 +205,6 @@ distclean:
 	setup \
 	themes \
 	upgrade \
-	version \
-	watch
+	version
 
 # vi: ft=make:tw=80:sw=4:ts=4:sts=0:noet:fdm=marker
