@@ -84,6 +84,8 @@ $(MDSHOW_CONFIG)/pandoc/templates/default.revealjs:
 
 # {{{1 sass / theme builder
 sass: $(MDSHOW_CONFIG)/reveal.js \
+	$(MDSHOW_CONFIG)/reveal.js/dist/css/print/paper.css \
+	$(MDSHOW_CONFIG)/reveal.js/dist/css/print/pdf.css \
 	.sync-custom-themes \
 	.link-theme-assets \
 	.build-themes
@@ -99,6 +101,10 @@ sass: $(MDSHOW_CONFIG)/reveal.js \
 
 $(MDSHOW_CONFIG)/reveal.js/dist/theme/%.css: $(MDSHOW_CONFIG)/reveal.js/css/theme/source/%.scss
 	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp css-themes
+
+$(MDSHOW_CONFIG)/reveal.js/dist/css/print/%.css: $(MDSHOW_CONFIG)/reveal.js/css/print/%.scss
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
+	cd $(MDSHOW_CONFIG)/reveal.js && yarn node-sass $< > $@
 
 $(MDSHOW_CONFIG)/theme/%/assets:
 	mkdir -p $@
