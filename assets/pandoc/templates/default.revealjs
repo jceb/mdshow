@@ -93,7 +93,7 @@ $body$
         // Display a presentation progress bar
         progress: ('$progress$' === '' ? false : true),
         // Display the page number of the current slide
-        slideNumber: ('$slideNumber$' === '' ? false : true),
+        slideNumber: ('$slideNumber$' === '' ? false : '$slideNumber$' === 'true' ? true : '$slideNumber$'),
         // Use 1 based indexing for # links to match slide number (default is zero
         // based)
         hashOneBasedIndex: ('$hashOneBasedIndex$' === '' ? false : true),
