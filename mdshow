@@ -25,7 +25,7 @@ help:
 	@echo "  version: prints the current version"
 	@echo ""
 	@echo "Dependencies:"
-	@echo "  curl, decktape, jq, pandoc, unzip, watchman, yarn"
+	@echo "  curl, decktape, pandoc, unzip, watchman, yarn"
 
 # {{{1 version
 version:
@@ -43,7 +43,6 @@ programs:
 	@echo "Testing depedencies"
 	@type curl || echo "curl is not installed, required in the setup process"
 	@type decktape || echo "decktape is not installed, required for converting the presentation to PDF: https://github.com/astefanutti/decktape"
-	@type jq || echo "jq is not installed, required for processing parameters"
 	@type pandoc || echo "pandoc is not installed, reqiured for converting markdown into a HTML presentation"
 	@type unzip || echo "unzip is not installed, required in the setup process"
 	@type watchman-make || echo "watchman-make is not installed, required for serving the presentation"
@@ -61,15 +60,15 @@ $(MDSHOW_CONFIG)/reveal.js:
 	rm $@/revealjs.zip
 	mv $@/reveal.js-4.0.2/.??* $@/reveal.js-4.0.2/* $@
 	rmdir $@/reveal.js-4.0.2
-	cd $@; \
-		yarn;
+	cd $@ && \
+		yarn && yarn add --dev node-jq
 	# workarounds for the new reveal-js release
-	cd $@/dist; \
-		ln -s . css; \
-		ln -s . js; \
-		ln -s ../plugin .;
-	cd $@/dist/plugin; \
-		ln -s zoom zoom-js;
+	cd $@/dist && \
+		ln -s . css  && \
+		ln -s . js  && \
+		ln -s ../plugin .
+	cd $@/dist/plugin && \
+		ln -s zoom zoom-js
 
 $(MDSHOW_CONFIG)/reveal.js/dist: $(MDSHOW_CONFIG)/reveal.js
 
@@ -137,8 +136,8 @@ html: .build/config.json sass .build/index.html
 pdf: html slides.pdf
 
 slides.pdf: .build/index.html
-	pdf_size="$$(jq -r '.pdf_size' < .build/config.json)"; \
-		pdf_delay="$$(jq -r '.pdf_delay' < .build/config.json)"; \
+	pdf_size="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_size' < .build/config.json)"; \
+		pdf_delay="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_delay' < .build/config.json)"; \
 		decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:3000/ $@ || \
 		echo "Failed to create $@. Is the mdshow server running? mdshow serve"
 
@@ -168,7 +167,7 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 
 .build/index.html: slides.md .build/config.json .build/reveal.js .build/assets
 	PANDOC_ARGS=; \
-				theme="$$(jq -r '.theme' < .build/config.json)"; \
+				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < .build/config.json)"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
