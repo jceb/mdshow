@@ -51,7 +51,7 @@ programs:
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
 
 $(MDSHOW_CONFIG)/defaults.yaml: $(MDSHOW_CONFIG)
-	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/mdshow -o $@
+	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
 
 $(MDSHOW_CONFIG):
 	mkdir -p $@
@@ -139,7 +139,7 @@ slides.pdf: .build/index.html
 
 # {{{1 serve
 $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
-	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
+	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: .build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	(watchman-make --make mdshow -p slides.md -t html & \
