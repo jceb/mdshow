@@ -134,8 +134,8 @@ pdf: html slides.pdf
 slides.pdf: .build/index.html
 	pdf_size="$$(jq -r '.pdf_size' < .build/config.json)"; \
 		pdf_delay="$$(jq -r '.pdf_delay' < .build/config.json)"; \
-		decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:3000/ $@
-		# decktape -s $${pdf_size} http://localhost:3000/ $${pdf}
+		decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:3000/ $@ || \
+		echo "Failed to create $@. Is the mdshow server running? mdshow serve"
 
 # {{{1 serve
 $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js: $(MDSHOW_CONFIG)/reveal.js
