@@ -6,6 +6,9 @@ subtitle: Show me more
 keywords: markdown slideshow
 slideNumber: False
 theme: black
+
+# default configuration: ~/.config/mdshow/defaults.yaml
+# revealjs configuration details: https://revealjs.com/
 ---
 
 # Section title slide
