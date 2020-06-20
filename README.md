@@ -87,7 +87,8 @@ live-reload:
 mdshow serve
 ```
 
-Convert the presentation to a PDF file:
+Convert the presentation to a PDF file (make sure `mdshow serve` is
+running before executing the following command):
 
 ```
 mdshow pdf
