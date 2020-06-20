@@ -50,15 +50,10 @@ programs:
 	@type watchman-make || echo "watchman-make is not installed, required for serving the presentation"
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
 
-$(MDSHOW_CONFIG)/defaults.yaml: $(MDSHOW_CONFIG)
+$(MDSHOW_CONFIG)/defaults.yaml:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
-
-$(MDSHOW_CONFIG):
-	mkdir -p $@
-
-$(MDSHOW_CONFIG)/theme: $(MDSHOW_CONFIG)
-	mkdir -p $@
 
 $(MDSHOW_CONFIG)/reveal.js:
 	mkdir -p $@
@@ -79,13 +74,12 @@ $(MDSHOW_CONFIG)/reveal.js:
 
 $(MDSHOW_CONFIG)/reveal.js/dist: $(MDSHOW_CONFIG)/reveal.js
 
-$(MDSHOW_CONFIG)/pandoc/templates: $(MDSHOW_CONFIG)
-	mkdir -p $@
-
-$(MDSHOW_CONFIG)/pandoc/templates/metadata.extract: $(MDSHOW_CONFIG)/pandoc/templates
+$(MDSHOW_CONFIG)/pandoc/templates/metadata.extract:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	echo '$$meta-json$$' > $@
 
-$(MDSHOW_CONFIG)/pandoc/templates/default.revealjs: $(MDSHOW_CONFIG)/pandoc/templates
+$(MDSHOW_CONFIG)/pandoc/templates/default.revealjs:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/pandoc/templates/default.revealjs -o $@
 
@@ -119,16 +113,17 @@ themes: $(MDSHOW_CONFIG)/reveal.js/dist $(wildcard $(MDSHOW_CONFIG)/reveal.js/di
 	@echo "Change theme by adding the option 'theme: <name>' between the two --- .. --- delimiters at the top of slides.md."
 
 # {{{1 scaffold
-$(MDSHOW_CONFIG)/scaffold.md: $(MDSHOW_CONFIG)
+$(MDSHOW_CONFIG)/scaffold.md:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/scaffold.md -o $@
 
-scaffold: $(MDSHOW_CONFIG)/scaffold.md assets
-	@[ ! -e slides.md ] && \
-		cp $< slides.md
-	echo "Created 'slides.md' and folder 'assets'." && \
-	echo "Start editing your slides in 'slides.md' and run 'mdshow html' whenever you're ready." || \
-	echo "'slides.md' already exists, nothing to do here."
+scaffold: $(MDSHOW_CONFIG)/scaffold.md
+	@[ ! -e assets ] && [ ! -e slides.md ] && \
+		mkdir assets && cp $< slides.md && \
+		echo "Created 'slides.md' and folder 'assets'." && \
+		echo "Start editing your slides in 'slides.md' and run 'mdshow html' whenever you're ready." || \
+		echo "'slides.md' and or 'assets' already exists, nothing to do here."
 
 # {{{1 html
 html: .build/config.json sass .build/index.html
@@ -153,37 +148,37 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 		cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build" serve)
 
 # {{{1 local directory
-.build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist .build
+.build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s $< $@ || true
 
-.build:
-	mkdir -p $@
-
-.build/assets: assets .build
+.build/assets: assets
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s ../assets $@ || true
 
-.build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract .build
+.build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	pandoc --data-dir=$(MDSHOW_CONFIG)/pandoc --template=metadata.extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
 	# yq . $(MDSHOW_CONFIG)/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json.tmp > $@
 
-.build/index.html: slides.md .build .build/config.json .build/reveal.js .build/assets
+.build/index.html: slides.md .build/config.json .build/reveal.js .build/assets
 	PANDOC_ARGS=; \
-	theme="$$(jq -r '.theme' < .build/config.json)"; \
-	[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
-	[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
-	[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
-	pandoc \
-		$(MDSHOW_CONFIG)/defaults.yaml \
-		slides.md \
-		--data-dir=$(MDSHOW_CONFIG)/pandoc \
-		-f markdown+yaml_metadata_block \
-		-t revealjs \
-		--wrap=preserve \
-		--standalone \
-		--slide-level=2 \
-		-V revealjs-url=reveal.js \
-		-o $@ \
-		$${PANDOC_ARGS} \
+				theme="$$(jq -r '.theme' < .build/config.json)"; \
+				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
+				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
+				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
+				pandoc \
+				$(MDSHOW_CONFIG)/defaults.yaml \
+				slides.md \
+				--data-dir=$(MDSHOW_CONFIG)/pandoc \
+				-f markdown+yaml_metadata_block \
+				-t revealjs \
+				--wrap=preserve \
+				--standalone \
+				--slide-level=2 \
+				-V revealjs-url=reveal.js \
+				-o $@ \
+				$${PANDOC_ARGS}
 
 # {{{1 cleanup
 clean:
