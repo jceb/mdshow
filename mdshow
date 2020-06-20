@@ -84,6 +84,9 @@ $(MDSHOW_CONFIG)/pandoc/templates: $(MDSHOW_CONFIG)
 $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract: $(MDSHOW_CONFIG)/pandoc/templates
 	echo '$$meta-json$$' > $@
 
+$(MDSHOW_CONFIG)/pandoc/templates/default.revealjs: $(MDSHOW_CONFIG)/pandoc/templates
+	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/pandoc/templates/default.revealjs -o $@
+
 # {{{1 sass / theme builder
 sass: $(MDSHOW_CONFIG)/reveal.js \
 	.sync-custom-themes \
@@ -178,6 +181,7 @@ assets:
 	pandoc \
 		$(MDSHOW_CONFIG)/defaults.yaml \
 		slides.md \
+		--data-dir=$(MDSHOW_CONFIG) \
 		-f markdown+yaml_metadata_block \
 		-t revealjs \
 		--wrap=preserve \
@@ -192,7 +196,7 @@ clean:
 	rm -rf .build
 
 distclean: clean
-	rm -rf $(MDSHOW_CONFIG)/reveal.js
+	rm -rf $(MDSHOW_CONFIG)/reveal.js $(MDSHOW_CONFIG)/pandoc
 
 # {{{1 .PHONY
 .PHONY: \
