@@ -37,7 +37,7 @@ upgrade:
 	chmod a+x $(realpath $(firstword $(MAKEFILE_LIST)))
 
 # {{{1 setup
-setup: programs sass $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
+setup: programs sass $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/scaffold.md $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 
 programs:
 	@echo "Testing depedencies"
@@ -51,7 +51,8 @@ programs:
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
 
 $(MDSHOW_CONFIG)/defaults.yaml: $(MDSHOW_CONFIG)
-	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
+	[ ! -e $@ ] && \
+		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
 
 $(MDSHOW_CONFIG):
 	mkdir -p $@
@@ -85,7 +86,8 @@ $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract: $(MDSHOW_CONFIG)/pandoc/temp
 	echo '$$meta-json$$' > $@
 
 $(MDSHOW_CONFIG)/pandoc/templates/default.revealjs: $(MDSHOW_CONFIG)/pandoc/templates
-	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/pandoc/templates/default.revealjs -o $@
+	[ ! -e $@ ] && \
+		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/pandoc/templates/default.revealjs -o $@
 
 # {{{1 sass / theme builder
 sass: $(MDSHOW_CONFIG)/reveal.js \
@@ -117,19 +119,13 @@ themes: $(MDSHOW_CONFIG)/reveal.js/dist $(wildcard $(MDSHOW_CONFIG)/reveal.js/di
 	@echo "Change theme by adding the option 'theme: <name>' between the two --- .. --- delimiters at the top of slides.md."
 
 # {{{1 scaffold
-scaffold: assets
+$(MDSHOW_CONFIG)/scaffold.md: $(MDSHOW_CONFIG)
+	[ ! -e $@ ] && \
+		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/scaffold.md -o $@
+
+scaffold: $(MDSHOW_CONFIG)/scaffold.md assets
 	@[ ! -e slides.md ] && \
-		echo "---" > slides.md && \
-		echo "title: slides by mdshow" >> slides.md && \
-		echo "subtitle: Show me more" >> slides.md && \
-		echo "theme: black" >> slides.md && \
-		echo "---" >> slides.md && \
-		echo "" >> slides.md && \
-		echo "# Section title slide" >> slides.md && \
-		echo "" >> slides.md && \
-		echo "## A slide" >> slides.md && \
-		echo "" >> slides.md && \
-		echo "- Point one" >> slides.md && \
+		cp $< slides.md
 	echo "Created 'slides.md' and folder 'assets'." && \
 	echo "Start editing your slides in 'slides.md' and run 'mdshow html' whenever you're ready." || \
 	echo "'slides.md' already exists, nothing to do here."
@@ -148,17 +144,15 @@ slides.pdf: .build/index.html
 
 # {{{1 serve
 $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js: $(MDSHOW_CONFIG)/reveal.js
-	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
+	[ ! -e $@ ] && \
+		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
-	(watchman-make --make mdshow -p slides.md -t html & \
+	(watchman-make --make $(realpath $(firstword $(MAKEFILE_LIST))) -p slides.md -t html & \
 		BPID=$$!; trap "kill $${BPID}" KILL INT HUP STOP; \
 		cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build" serve)
 
 # {{{1 local directory
-assets:
-	@mkdir -p assets
-
 .build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist .build
 	@[ ! -e $@ ] && ln -s $< $@ || true
 
@@ -195,7 +189,9 @@ assets:
 clean:
 	rm -rf .build
 
-distclean: clean
+distclean:
+	[ -e $(MDSHOW_CONFIG)/defaults.yaml ] && mv $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/defaults.yaml.bak
+	[ -e $(MDSHOW_CONFIG)/scaffold.md ] && mv $(MDSHOW_CONFIG)/scaffold.md $(MDSHOW_CONFIG)/scaffold.md.bak
 	rm -rf $(MDSHOW_CONFIG)/reveal.js $(MDSHOW_CONFIG)/pandoc
 
 # {{{1 .PHONY
