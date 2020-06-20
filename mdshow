@@ -196,7 +196,7 @@ assets:
 
 # {{{1 cleanup
 clean:
-	rm -f .template-metadata-extract slides.pdf
+	rm -f .template-metadata-extract
 	rm -rf .build
 
 distclean: clean
