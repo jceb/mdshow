@@ -59,7 +59,7 @@ $(MDSHOW_CONFIG):
 $(MDSHOW_CONFIG)/theme: $(MDSHOW_CONFIG)
 	mkdir -p $@
 
-$(MDSHOW_CONFIG)/reveal.js:
+$(MDSHOW_CONFIG)/reveal.js: $(MDSHOW_CONFIG)
 	mkdir -p $@
 	curl -L https://github.com/hakimel/reveal.js/archive/4.0.2.zip -o $@/revealjs.zip
 	unzip $@/revealjs.zip -d $@
