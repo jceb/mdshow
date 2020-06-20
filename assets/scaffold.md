@@ -9,6 +9,7 @@ theme: black
 
 # default configuration: ~/.config/mdshow/defaults.yaml
 # revealjs documentation: https://revealjs.com/
+# fontawesome icons: https://fontawesome.com/
 ---
 
 # Section title slide
@@ -16,3 +17,4 @@ theme: black
 ## A slide
 
 - Point one
+- ![](fas fa-smile)

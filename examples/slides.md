@@ -69,3 +69,7 @@ Link to [mdshow](https://github.com/jceb/mdshow)
 > Quote
 > by
 > Someone
+
+## Fontawesome integration
+
+- ![](fas fa-smile)
