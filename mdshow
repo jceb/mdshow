@@ -78,6 +78,12 @@ $(MDSHOW_CONFIG)/reveal.js: $(MDSHOW_CONFIG)
 
 $(MDSHOW_CONFIG)/reveal.js/dist: $(MDSHOW_CONFIG)/reveal.js
 
+$(MDSHOW_CONFIG)/pandoc/templates: $(MDSHOW_CONFIG)
+	mkdir -p $@
+
+$(MDSHOW_CONFIG)/pandoc/templates/metadata.extract: $(MDSHOW_CONFIG)/pandoc/templates
+	echo '$$meta-json$$' > $@
+
 # {{{1 sass / theme builder
 sass: $(MDSHOW_CONFIG)/reveal.js \
 	.sync-custom-themes \
@@ -159,22 +165,9 @@ assets:
 .build/assets: assets .build
 	@[ ! -e $@ ] && ln -s ../assets $@ || true
 
-.template-metadata-extract:
-	echo '$$meta-json$$' > $@
-
-.build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml .template-metadata-extract .build
-	pandoc --template=.template-metadata-extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
+.build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract .build
+	pandoc --data-dir=$(MDSHOW_CONFIG) --template=metadata.extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
 	# yq . $(MDSHOW_CONFIG)/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json.tmp > $@
-
-# .build/slides.md: slides.md .build/config.json
-# 	pandoc $< -o $@.tmp.md
-# 	echo '---' > $@
-# 	# yq . $(MDSHOW_CONFIG)/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json | yq -y . >> $@
-# 	yq -y . .build/config.json >> $@
-# 	echo '---' >> $@
-# 	echo >> $@
-# 	# cat $@.tmp.md >> $@
-# 	cat $< >> $@
 
 .build/index.html: slides.md .build .build/config.json .build/reveal.js .build/assets
 	PANDOC_ARGS=; \
@@ -196,7 +189,6 @@ assets:
 
 # {{{1 cleanup
 clean:
-	rm -f .template-metadata-extract
 	rm -rf .build
 
 distclean: clean
