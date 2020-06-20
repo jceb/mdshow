@@ -141,7 +141,7 @@ slides.pdf: .build/index.html
 $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
 	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
-serve: .build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
+serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	(watchman-make --make mdshow -p slides.md -t html & \
 		BPID=$$!; trap "kill $${BPID}" KILL INT HUP STOP; \
 		cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build" serve)
