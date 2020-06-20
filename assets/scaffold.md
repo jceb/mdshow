@@ -8,7 +8,7 @@ slideNumber: False
 theme: black
 
 # default configuration: ~/.config/mdshow/defaults.yaml
-# revealjs configuration details: https://revealjs.com/
+# revealjs documentation: https://revealjs.com/
 ---
 
 # Section title slide
