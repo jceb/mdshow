@@ -145,7 +145,7 @@ $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js: $(MDSHOW_CONFIG)/reveal.js
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
-	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build" serve
+	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build"
 
 # {{{1 local directory
 .build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist

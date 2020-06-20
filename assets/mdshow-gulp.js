@@ -11,13 +11,13 @@ const root = yargs.argv.root || ".";
 const port = yargs.argv.port || 8000;
 const mdshow = yargs.argv.mdshow || "mdshow";
 
-function reload() {
-  return gulp.src(["*.html", "*.md"]).pipe(connect.reload());
+function reload(cb) {
+  gulp.src(["*.html", "assets/**", "reveal.js/**"]).pipe(connect.reload());
+  cb();
 }
 
 function rebuild(cb) {
   const build = spawn(mdshow, ["html"], {
-    shell: true,
     cwd: path.join(root, "..")
   });
   build.stdout.on("data", d => console.log(`${d}`));
@@ -30,8 +30,9 @@ function rebuild(cb) {
   });
 }
 
-function serve() {
+exports.default = function() {
   connect.server({
+    name: "mdshow",
     root: root,
     port: port,
     host: "127.0.0.1",
@@ -39,17 +40,12 @@ function serve() {
   });
 
   gulp.watch(
-    ["index.html", "assets/**", "reveal.js/**"].map(glob =>
-      path.join(root, glob)
-    ),
-    gulp.series(reload)
+    ["*.html", "assets/**", "reveal.js/**"].map(glob => path.join(root, glob)),
+    reload
   );
 
   gulp.watch(
-    ["../slides.md"].map(glob => path.join(root, glob)),
-    gulp.series(rebuild)
+    ["../*.md"].map(glob => path.join(root, glob)),
+    rebuild
   );
-}
-
-exports.serve = serve;
-exports.default = serve;
+};
