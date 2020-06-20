@@ -138,7 +138,7 @@ slides.pdf: .build/index.html
 		# decktape -s $${pdf_size} http://localhost:3000/ $${pdf}
 
 # {{{1 serve
-$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
+$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js: $(MDSHOW_CONFIG)/reveal.js
 	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
