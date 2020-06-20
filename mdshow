@@ -163,7 +163,7 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	@[ ! -e $@ ] && ln -s ../assets $@ || true
 
 .build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract .build
-	pandoc --data-dir=$(MDSHOW_CONFIG) --template=metadata.extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
+	pandoc --data-dir=$(MDSHOW_CONFIG)/pandoc --template=metadata.extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
 	# yq . $(MDSHOW_CONFIG)/defaults.yaml | jq -s '.[0] * .[1]' - .build/config.json.tmp > $@
 
 .build/index.html: slides.md .build .build/config.json .build/reveal.js .build/assets
@@ -175,7 +175,7 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	pandoc \
 		$(MDSHOW_CONFIG)/defaults.yaml \
 		slides.md \
-		--data-dir=$(MDSHOW_CONFIG) \
+		--data-dir=$(MDSHOW_CONFIG)/pandoc \
 		-f markdown+yaml_metadata_block \
 		-t revealjs \
 		--wrap=preserve \
