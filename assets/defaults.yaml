@@ -1,0 +1,45 @@
+---
+title: slides by mdshow
+pdf_size: 1189x841  # 1024x768  # 1280x720
+pdf_delay: 100
+width: 960
+height: 700
+margin: 0.1
+minScale: 0.2
+maxScale: 1.5
+standalone:
+asciinema: false
+theme: black
+transition: slide  # none/fade/slide/convex/concave/zoom
+controls: false
+controlsTutorial: false
+controlsLayout: bottom-right
+controlsBackArrows: faded
+progress: true
+defaultTiming: 120
+slideNumber: false
+history: true
+keyboard: true
+overview: true
+center: true
+touch: true
+loop: false
+rtl: false
+shuffle: false
+fragments: true
+fragmentInURL: true
+embedded: false
+help: true
+showNotes: false
+autoPlayMedia: null
+autoSlide: 0
+autoSlideStoppable: true
+autoSlideMethod: Reveal.navigateNext
+mouseWheel: false
+hideAddressBar: true
+previewLinks: false
+transitionSpeed: default  # default/fast/slow
+backgroundTransition: fade  # none/fade/slide/convex/concave/zoom
+viewDistance: 3
+highlight_style: zenburn
+---
