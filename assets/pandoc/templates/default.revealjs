@@ -176,7 +176,7 @@ $endif$
         autoSlideStoppable: ('$autoSlideStoppable$' === '' ? false : true),
 $if(autoSlideMethod)$
         // Use this method for navigation when auto-sliding (defaults to navigateNext)
-        (autoSlideMethod: ('$(autoSlideMethod$' === 'null' ? null : '$(autoSlideMethod$'), // none/fade/slide/convex/concave/zoom
+        autoSlideMethod: ('$autoSlideMethod$' === 'null' ? null : '$autoSlideMethod$'), // none/fade/slide/convex/concave/zoom
 $endif$
 $if(defaultTiming)$
         // Specify the average time in seconds that you think you will spend
