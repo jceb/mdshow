@@ -1,7 +1,6 @@
 # TODO
 
 - [ ] integrate fontawesome
-- [ ] remove sass dependency since it's already provided by reveal.js
 - [ ] describe custom theming
 - [ ] integrate plantuml
 - [ ] build a fully standalone HTML file that contains all pictures, css, and js
@@ -10,6 +9,7 @@
 
 # DONE
 
+- [x] remove sass dependency since it's already provided by reveal.js, 2020-06-20
 - [x] fix pandoc template so that options can be disabled, e.g.  controls, 2020-06-20
 - [x] include default.yaml and mdshow-gulp.js in repository
 - [x] include version information

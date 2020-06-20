@@ -25,7 +25,7 @@ help:
 	@echo "  version: prints the current version"
 	@echo ""
 	@echo "Dependencies:"
-	@echo "  curl, decktape, jq, pandoc, sass, unzip, watchman, yarn"
+	@echo "  curl, decktape, jq, pandoc, unzip, watchman, yarn"
 
 # {{{1 version
 version:
@@ -45,7 +45,6 @@ programs:
 	@type decktape || echo "decktape is not installed, required for converting the presentation to PDF: https://github.com/astefanutti/decktape"
 	@type jq || echo "jq is not installed, required for processing parameters"
 	@type pandoc || echo "pandoc is not installed, reqiured for converting markdown into a HTML presentation"
-	@type sass || echo "sass is not installed, required for creating custom themes: https://sass-lang.com/"
 	@type unzip || echo "unzip is not installed, required in the setup process"
 	@type watchman-make || echo "watchman-make is not installed, required for serving the presentation"
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
@@ -99,7 +98,7 @@ sass: $(MDSHOW_CONFIG)/reveal.js \
 .link-theme-assets: $$(addprefix $(MDSHOW_CONFIG)/reveal.js/dist/theme/,$$(basename $$(notdir $$(wildcard $(MDSHOW_CONFIG)/reveal.js/css/theme/source/*.scss))))
 
 $(MDSHOW_CONFIG)/reveal.js/dist/theme/%.css: $(MDSHOW_CONFIG)/reveal.js/css/theme/source/%.scss
-	sass $< $@
+	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp css-themes
 
 $(MDSHOW_CONFIG)/theme/%/assets:
 	mkdir -p $@
