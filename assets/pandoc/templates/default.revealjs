@@ -85,96 +85,123 @@ $body$
       // Full list of configuration options available at:
       // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
-$if(controls)$
         // Display controls in the bottom right corner
-        controls: $controls$,
-$endif$
-$if(progress)$
+        controls: ('$controls$' === '' ? false : true),
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: ('$controlsTutorial$' === '' ? false : true),
         // Display a presentation progress bar
-        progress: $progress$,
-$endif$
-$if(slideNumber)$
+        progress: ('$progress$' === '' ? false : true),
         // Display the page number of the current slide
-        slideNumber: $slideNumber$,
-$endif$
+        slideNumber: ('$slideNumber$' === '' ? false : true),
+        // Use 1 based indexing for # links to match slide number (default is zero
+        // based)
+        hashOneBasedIndex: ('$hashOneBasedIndex$' === '' ? false : true),
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: ('$hash$' === '' ? false : true),
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: ('$respondToHashChanges$' === '' ? false : true),
         // Push each slide change to the browser history
-$if(history)$
-        history: $history$,
-$else$
-        history: true,
-$endif$
-$if(keyboard)$
+        history: ('$history$' === '' ? false : true),
         // Enable keyboard shortcuts for navigation
-        keyboard: $keyboard$,
-$endif$
-$if(overview)$
+        keyboard: ('$keyboard$' === '' ? false : true),
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: ('$disableLayout$' === '' ? false : true),
         // Enable the slide overview mode
-        overview: $overview$,
-$endif$
-$if(center)$
+        overview: ('$overview$' === '' ? false : true),
         // Vertical centering of slides
-        center: $center$,
-$endif$
-$if(touch)$
+        center: ('$center$' === '' ? false : true),
         // Enables touch navigation on devices with touch input
-        touch: $touch$,
-$endif$
-$if(loop)$
+        touch: ('$touch$' === '' ? false : true),
         // Loop the presentation
-        loop: $loop$,
-$endif$
-$if(rtl)$
+        loop: ('$loop$' === '' ? false : true),
         // Change the presentation direction to be RTL
-        rtl: $rtl$,
-$endif$
+        rtl: ('$rtl$' === '' ? false : true),
 $if(navigationMode)$
         // see https://github.com/hakimel/reveal.js/#navigation-mode
         navigationMode: '$navigationMode$',
 $endif$
-$if(fragments)$
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: ('$shuffle$' === '' ? false : true),
         // Turns fragments on and off globally
-        fragments: $fragments$,
-$endif$
-$if(embedded)$
+        fragments: ('$fragments$' === '' ? false : true),
+        // Flags whether to include the current fragment in the URL
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: ('$fragmentInURL$' === '' ? false : true),
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
-        embedded: $embedded$,
-$endif$
-$if(help)$
+        embedded: ('$embedded$' === '' ? false : true),
         // Flags if we should show a help overlay when the questionmark
         // key is pressed
-        help: $help$,
-$endif$
-$if(showNotes)$
+        help: ('$help$' === '' ? false : true),
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: ('$pause$' === '' ? false : true),
         // Flags if speaker notes should be visible to all viewers
-        showNotes: $showNotes$,
+        showNotes: ('$showNotes$' === '' ? false : true),
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null:   Media will only autoplay if data-autoplay is present
+        // - True:   All media will autoplay, regardless of individual setting
+        // - False:  No media will autoplay, regardless of individual setting
+        autoPlayMedia: ('$autoPlayMedia$' === 'null' ? null : '$autoPlayMedia$' === '' ? false : true),
+        // Global override for preloading lazy-loaded iframes
+        // - null:   Iframes with data-src AND data-preload will be loaded when within
+        //           the viewDistance, iframes with only data-src will be loaded when visible
+        // - True:   All iframes with data-src will be loaded when within the viewDistance
+        // - False:  All iframes with data-src will be loaded only when visible
+        preloadIframes: ('$preloadIframes$' === 'null' ? null : '$preloadIframes$' === '' ? false : true),
+        // Can be used to globally disable auto-animation
+        autoAnimate: ('$autoAnimate$' === '' ? false : true),
+$if(autoAnimateMatcher)$
+        // Optionally provide a custom element matcher that will be
+        // used to dictate which elements we can animate between.
+        autoAnimateMatcher: ('$autoAnimateMatcher$' === 'null' ? null : '$autoAnimateMatcher$'), // none/fade/slide/convex/concave/zoom
 $endif$
-$if(autoSlide)$
+$if(autoAnimateEasing)$
+        // Default settings for our auto-animate transitions, can be
+        // overridden per-slide or per-element via data arguments
+        autoAnimateEasing: '$autoAnimateEasing$',
+$endif$
+$if(autoAnimateDuration)$
+        autoAnimateDuration: $autoAnimateDuration$,
+$endif$
+        autoAnimateUnmatched: ('$autoAnimateUnmatched$' === '' ? false : true),
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
-        autoSlide: $autoSlide$,
-$endif$
-$if(autoSlideStoppable)$
+        autoSlide: ('$autoSlide$' === '' ? false : parseInt('$autoSlide$')),
         // Stop auto-sliding after user input
-        autoSlideStoppable: $autoSlideStoppable$,
+        autoSlideStoppable: ('$autoSlideStoppable$' === '' ? false : true),
+$if(autoSlideMethod)$
+        // Use this method for navigation when auto-sliding (defaults to navigateNext)
+        (autoSlideMethod: ('$(autoSlideMethod$' === 'null' ? null : '$(autoSlideMethod$'), // none/fade/slide/convex/concave/zoom
 $endif$
-$if(mouseWheel)$
+$if(defaultTiming)$
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: $defaultTiming$,
+$endif$
         // Enable slide navigation via mouse wheel
-        mouseWheel: $mouseWheel$,
-$endif$
-$if(rollingLinks)$
-        // Apply a 3D roll to links on hover
-        rollingLinks: $rollingLinks$,
-$endif$
-$if(hideAddressBar)$
-        // Hides the address bar on mobile devices
-        hideAddressBar: $hideAddressBar$,
-$endif$
-$if(previewLinks)$
+        mouseWheel: ('$mouseWheel$' === '' ? false : true),
         // Opens links in an iframe preview overlay
-        previewLinks: $previewLinks$,
-$endif$
+        // Add `data-preview-link` and `data-preview-link="False"` to customise each link
+        // individually
+        previewLinks: ('$previewLinks$' === '' ? false : true),
+        // Exposes the reveal.js API through window.postMessage
+        postMessage: ('$postMessage$' === '' ? false : true),
+        // Dispatches all reveal.js events to the parent window through postMessage
+        postMessageEvents: ('$postMessageEvents$' === '' ? false : true),
+          // Focuses body when page changes visibility to ensure keyboard shortcuts work
+        focusBodyOnPageVisibilityChange: ('$focusBodyOnPageVisibilityChange$' === '' ? false : true),
+        // Apply a 3D roll to links on hover
+        // TODO check if still in use
+        rollingLinks: ('$rollingLinks$' === '' ? false : true),
+        // Hides the address bar on mobile devices
+        hideAddressBar: ('$controls$' === '' ? false : true),
+        // Opens links in an iframe preview overlay
+        previewLinks: ('$controls$' === '' ? false : true)$previewLinks$,
 $if(transition)$
         // Transition style
         transition: '$transition$', // none/fade/slide/convex/concave/zoom

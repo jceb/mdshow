@@ -1,7 +1,6 @@
 # TODO
 
 - [ ] integrate fontawesome
-- [ ] fix pandoc template so that options can be disabled, e.g. controls
 - [ ] remove sass dependency since it's already provided by reveal.js
 - [ ] describe custom theming
 - [ ] integrate plantuml
@@ -11,6 +10,7 @@
 
 # DONE
 
+- [x] fix pandoc template so that options can be disabled, e.g.  controls, 2020-06-20
 - [x] include default.yaml and mdshow-gulp.js in repository
 - [x] include version information
 - [x] merge watch and serve commands into one, 2020-06-19
