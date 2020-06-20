@@ -11,6 +11,7 @@
 
 # DONE
 
+- [x] include default.yaml and mdshow-gulp.js in repository
 - [x] include version information
 - [x] merge watch and serve commands into one, 2020-06-19
 - [x] move includes to subdirectory, 2020-06-13

@@ -50,55 +50,13 @@ programs:
 	@type watchman-make || echo "watchman-make is not installed, required for serving the presentation"
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
 
-$(MDSHOW_CONFIG)/defaults.yaml: $(MDSHOW_CONFIG)/theme
-	@echo "---" > $@
-	@echo "title: slides by mdshow" >> $@
-	@echo "pdf_size: 1189x841  # 1024x768  # 1280x720" >> $@
-	@echo "pdf_delay: 100" >> $@
-	@echo "width: 960" >> $@
-	@echo "height: 700" >> $@
-	@echo "margin: 0.1" >> $@
-	@echo "minScale: 0.2" >> $@
-	@echo "maxScale: 1.5" >> $@
-	@echo "standalone:" >> $@
-	@echo "asciinema: false" >> $@
-	@echo "theme: black" >> $@
-	@echo "transition: slide  # none/fade/slide/convex/concave/zoom" >> $@
-	@echo "controls: false" >> $@
-	@echo "controlsTutorial: false" >> $@
-	@echo "controlsLayout: bottom-right" >> $@
-	@echo "controlsBackArrows: faded" >> $@
-	@echo "progress: true" >> $@
-	@echo "defaultTiming: 120" >> $@
-	@echo "slideNumber: false" >> $@
-	@echo "history: true" >> $@
-	@echo "keyboard: true" >> $@
-	@echo "overview: true" >> $@
-	@echo "center: true" >> $@
-	@echo "touch: true" >> $@
-	@echo "loop: false" >> $@
-	@echo "rtl: false" >> $@
-	@echo "shuffle: false" >> $@
-	@echo "fragments: true" >> $@
-	@echo "fragmentInURL: true" >> $@
-	@echo "embedded: false" >> $@
-	@echo "help: true" >> $@
-	@echo "showNotes: false" >> $@
-	@echo "autoPlayMedia: null" >> $@
-	@echo "autoSlide: 0" >> $@
-	@echo "autoSlideStoppable: true" >> $@
-	@echo "autoSlideMethod: Reveal.navigateNext" >> $@
-	@echo "mouseWheel: false" >> $@
-	@echo "hideAddressBar: true" >> $@
-	@echo "previewLinks: false" >> $@
-	@echo "transitionSpeed: default  # default/fast/slow" >> $@
-	@echo "backgroundTransition: fade  # none/fade/slide/convex/concave/zoom" >> $@
-	@echo "viewDistance: 3" >> $@
-	@echo "highlight_style: zenburn" >> $@
-	@echo "---" >> $@
-	@echo "Created $@"
+$(MDSHOW_CONFIG)/defaults.yaml: $(MDSHOW_CONFIG)
+	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/mdshow -o $@
 
-$(MDSHOW_CONFIG)/theme:
+$(MDSHOW_CONFIG):
+	mkdir -p $@
+
+$(MDSHOW_CONFIG)/theme: $(MDSHOW_CONFIG)
 	mkdir -p $@
 
 $(MDSHOW_CONFIG)/reveal.js:
@@ -181,36 +139,7 @@ slides.pdf: .build/index.html
 
 # {{{1 serve
 $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
-	@echo "const gulp = require('gulp')" > $@
-	@echo "const path = require('path')" >> $@
-	@echo "const connect = require('gulp-connect')" >> $@
-	@echo "const yargs = require('yargs')" >> $@
-	@echo "" >> $@
-	@echo "// Prevents warnings from opening too many test pages" >> $@
-	@echo "process.setMaxListeners(20);" >> $@
-	@echo "" >> $@
-	@echo "const root = yargs.argv.root || '.'" >> $@
-	@echo "const port = yargs.argv.port || 8000" >> $@
-	@echo "" >> $@
-	@echo "gulp.task('reload', () => gulp.src(['*.html', '*.md'])" >> $@
-	@echo "    .pipe(connect.reload()));" >> $@
-	@echo "" >> $@
-	@echo "gulp.task('serve', () => {" >> $@
-	@echo "" >> $@
-	@echo "    connect.server({" >> $@
-	@echo "        root: root," >> $@
-	@echo "        port: port," >> $@
-	@echo "        host: '127.0.0.1'," >> $@
-	@echo "        livereload: true" >> $@
-	@echo "    })" >> $@
-	@echo "" >> $@
-	@echo "    gulp.watch([" >> $@
-	@echo "      'index.html'," >> $@
-	@echo "      'assets/**'," >> $@
-	@echo "      'reveal.js/**'," >> $@
-	@echo "    ].map(glob => path.join(root, glob)), gulp.series('reload'))" >> $@
-	@echo "" >> $@
-	@echo "})" >> $@
+	curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
 
 serve: .build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	(watchman-make --make mdshow -p slides.md -t html & \
