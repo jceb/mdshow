@@ -1,5 +1,7 @@
 # TODO
 
+- [ ] fix download of lua filter
+- [ ] replace scaffold by example
 - [ ] describe custom theming
 - [ ] integrate plantuml
 - [ ] build a fully standalone HTML file that contains all pictures, css, and js
@@ -8,6 +10,7 @@
 
 # DONE
 
+- [x] watch for all changes in the mdshow configuration folder, 2020-06-27
 - [x] integrate fontawesome, 2020-06-20
 - [x] remove sass dependency since it's already provided by reveal.js, 2020-06-20
 - [x] fix pandoc template so that options can be disabled, e.g.  controls, 2020-06-20

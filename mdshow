@@ -158,6 +158,9 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s $< $@ || true
 
+.build/.mdshow: $(MDSHOW_CONFIG)
+	@[ ! -e $@ ] && ln -s $< $@ || true
+
 .build/assets: assets
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s ../$< $@ || true
@@ -166,7 +169,7 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	pandoc --data-dir=$(MDSHOW_CONFIG)/pandoc --template=metadata.extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
 
-.build/index.html: slides.md .build/config.json .build/reveal.js .build/assets
+.build/index.html: slides.md .build/config.json .build/reveal.js .build/assets .build/.mdshow
 	PANDOC_ARGS=; \
 				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < .build/config.json)"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
