@@ -160,7 +160,7 @@ serve: .build/index.html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 
 .build/assets: assets
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
-	@[ ! -e $@ ] && ln -s ../assets $@ || true
+	@[ ! -e $@ ] && ln -s ../$< $@ || true
 
 .build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
