@@ -137,7 +137,7 @@ themes: $(MDSHOW_CONFIG)/reveal.js/dist $(wildcard $(MDSHOW_CONFIG)/reveal.js/di
 $(MDSHOW_CONFIG)/scaffold.md:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
-		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/scaffold.md -o $@
+		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/examples/slides.md -o $@
 
 scaffold: $(MDSHOW_CONFIG)/scaffold.md
 	@[ ! -e assets ] && [ ! -e slides.md ] && \

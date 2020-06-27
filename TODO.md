@@ -1,6 +1,5 @@
 # TODO
 
-- [ ] replace scaffold by example
 - [ ] describe custom theming
 - [ ] integrate plantuml
 - [ ] build a fully standalone HTML file that contains all pictures, css, and js
@@ -9,6 +8,7 @@
 
 # DONE
 
+- [x] replace scaffold by example, 2020-06-27
 - [x] watch for all changes in the mdshow configuration folder, 2020-06-27
 - [x] integrate fontawesome, 2020-06-20
 - [x] remove sass dependency since it's already provided by reveal.js, 2020-06-20

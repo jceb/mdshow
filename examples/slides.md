@@ -4,6 +4,7 @@ date: 2020-06-20
 title: Example presentation
 subtitle: Subtitle goes here
 keywords: markdown slideshow
+slideNumber: False
 theme: moon
 ---
 
