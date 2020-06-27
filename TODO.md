@@ -1,6 +1,5 @@
 # TODO
 
-- [ ] fix download of lua filter
 - [ ] replace scaffold by example
 - [ ] describe custom theming
 - [ ] integrate plantuml

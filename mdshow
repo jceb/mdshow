@@ -37,7 +37,15 @@ upgrade:
 	chmod a+x $(realpath $(firstword $(MAKEFILE_LIST)))
 
 # {{{1 setup
-setup: programs sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/scaffold.md $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
+setup: programs \
+	sass \
+	$(MDSHOW_CONFIG)/defaults.yaml \
+	$(MDSHOW_CONFIG)/pandoc/filters/fontawesome.lua \
+	$(MDSHOW_CONFIG)/pandoc/templates/default.revealjs \
+	$(MDSHOW_CONFIG)/pandoc/templates/metadata.extract \
+	$(MDSHOW_CONFIG)/reveal.js/dist/fontawesome \
+	$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js \
+	$(MDSHOW_CONFIG)/scaffold.md
 
 programs:
 	@echo "Testing depedencies"
@@ -75,6 +83,11 @@ $(MDSHOW_CONFIG)/reveal.js:
 		ln -s zoom zoom-js
 
 $(MDSHOW_CONFIG)/reveal.js/dist: $(MDSHOW_CONFIG)/reveal.js
+
+$(MDSHOW_CONFIG)/pandoc/filters/fontawesome.lua:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
+	[ ! -e $@ ] && \
+		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/pandoc/filters/fontawesome.lua -o $@
 
 $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
