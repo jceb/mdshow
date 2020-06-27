@@ -12,7 +12,7 @@ const port = yargs.argv.port || 8000;
 const mdshow = yargs.argv.mdshow || "mdshow";
 
 function reload(cb) {
-  gulp.src(["*.html", "assets/**", "reveal.js/**"]).pipe(connect.reload());
+  gulp.src(["index*.html", "assets/**", "reveal.js/**"]).pipe(connect.reload());
   cb();
 }
 
@@ -40,12 +40,12 @@ exports.default = function() {
   });
 
   gulp.watch(
-    ["*.html", "assets/**", "reveal.js/**"].map(glob => path.join(root, glob)),
+    ["index*.html", "assets/**", "reveal.js/**"].map(glob => path.join(root, glob)),
     reload
   );
 
   gulp.watch(
-    ["../*.md"].map(glob => path.join(root, glob)),
+    ["../slides*.md"].map(glob => path.join(root, glob)),
     rebuild
   );
 };
