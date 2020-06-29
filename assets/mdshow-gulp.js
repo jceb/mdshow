@@ -13,7 +13,7 @@ const mdshow = yargs.argv.mdshow || "mdshow";
 
 function reload(cb) {
   gulp
-    .src(["index*.html", "assets/**", "reveal.js/**", ".mdshow/**"])
+    .src(["index*.html", "assets/**", "reveal.js/**"])
     .pipe(connect.reload());
   cb();
 }
@@ -42,14 +42,16 @@ exports.default = function() {
   });
 
   gulp.watch(
-    ["index*.html", "assets/**", "reveal.js/**", ".mdshow/**"].map(glob =>
+    ["index*.html", "assets/**", "reveal.js/**"].map(glob =>
       path.join(root, glob)
     ),
     reload
   );
 
   gulp.watch(
-    ["../slides*.md"].map(glob => path.join(root, glob)),
+    ["../slides*.md", "assets/**", ".mdshow/**"].map(glob =>
+      path.join(root, glob)
+    ),
     rebuild
   );
 };
