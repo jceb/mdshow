@@ -49,6 +49,19 @@ opinionated path.
 
 ## Install
 
+### Prequisites
+
+- `autoconf`
+- `automake`
+- `curl`
+- `g++`
+- `gcc`
+- `make`
+- `pandoc`, suggest version 2.9.x
+- `unzip`
+
+### Installation
+
 Download the program:
 
 ```
