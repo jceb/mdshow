@@ -161,7 +161,8 @@ slides.pdf: .build/index.html
 		echo "Failed to create $@. Is the mdshow server running? mdshow serve"
 
 # {{{1 serve
-$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js: $(MDSHOW_CONFIG)/reveal.js
+$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
