@@ -143,7 +143,9 @@ scaffold: $(MDSHOW_CONFIG)/scaffold.md
 	@[ ! -e assets ] && [ ! -e slides.md ] && \
 		mkdir assets && cp $< slides.md && \
 		echo "Created 'slides.md' and folder 'assets'." && \
-		echo "Start editing your slides in 'slides.md' and run 'mdshow html' whenever you're ready." || \
+		echo "- Start editing your slides in 'slides.md'" && \
+		echo "- Run 'mdshow serve' to live-preview the slides in the browser" && \
+		echo "- Run 'mdshow pdf' to store the slideshow in a PDF document" || \
 		echo "'slides.md' and or 'assets' already exists, nothing to do here."
 
 # {{{1 html
