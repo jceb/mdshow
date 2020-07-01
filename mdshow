@@ -79,8 +79,6 @@ $(MDSHOW_CONFIG)/reveal.js:
 		ln -s . css  && \
 		ln -s . js  && \
 		ln -s ../plugin .
-	cd $@/dist/plugin && \
-		ln -s zoom zoom-js
 
 $(MDSHOW_CONFIG)/reveal.js/dist: $(MDSHOW_CONFIG)/reveal.js
 
