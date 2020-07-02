@@ -6,6 +6,12 @@ subtitle: Subtitle goes here
 keywords: markdown slideshow
 slideNumber: False
 theme: moon
+
+# default configuration: ~/.config/mdshow/defaults.yaml
+# themes: ~/.config/mdshow/reveal.js/dist/theme/
+# special markdown formatting: https://pandoc.org/MANUAL.html#pandocs-markdown
+# revealjs documentation: https://revealjs.com/
+# fontawesome icons: https://fontawesome.com/
 ---
 
 # Agenda
