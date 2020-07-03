@@ -16,28 +16,20 @@ $endif$
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="$revealjs-url$/css/reset.css">
-  <link rel="stylesheet" href="$revealjs-url$/css/reveal.css">
+  <link rel="stylesheet" href="$revealjs-url$/reset.css">
+  <link rel="stylesheet" href="$revealjs-url$/reveal.css">
   <link rel="stylesheet" href="$revealjs-url$/fontawesome/css/all.min.css">
   <style>
     $styles.html()$
   </style>
 $if(theme)$
-  <link rel="stylesheet" href="$revealjs-url$/css/theme/$theme$.css" id="theme">
+  <link rel="stylesheet" href="$revealjs-url$/theme/$theme$.css" id="theme">
 $else$
-  <link rel="stylesheet" href="$revealjs-url$/css/theme/black.css" id="theme">
+  <link rel="stylesheet" href="$revealjs-url$/theme/black.css" id="theme">
 $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$"/>
 $endfor$
-  <!-- Printing and PDF exports -->
-  <script>
-    var link = document.createElement( 'link' );
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = window.location.search.match( /print-pdf/gi ) ? '$revealjs-url$/css/print/pdf.css' : '$revealjs-url$/css/print/paper.css';
-    document.getElementsByTagName( 'head' )[0].appendChild( link );
-  </script>
   <!--[if lt IE 9]>
   <script src="$revealjs-url$/lib/js/html5shiv.js"></script>
   <![endif]-->
@@ -79,7 +71,12 @@ $body$
     </div>
   </div>
 
-  <script src="$revealjs-url$/js/reveal.js"></script>
+  <script src="$revealjs-url$/reveal.js"></script>
+  <script src="$revealjs-url$/plugin/math/math.js"></script>
+  <script src="$revealjs-url$/plugin/zoom/zoom.js"></script>
+  <script src="$revealjs-url$/plugin/highlight/highlight.js"></script>
+  <script src="$revealjs-url$/plugin/search/search.js"></script>
+  <script src="$revealjs-url$/plugin/notes/notes.js"></script>
 
   <script>
 
@@ -285,19 +282,7 @@ $if(mathjax)$
 $endif$
 
         // Optional reveal.js plugins
-        dependencies: [
-          { src: '$revealjs-url$/plugin/zoom/zoom.js', async: true },
-          { src: '$revealjs-url$/plugin/highlight/highlight.js', async: true },
-          { src: '$revealjs-url$/plugin/search/search.js', async: true },
-$if(notes-server)$
-          { src: '$revealjs-url$/socket.io/socket.io.js', async: true },
-          { src: '$revealjs-url$/plugin/notes-server/client.js', async: true },
-$endif$
-$if(mathjax)$
-          { src: '$revealjs-url$/plugin/math/math.js', async: true },
-$endif$
-          { src: '$revealjs-url$/plugin/notes/notes.js', async: true }
-        ]
+        plugins: [ RevealHighlight, RevealZoom, RevealNotes, RevealSearch, RevealMath ]
       });
     </script>
   $for(include-after)$

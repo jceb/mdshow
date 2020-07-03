@@ -76,8 +76,6 @@ $(MDSHOW_CONFIG)/reveal.js:
 		yarn && yarn add --dev node-jq
 	# workarounds for the new reveal-js release
 	cd $@/dist && \
-		ln -s . css  && \
-		ln -s . js  && \
 		ln -s ../plugin .
 
 $(MDSHOW_CONFIG)/reveal.js/dist: $(MDSHOW_CONFIG)/reveal.js
