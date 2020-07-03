@@ -1,5 +1,6 @@
 # TODO
 
+- [ ] use local jq installation if available
 - [ ] describe custom theming
 - [ ] integrate plantuml
 - [ ] build a fully standalone HTML file that contains all pictures, css, and js
