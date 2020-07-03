@@ -73,7 +73,7 @@ $(MDSHOW_CONFIG)/reveal.js:
 	mv $@/reveal.js-4.0.2/.??* $@/reveal.js-4.0.2/* $@
 	rmdir $@/reveal.js-4.0.2
 	cd $@ && \
-		yarn && yarn add --dev node-jq
+		yarn && yarn add --dev node-jq decktape
 	# workarounds for the new reveal-js release
 	cd $@/dist && \
 		ln -s ../plugin .
