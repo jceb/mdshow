@@ -14,12 +14,32 @@ heavy lifting of making text beautiful is left to
 
 ## Table of Contents
 
+- [Features](#feature)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Features
+
+- Minimally invasive. All data is kept in `slides.md`, `assets/`, and a temporay `.build/` folder
+- Markdown as the sole markup to focus on
+- Custom themes and reuse of themes across all presentations
+- Scaffolding for a quick start
+- Auto-generated title slide
+- [Fontawesome](https://fontawesome.com/) integration
+- Multiple columns per slide
+- Syntax highlighting for source code
+- Incremental display of bullet points and other fragments
+- Zoom into slide
+- Separate speaker notes view
+- Live-reload of changes 
+- PDF conversion
+- Default settings across all presentations
+- Custom settings per presentation
+- Built with reveal.js 4.0 and pandoc 2.9
 
 ## Background
 
