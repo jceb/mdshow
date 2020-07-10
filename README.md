@@ -29,7 +29,7 @@ heavy lifting of making text beautiful is left to
 - Custom themes and reuse of themes across all presentations
 - Scaffolding for a quick start
 - Auto-generated title slide
-- [Fontawesome](https://fontawesome.com/) integration
+- [Font Awesome](https://fontawesome.com/) integration
 - Multiple columns per slide
 - Syntax highlighting for source code
 - Incremental display of bullet points and other fragments
