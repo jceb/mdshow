@@ -14,7 +14,7 @@ heavy lifting of making text beautiful is left to
 
 ## Table of Contents
 
-- [Features](#feature)
+- [Features](#features)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
