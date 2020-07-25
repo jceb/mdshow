@@ -39,7 +39,7 @@ heavy lifting of making text beautiful is left to
 - Incremental display of bullet points and other fragments
 - Zoom into slide
 - Separate speaker notes view
-- Live-reload of changes 
+- Live-reload of changes
 - PDF conversion
 - Default settings across all presentations
 - Custom settings per presentation
