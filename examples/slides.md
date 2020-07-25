@@ -100,6 +100,7 @@ hello('world!');
 ## Math formulas
 
 `$$ J(\theta_0,\theta_1) = \sum_{i=0} $$`
+`$$ e^{\pi i}=-1 $$`
 
 ## Table
 
