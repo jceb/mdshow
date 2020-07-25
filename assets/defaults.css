@@ -45,6 +45,11 @@
   width: 12rem;
 }
 
+.box-14rem {
+  height: 14rem;
+  width: 14rem;
+}
+
 .box-16rem {
   height: 16rem;
   width: 16rem;
@@ -93,4 +98,40 @@
 .background-cover {
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.fs-05 {
+    font-size: 0.5rem;
+}
+
+.fs-08 {
+    font-size: 0.8rem;
+}
+
+.fs-1 {
+    font-size: 1.0rem;
+}
+
+.fs-2 {
+    font-size: 2.0rem;
+}
+
+.fs-3 {
+    font-size: 3.0rem;
+}
+
+.fs-4 {
+    font-size: 4.0rem;
+}
+
+.fs-5 {
+    font-size: 5.0rem;
+}
+
+.fs-6 {
+    font-size: 6.0rem;
+}
+
+.fs-7 {
+    font-size: 7.0rem;
 }
