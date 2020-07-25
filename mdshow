@@ -169,6 +169,9 @@ serve: html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build"
 
 # {{{1 local directory
+assets:
+	@[ ! -e $@ ] && mkdir $@
+
 .build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s $< $@ || true
