@@ -3,6 +3,10 @@ title: Slides by mdshow
 # title-prefix:
 theme: black
 
+highlightStyle: pygments
+# list supported styles: pandoc --list-highlight-languages
+# pygments, kate, monochrome, breezeDark, espresso, zenburn, haddock, and tango
+
 # custom css
 # css:
 

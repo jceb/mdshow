@@ -187,6 +187,7 @@ serve: html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 .build/index.html: slides.md .build/config.json .build/reveal.js .build/assets .build/.mdshow .build/reveal.js/defaults.css
 	PANDOC_ARGS=; \
 				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < .build/config.json)"; \
+				highlightStyle="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.highlightStyle' < .build/config.json)"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
@@ -200,6 +201,7 @@ serve: html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 				--wrap=preserve \
 				--standalone \
 				--slide-level=2 \
+				--highlight-style="$${highlightStyle}" \
 				-V revealjs-url=reveal.js \
 				-o $@ \
 				$${PANDOC_ARGS}

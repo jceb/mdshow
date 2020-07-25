@@ -75,7 +75,6 @@ $body$
   <script src="$revealjs-url$/reveal.js"></script>
   <script src="$revealjs-url$/plugin/math/math.js"></script>
   <script src="$revealjs-url$/plugin/zoom/zoom.js"></script>
-  <script src="$revealjs-url$/plugin/highlight/highlight.js"></script>
   <script src="$revealjs-url$/plugin/search/search.js"></script>
   <script src="$revealjs-url$/plugin/notes/notes.js"></script>
 
@@ -283,7 +282,7 @@ $if(mathjax)$
 $endif$
 
         // Optional reveal.js plugins
-        plugins: [ RevealHighlight, RevealZoom, RevealNotes, RevealSearch, RevealMath ]
+        plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMath ]
       });
     </script>
   $for(include-after)$
