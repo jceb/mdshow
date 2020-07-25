@@ -12,6 +12,8 @@ heavy lifting of making text beautiful is left to
 
 [![](assets/screenshot400.png)](https://youtu.be/ZNXvQGsk_wA)
 
+[Intro video](https://youtu.be/ZNXvQGsk_wA)
+
 ## Table of Contents
 
 - [Features](#features)
