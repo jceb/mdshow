@@ -99,7 +99,9 @@ hello('world!');
 
 ## Math formulas
 
-`$$ J(\theta_0,\theta_1) = \sum_{i=0} $$`
+
+`$$ \sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6} $$`
+
 `$$ e^{\pi i}=-1 $$`
 
 ## Table
