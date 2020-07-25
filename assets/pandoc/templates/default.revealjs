@@ -19,6 +19,7 @@ $endif$
   <link rel="stylesheet" href="$revealjs-url$/reset.css">
   <link rel="stylesheet" href="$revealjs-url$/reveal.css">
   <link rel="stylesheet" href="$revealjs-url$/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="$revealjs-url$/defaults.css">
   <style>
     $styles.html()$
   </style>

@@ -1,0 +1,96 @@
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.margin-tb-4rem {
+  margin: 4rem 0;
+}
+
+.margin-tb-5rem {
+  margin: 5rem 0;
+}
+
+.margin-tb-6rem {
+  margin: 6rem 0;
+}
+
+.margin-tb-7rem {
+  margin: 7rem 0;
+}
+
+.margin-tb-8rem {
+  margin: 8rem 0;
+}
+
+.box-8rem {
+  height: 8rem;
+  width: 8rem;
+}
+
+.box-10rem {
+  height: 10rem;
+  width: 10rem;
+}
+
+.box-12rem {
+  height: 12rem;
+  width: 12rem;
+}
+
+.box-16rem {
+  height: 16rem;
+  width: 16rem;
+}
+
+.radius-10p {
+  border-radius: 10%;
+}
+
+.radius-20p {
+  border-radius: 20%;
+}
+
+.radius-30p {
+  border-radius: 30%;
+}
+
+.radius-40p {
+  border-radius: 40%;
+}
+
+.radius-50p {
+  border-radius: 50%;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.box-shadow-rb {
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2), 4px 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.box-shadow-rbl {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.box-shadow-trbl {
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.box-shadow-bl {
+  box-shadow: -4px 4px 8px 0 rgba(0, 0, 0, 0.2), -4px 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.background-cover {
+  background-repeat: no-repeat;
+  background-size: cover;
+}

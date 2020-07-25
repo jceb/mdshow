@@ -7,11 +7,12 @@ keywords: markdown slideshow
 slideNumber: False
 theme: simple
 
-# default configuration: ~/.config/mdshow/defaults.yaml
-# themes: ~/.config/mdshow/reveal.js/dist/theme/
-# special markdown formatting: https://pandoc.org/MANUAL.html#pandocs-markdown
-# revealjs documentation: https://revealjs.com/
-# fontawesome icons: https://fontawesome.com/
+# - default css configuration: ~/.config/mdshow/defaults.css
+# - default configuration: ~/.config/mdshow/defaults.yaml
+# - installed themes: ~/.config/mdshow/reveal.js/dist/theme/
+# - special pandoc markdown formatting: https://pandoc.org/MANUAL.html#pandocs-markdown
+# - revealjs documentation: https://revealjs.com/
+# - fontawesome icons: https://fontawesome.com/
 ---
 
 # Agenda with custom background{data-background-image="https://images.unsplash.com/photo-1499892477393-f675706cbe6e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640"}
@@ -79,20 +80,20 @@ Shown one after the other
 
 ## Center pictures
 
-<div style="display: flex; align-items: center; justify-content: space-around; margin: 5rem">
-<div style='height: 8rem; width: 8rem; border-radius: 20%; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: url("https://images.unsplash.com/photo-1595537725181-0f127e2feeb2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640"); background-repeat: no-repeat; background-size: cover;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);'></div>
-<div style='height: 8rem; width: 8rem; border-radius: 20%; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: url("https://images.unsplash.com/photo-1595589982168-77b64bc1b485?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640"); background-repeat: no-repeat; background-size: cover;'></div>
-<div style='height: 8rem; width: 8rem; border-radius: 20%; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: url("https://images.unsplash.com/photo-1595586964632-b215dfbc064a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640"); background-repeat: no-repeat; background-size: cover;'></div>
-<div style='height: 8rem; width: 8rem; border-radius: 20%; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: url("https://images.unsplash.com/photo-1595508064774-5ff825ff0f81?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640"); background-repeat: no-repeat; background-size: cover;'></div>
-</div>
+:::::: {.flex .align-center .justify-around .margin-tb-6rem}
+<div class="box-12rem radius-10p overflow-hidden background-cover box-shadow-bl" style='background-image: url("https://images.unsplash.com/photo-1595537725181-0f127e2feeb2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
+<div class="box-12rem radius-10p overflow-hidden background-cover box-shadow-rbl" style='background-image: url("https://images.unsplash.com/photo-1595589982168-77b64bc1b485?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
+<div class="box-12rem radius-10p overflow-hidden background-cover box-shadow-trbl" style='background-image: url("https://images.unsplash.com/photo-1595586964632-b215dfbc064a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
+<div class="box-12rem radius-10p overflow-hidden background-cover box-shadow-rb" style='background-image: url("https://images.unsplash.com/photo-1595508064774-5ff825ff0f81?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
+::::::
 
 ## Center buttons
 
-<div style="display: flex; align-items: center; justify-content: space-around; margin: 5rem">
-<div style="height: 8rem; width: 8rem; border-radius: 50%; background-color: lightblue; color: yellow; display: flex; align-items: center; justify-content: center;">![](fas fa-thumbs-up)</div>
-<div style="height: 8rem; width: 8rem; border-radius: 50%; background-color: pink; color: darkred; display: flex; align-items: center; justify-content: center;">![](fas fa-thumbtack)</div>
-<div style="height: 8rem; width: 8rem; border-radius: 50%; background-color: lightgreen; color: lightblack; display: flex; align-items: center; justify-content: center;">![](fas fa-headphones)</div>
-</div>
+:::::: {.flex .align-center .justify-around .margin-tb-5rem}
+<div class="flex align-center justify-around box-10rem radius-50p overflow-hidden background-cover box-shadow-rbl" style=" background-color: lightblue; color: yellow">![](fas fa-thumbs-up)</div>
+<div class="flex align-center justify-around box-10rem radius-50p overflow-hidden background-cover box-shadow-rbl" style=" background-color: pink; color: darkred;">![](fas fa-thumbtack)</div>
+<div class="flex align-center justify-around box-10rem radius-50p overflow-hidden background-cover box-shadow-rbl" style=" background-color: lightgreen; color: lightblack;">![](fas fa-headphones)</div>
+::::::
 
 ## Links
 
