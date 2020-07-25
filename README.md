@@ -12,7 +12,9 @@ heavy lifting of making text beautiful is left to
 
 [![](assets/screenshot400.png)](https://youtu.be/ZNXvQGsk_wA)
 
-[Intro video](https://youtu.be/ZNXvQGsk_wA)
+- [Intro video](https://youtu.be/ZNXvQGsk_wA)
+- [Example Markdown](./examples/slides.md)
+- [Example PDF](./examples/slides.pdf)
 
 ## Table of Contents
 
