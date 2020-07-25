@@ -12,16 +12,42 @@ theme: simple
 # - Themes: ~/.config/mdshow/reveal.js/dist/theme/
 # - Pandoc markdown formatting: https://pandoc.org/MANUAL.html#pandocs-markdown
 # - Revealjs documentation: https://revealjs.com/
-# - Fontawesome icons: https://fontawesome.com/
+# - Font Awesome icons: https://fontawesome.com/
 ---
 
 # Agenda
 
-1. Basics
-2. Incremental Display
-3. Backgrounds
-4. Pictures and Icons
-5. Advanced Formatting
+1. Intro mdshow
+2. Basics
+3. Incremental Display
+4. Backgrounds
+5. Pictures and Icons
+6. Advanced Formatting
+
+# Intro mdshow
+
+> Turn markdown files into beautiful presentations quickly.
+
+## Markdown
+
+`mdshow` is built to quickly turn ideas into beautiful presentations.
+The text-based [markdown
+format](https://daringfireball.net/projects/markdown/) is the tool of
+choice to do just that!
+
+## Features
+
+- Built with [reveal.js 4.0](https://revealjs.com/) and [pandoc
+  2.9](https://pandoc.org/)
+- Focus: stays out of the way
+- Enterprise: theming and PDF conversion
+- Setup: super fast
+- Presentation: looks great with the power of the browser at your
+  fingertips
+
+---
+
+See for yourself.
 
 # Basics
 
@@ -63,6 +89,16 @@ Regluar, *italic*, **bold**, and <u>underlined</u>.
 > Quote
 > by
 > Someone
+
+## Code Highlighting
+
+```javascript
+function hello(msg) {
+  alert(`Hello ${msg}`)
+}
+
+hello('world!');
+```
 
 ## Table
 
@@ -137,7 +173,7 @@ Regluar, *italic*, **bold**, and <u>underlined</u>.
 
 ![](https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640){width=50%}
 
-## Fontawesome Icon
+## Font Awesome Icon
 
 ![](fas fa-smile)
 
@@ -145,7 +181,7 @@ Regluar, *italic*, **bold**, and <u>underlined</u>.
 
 ## Colored <span style="color: #78a5e9">text</span>
 
-## Fontawesome Icon with Color
+## Font Awesome Icon with Color
 
 <span style="font-size: 8rem; color: purple;">
 ![](fas fa-smile)
@@ -177,7 +213,7 @@ Shadow bottom, left.
 <div class="box-12rem radius-50p" style="background-color: lightgreen; color: darkgreen;">Circle</div>
 ::::::
 
-## Fontawesome Buttons
+## Font Awesome Buttons
 
 :::::: {.flex .align-center .justify-around .margin-tb-5rem}
 <div class="flex align-center justify-around box-8rem radius-10p box-shadow-trbl" style=" background-color: lightblue; color: yellow">![](fas fa-thumbs-up)</div>
