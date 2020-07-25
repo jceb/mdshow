@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="John Doe">
+  <meta name="dcterms.date" content="2020-07-25">
+  <meta name="keywords" content="markdown slideshow revealjs mdshow fontawesome">
+  <title>mdshow</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/reset.css">
+  <link rel="stylesheet" href="reveal.js/reveal.css">
+  <link rel="stylesheet" href="reveal.js/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="reveal.js/defaults.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="reveal.js/theme/simple.css" id="theme">
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">mdshow</h1>
+  <p class="subtitle">Turn markdown files into beautiful presentations quickly.</p>
+  <p class="author">John Doe</p>
+  <p class="date">2020-07-25</p>
+</section>
+
+<section id="agenda" class="title-slide slide level1">
+<h1>Agenda</h1>
+<ol type="1">
+<li>Intro mdshow</li>
+<li>Basics</li>
+<li>Incremental Display</li>
+<li>Backgrounds</li>
+<li>Pictures and Icons</li>
+<li>Advanced Formatting</li>
+</ol>
+</section>
+
+<section>
+<section id="intro-mdshow" class="title-slide slide level1">
+<h1>Intro mdshow</h1>
+<blockquote>
+<p>Turn markdown files into beautiful presentations quickly.</p>
+</blockquote>
+</section>
+<section id="markdown" class="slide level2">
+<h2>Markdown</h2>
+<p><code>mdshow</code> is built to quickly turn ideas into beautiful presentations.
+The text-based <a href="https://daringfireball.net/projects/markdown/">markdown
+format</a> is the tool of
+choice to do just that!</p>
+</section>
+<section id="features" class="slide level2">
+<h2>Features</h2>
+<ul>
+<li>Built with <a href="https://revealjs.com/">reveal.js 4.0</a> and <a href="https://pandoc.org/">pandoc
+2.9</a></li>
+<li>Focus: stays out of the way</li>
+<li>Enterprise: theming and PDF conversion</li>
+<li>Setup: super fast</li>
+<li>Presentation: looks great with the power of the browser at your
+fingertips</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p>See for yourself.</p>
+</section></section>
+<section>
+<section id="basics" class="title-slide slide level1">
+<h1>Basics</h1>
+
+</section>
+<section id="headings" class="slide level2">
+<h2>Headings</h2>
+<h1>
+h1
+</h1>
+<h2>
+h2
+</h2>
+<h3 id="h3">h3</h3>
+</section>
+<section class="slide level2">
+
+<p>No heading.</p>
+</section>
+<section id="text-formatting" class="slide level2">
+<h2>Text formatting</h2>
+<p>Regluar, <em>italic</em>, <strong>bold</strong>, and <u>underlined</u>.</p>
+</section>
+<section id="unordered-list" class="slide level2">
+<h2>Unordered List</h2>
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+</ul>
+</section>
+<section id="ordered-list" class="slide level2">
+<h2>Ordered List</h2>
+<ol type="1">
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+</ol>
+</section>
+<section id="links" class="slide level2">
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/jceb/mdshow">Text link</a></li>
+<li>Image link: <a href="https://unsplash.com/photos/x9yfTxHpj5w"><img data-src="https://images.unsplash.com/photo-1595503240812-7286dafaddc1?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640" style="width:30.0%" /></a></li>
+</ul>
+</section>
+<section id="quotes" class="slide level2">
+<h2>Quotes</h2>
+<blockquote>
+<p>Famous Quote by Someone</p>
+</blockquote>
+</section>
+<section id="code-highlighting" class="slide level2">
+<h2>Code Highlighting</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">function</span> <span class="fu">hello</span>(msg) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="fu">alert</span>(<span class="vs">`Hello </span><span class="sc">${</span>msg<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="fu">hello</span>(<span class="st">&#39;world!&#39;</span>)<span class="op">;</span></span></code></pre></div>
+</section>
+<section id="math-formulas" class="slide level2">
+<h2>Math formulas</h2>
+<p><code>$$ \sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6} $$</code></p>
+<p><code>$$ e^{\pi i}=-1 $$</code></p>
+</section>
+<section id="table" class="slide level2">
+<h2>Table</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Tables</th>
+<th style="text-align: center;">Are</th>
+<th style="text-align: right;">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>col 3 is</td>
+<td style="text-align: center;">right-aligned</td>
+<td style="text-align: right;">$1600</td>
+</tr>
+<tr class="even">
+<td>col 2 is</td>
+<td style="text-align: center;">centered</td>
+<td style="text-align: right;">$12</td>
+</tr>
+<tr class="odd">
+<td>zebra stripes</td>
+<td style="text-align: center;">are neat</td>
+<td style="text-align: right;">$1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="columns" class="slide level2">
+<h2>Columns</h2>
+<div class="flex align-center justify-around">
+<div class="Col1">
+<ul>
+<li>Column 1</li>
+<li>Column 1</li>
+<li>Column 1</li>
+</ul>
+</div>
+<div class="Col2">
+<ul>
+<li>Column 2</li>
+<li>Column 2</li>
+<li>Column 2</li>
+</ul>
+</div>
+<div class="Col3">
+<ul>
+<li>Column 3</li>
+<li>Column 3</li>
+<li>Column 3</li>
+</ul>
+</div>
+</div>
+</section></section>
+<section>
+<section id="incremental-display" class="title-slide slide level1">
+<h1>Incremental Display</h1>
+
+</section>
+<section id="incremental-lists" class="slide level2">
+<h2>Incremental Lists</h2>
+<div>
+<ul>
+<li class="fragment">Item 1</li>
+<li class="fragment">Item 2</li>
+<li class="fragment">Item 3</li>
+</ul>
+</div>
+</section>
+<section id="fragments" class="slide level2">
+<h2>Fragments</h2>
+<div class="flex align-center">
+<p><img data-src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640" style="width:50.0%" /></p>
+<div class="fragment">
+<p><img data-src="https://images.unsplash.com/photo-1587613864521-9ef8dfe617cc?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640" style="width:50.0%" /></p>
+</div>
+</div>
+</section>
+<section id="breaks" class="slide level2">
+<h2>Breaks</h2>
+<ul>
+<li>Item 1</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Item 2</li>
+<li>Item 3</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="backgrounds" class="title-slide slide level1">
+<h1>Backgrounds</h1>
+
+</section>
+<section id="slide-with-background-image" class="slide level2" data-background-image="https://images.unsplash.com/photo-1499892477393-f675706cbe6e?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640">
+<h2 data-background-image="https://images.unsplash.com/photo-1499892477393-f675706cbe6e?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640">Slide with background image</h2>
+</section>
+<section id="slide-with-colored-background" class="slide level2" data-background-color="#78a5e9">
+<h2 data-background-color="#78a5e9">Slide with colored background</h2>
+</section></section>
+<section>
+<section id="pictures-and-icons" class="title-slide slide level1">
+<h1>Pictures and Icons</h1>
+
+</section>
+<section id="picture" class="slide level2">
+<h2>Picture</h2>
+<p><img data-src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640" style="width:50.0%" /></p>
+</section>
+<section id="font-awesome-icon" class="slide level2">
+<h2>Font Awesome Icon</h2>
+<p><i class='fas fa-smile'></i></p>
+</section></section>
+<section>
+<section id="advanced-formatting" class="title-slide slide level1">
+<h1>Advanced Formatting</h1>
+
+</section>
+<section id="colored-text" class="slide level2">
+<h2>Colored <span style="color: #78a5e9">text</span></h2>
+</section>
+<section id="font-awesome-icon-with-color" class="slide level2">
+<h2>Font Awesome Icon with Color</h2>
+<p><span style="font-size: 8rem; color: purple;">
+<i class='fas fa-smile'></i>
+</span></p>
+</section>
+<section id="box-shadow" class="slide level2">
+<h2>Box Shadow</h2>
+<div class="box-shadow-trbl">
+<p>Shadow top, right, bottom, left.</p>
+</div>
+<div class="box-shadow-rbl">
+<p>Shadow right, bottom, left.</p>
+</div>
+<div class="box-shadow-rb">
+<p>Shadow right, bottom.</p>
+</div>
+<div class="box-shadow-bl">
+<p>Shadow bottom, left.</p>
+</div>
+</section>
+<section id="colored-boxes" class="slide level2">
+<h2>Colored Boxes</h2>
+<div class="flex align-center justify-around">
+<div class="box-8rem radius-10p" style="background-color: lightblue; color: yellow">
+App 1
+</div>
+<div class="box-10rem radius-20p" style="background-color: pink; color: darkred;">
+App 2
+</div>
+<div class="box-12rem radius-50p" style="background-color: lightgreen; color: darkgreen;">
+Circle
+</div>
+</div>
+</section>
+<section id="font-awesome-buttons" class="slide level2">
+<h2>Font Awesome Buttons</h2>
+<div class="flex align-center justify-around margin-tb-5rem">
+<div class="flex align-center justify-around box-8rem radius-10p box-shadow-trbl" style=" background-color: lightblue; color: yellow">
+<i class='fas fa-thumbs-up'></i>
+</div>
+<div class="fs-4 flex align-center justify-around box-10rem radius-20p box-shadow-rbl" style=" background-color: pink; color: darkred;">
+<i class='fas fa-thumbtack'></i>
+</div>
+<div class="fs-7 flex align-center justify-around box-12rem radius-50p box-shadow-rb" style=" background-color: lightgreen; color: darkgreen;">
+<i class='fas fa-headphones'></i>
+</div>
+</div>
+</section>
+<section id="picture-buttons" class="slide level2">
+<h2>Picture Buttons</h2>
+<div class="flex align-center justify-around margin-tb-6rem">
+<div class="box-8rem radius-10p overflow-hidden background-cover box-shadow-trbl" style="background-image: url(&quot;https://images.unsplash.com/photo-1595537725181-0f127e2feeb2?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640&quot;);">
+
+</div>
+<div class="box-10rem radius-20p overflow-hidden background-cover box-shadow-rbl" style="background-image: url(&quot;https://images.unsplash.com/photo-1595589982168-77b64bc1b485?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640&quot;);">
+
+</div>
+<div class="box-12rem radius-30p overflow-hidden background-cover box-shadow-rb" style="background-image: url(&quot;https://images.unsplash.com/photo-1595586964632-b215dfbc064a?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640&quot;);">
+
+</div>
+<div class="box-14rem radius-50p overflow-hidden background-cover box-shadow-bl" style="background-image: url(&quot;https://images.unsplash.com/photo-1595508064774-5ff825ff0f81?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=640&quot;);">
+
+</div>
+</div>
+</section></section>
+<section id="thank-you" class="title-slide slide level1">
+<h1>Thank you</h1>
+<h3>
+for using <a href="https://github.com/jceb/mdshow">mdshow</a>
+</h3>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/reveal.js"></script>
+  <script src="reveal.js/plugin/math/math.js"></script>
+  <script src="reveal.js/plugin/zoom/zoom.js"></script>
+  <script src="reveal.js/plugin/search/search.js"></script>
+  <script src="reveal.js/plugin/notes/notes.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: ('' === '' ? false : true),
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: ('true' === '' ? false : true),
+        // Display a presentation progress bar
+        progress: ('true' === '' ? false : true),
+        // Display the page number of the current slide
+        slideNumber: ('' === '' ? false : '' === 'true' ? true : ''),
+        // Use 1 based indexing for # links to match slide number (default is zero
+        // based)
+        hashOneBasedIndex: ('' === '' ? false : true),
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: ('' === '' ? false : true),
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: ('true' === '' ? false : true),
+        // Push each slide change to the browser history
+        history: ('true' === '' ? false : true),
+        // Enable keyboard shortcuts for navigation
+        keyboard: ('true' === '' ? false : true),
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: ('' === '' ? false : true),
+        // Enable the slide overview mode
+        overview: ('true' === '' ? false : true),
+        // Vertical centering of slides
+        center: ('true' === '' ? false : true),
+        // Enables touch navigation on devices with touch input
+        touch: ('true' === '' ? false : true),
+        // Loop the presentation
+        loop: ('' === '' ? false : true),
+        // Change the presentation direction to be RTL
+        rtl: ('' === '' ? false : true),
+        // see https://github.com/hakimel/reveal.js/#navigation-mode
+        navigationMode: 'default',
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: ('' === '' ? false : true),
+        // Turns fragments on and off globally
+        fragments: ('true' === '' ? false : true),
+        // Flags whether to include the current fragment in the URL
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: ('true' === '' ? false : true),
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: ('' === '' ? false : true),
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: ('true' === '' ? false : true),
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: ('true' === '' ? false : true),
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: ('' === '' ? false : true),
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null:   Media will only autoplay if data-autoplay is present
+        // - True:   All media will autoplay, regardless of individual setting
+        // - False:  No media will autoplay, regardless of individual setting
+        autoPlayMedia: ('null' === 'null' ? null : 'null' === '' ? false : true),
+        // Global override for preloading lazy-loaded iframes
+        // - null:   Iframes with data-src AND data-preload will be loaded when within
+        //           the viewDistance, iframes with only data-src will be loaded when visible
+        // - True:   All iframes with data-src will be loaded when within the viewDistance
+        // - False:  All iframes with data-src will be loaded only when visible
+        preloadIframes: ('null' === 'null' ? null : 'null' === '' ? false : true),
+        // Can be used to globally disable auto-animation
+        autoAnimate: ('true' === '' ? false : true),
+        // Optionally provide a custom element matcher that will be
+        // used to dictate which elements we can animate between.
+        autoAnimateMatcher: ('null' === 'null' ? null : 'null'), // none/fade/slide/convex/concave/zoom
+        // Default settings for our auto-animate transitions, can be
+        // overridden per-slide or per-element via data arguments
+        autoAnimateEasing: 'ease',
+        autoAnimateDuration: 1.0,
+        autoAnimateUnmatched: ('true' === '' ? false : true),
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: ('0' === '' ? false : parseInt('0')),
+        // Stop auto-sliding after user input
+        autoSlideStoppable: ('true' === '' ? false : true),
+        // Use this method for navigation when auto-sliding (defaults to navigateNext)
+        autoSlideMethod: ('null' === 'null' ? null : 'null'), // none/fade/slide/convex/concave/zoom
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: 120,
+        // Enable slide navigation via mouse wheel
+        mouseWheel: ('' === '' ? false : true),
+        // Opens links in an iframe preview overlay
+        // Add `data-preview-link` and `data-preview-link="False"` to customise each link
+        // individually
+        previewLinks: ('' === '' ? false : true),
+        // Exposes the reveal.js API through window.postMessage
+        postMessage: ('true' === '' ? false : true),
+        // Dispatches all reveal.js events to the parent window through postMessage
+        postMessageEvents: ('' === '' ? false : true),
+          // Focuses body when page changes visibility to ensure keyboard shortcuts work
+        focusBodyOnPageVisibilityChange: ('true' === '' ? false : true),
+        // Apply a 3D roll to links on hover
+        // TODO check if still in use
+        rollingLinks: ('' === '' ? false : true),
+        // Hides the address bar on mobile devices
+        hideAddressBar: ('' === '' ? false : true),
+        // Opens links in an iframe preview overlay
+        previewLinks: ('' === '' ? false : true),
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+
+        // Optional reveal.js plugins
+        plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMath ]
+      });
+    </script>
+    </body>
+</html>
