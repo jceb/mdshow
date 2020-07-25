@@ -83,12 +83,9 @@ Regluar, *italic*, **bold**, and <u>underlined</u>.
 - [Text link](https://github.com/jceb/mdshow)
 - Image link: [![](https://images.unsplash.com/photo-1595503240812-7286dafaddc1?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640){width=30%}](https://unsplash.com/photos/x9yfTxHpj5w)
 
-## Quote
+## Quotes
 
-> Famous
-> Quote
-> by
-> Someone
+> Famous Quote by Someone
 
 ## Code Highlighting
 
@@ -99,6 +96,10 @@ function hello(msg) {
 
 hello('world!');
 ```
+
+## Math formulas
+
+`$$ J(\theta_0,\theta_1) = \sum_{i=0} $$`
 
 ## Table
 
