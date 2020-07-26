@@ -207,7 +207,7 @@ autoSlideMethod: null
 defaultTiming: 120
 
 # Enable slide navigation via mouse wheel
-mouseWheel: False
+mouseWheel: True
 
 # Opens links in an iframe preview overlay
 # Add `data-preview-link` and `data-preview-link="False"` to customise each link
