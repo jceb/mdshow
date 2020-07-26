@@ -1,18 +1,18 @@
 ---
-author: John Doe
-date: 2020-07-25
+author: Jan Christoph Ebersbach
+date: 2020-07-26
 title: mdshow
 subtitle: Turn markdown files into beautiful presentations quickly.
-keywords: markdown slideshow revealjs mdshow fontawesome
+keywords: slides slideshow presentations markup markdown revealjs pandoc fontawesome
 slideNumber: False
 theme: simple
 
-# - CSS configuration: ~/.config/mdshow/defaults.css
-# - Default configuration: ~/.config/mdshow/defaults.yaml
-# - Themes: ~/.config/mdshow/reveal.js/dist/theme/
-# - Pandoc markdown formatting: https://pandoc.org/MANUAL.html#pandocs-markdown
+# - Markdown file format: https://pandoc.org/MANUAL.html#pandocs-markdown
 # - Revealjs documentation: https://revealjs.com/
+# - Themes: ~/.config/mdshow/reveal.js/dist/theme/
 # - Font Awesome icons: https://fontawesome.com/
+# - Default settings: ~/.config/mdshow/defaults.yaml
+# - Default CSS: ~/.config/mdshow/defaults.css
 ---
 
 # Agenda
@@ -42,8 +42,16 @@ choice to do just that!
 - Focus: stays out of the way
 - Enterprise: theming and PDF conversion
 - Setup: super fast
-- Presentation: looks great with the power of the browser at your
+- Presentation: looks great and offers the power of the browser to your
   fingertips
+
+## Examples
+
+- [Introduction video to mdshow](https://youtu.be/ZNXvQGsk_wA)
+- [Example HTML presentation](https://mdshow.e-jc.de/)
+- [Example PDF](./examples/slides.pdf)
+- [Example
+  Markdown](https://raw.githubusercontent.com/jceb/mdshow/master/examples/slides.md)
 
 ---
 
@@ -135,6 +143,16 @@ hello('world!');
 :::
 
 ::::::
+
+## Keybindings
+
+- `<Space>` advance to next slide
+- `<Shift-Space>` advance to previous slide
+- `<f>` enter full-screen mode
+- `<s>` show speaker notes
+- `<Esc>` enter slide overview and `<Esc>` to show selected slide
+- `<Alt-Left Mouse Button>` or `<Ctrl-Left Mouse Button>` zoom into
+  slide
 
 # Incremental Display
 

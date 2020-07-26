@@ -12,9 +12,10 @@ heavy lifting of making text beautiful is left to
 
 [![](assets/screenshot400.png)](https://youtu.be/ZNXvQGsk_wA)
 
-- [Intro video](https://youtu.be/ZNXvQGsk_wA)
-- [Example Markdown](./examples/slides.md)
+- [Introduction video to mdshow](https://youtu.be/ZNXvQGsk_wA)
+- [Example HTML presentation](https://mdshow.e-jc.de/)
 - [Example PDF](./examples/slides.pdf)
+- [Example Markdown](https://raw.githubusercontent.com/jceb/mdshow/master/examples/slides.md)
 
 ## Table of Contents
 
@@ -57,11 +58,11 @@ heavy lifting of making text beautiful is left to
 - Multiple columns per slide
 - Syntax highlighting for source code
 - Incremental display of bullet points and other fragments
-- Zoom into slide (press `Alt-Left Mouse Button` or `Ctrl-Left Mouse
-  Button` to zoom)
-- Separate speaker notes view (press `s` to show)
-- Slide overview and navication (press `Esc` to enter overview and `Esc`
-  to show selected slide)
+- Zoom into slide (press `<Alt-Left Mouse Button>` or `<Ctrl-Left Mouse
+  Button>` to zoom)
+- Separate speaker notes view (press `<s>` to show)
+- Slide overview and navication (press `<Esc>` to enter overview and
+  `<Esc>` to show selected slide)
 
 ## Background
 
