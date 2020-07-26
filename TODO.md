@@ -3,6 +3,7 @@
 - [ ] use local jq installation if available
 - [ ] describe custom theming
 - [ ] integrate plantuml
+- [ ] integrate chart.js
 - [ ] build a fully standalone HTML file that contains all pictures, css, and js
 - [ ] support work on multiple presentations at the same time, basically
   allowing to pick a different port number for running the server at
