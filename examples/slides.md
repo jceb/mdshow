@@ -8,6 +8,7 @@ slideNumber: False
 theme: simple
 
 # - Markdown file format: https://pandoc.org/MANUAL.html#pandocs-markdown
+# - Example presentation: ~/.config/mdshow/scaffold.md
 # - Revealjs documentation: https://revealjs.com/
 # - Themes: ~/.config/mdshow/reveal.js/dist/theme/
 # - Font Awesome icons: https://fontawesome.com/
