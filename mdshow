@@ -140,13 +140,17 @@ $(MDSHOW_CONFIG)/scaffold.md:
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/examples/$(SLIDES) -o $@
 
 scaffold: $(MDSHOW_CONFIG)/scaffold.md
-	@[ ! -e assets ] && [ ! -e $(SLIDES) ] && \
-		mkdir assets && cp $< $(SLIDES) && \
-		echo "Created '$(SLIDES)' and folder 'assets'." && \
-		echo "- Start editing your slides in '$(SLIDES)'" && \
+	@([ -e $(SLIDES) ] && [ -e assets ] && \
+		echo "'$(SLIDES)' and or 'assets' already exists, nothing to do here.") || \
+		([ ! -e $(SLIDES) ] && \
+		cp $< $(SLIDES) && \
+		echo "Created slideshow template '$(SLIDES)'." || true) && \
+		([ ! -e assets ] && \
+		mkdir assets && \
+		echo "Created 'assets' folder." || true) && \
+		(echo "- Start editing your slides in '$(SLIDES)'" && \
 		echo "- Run 'mdshow serve' to live-preview the slides in the browser" && \
-		echo "- Run 'mdshow pdf' to store the slideshow in a PDF document" || \
-		echo "'$(SLIDES)' and or 'assets' already exists, nothing to do here."
+		echo "- Run 'mdshow pdf' to store the slideshow in a PDF document") || true\
 
 # {{{1 html
 html: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
