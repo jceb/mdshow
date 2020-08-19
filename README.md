@@ -143,6 +143,13 @@ live-reload:
 mdshow serve
 ```
 
+If you want to use a different file name pass it to mdshow via the
+`SLIDES` paramter:
+
+```
+mdshow serve SLIDES=custom.md
+```
+
 Convert the presentation to a PDF file (make sure `mdshow serve` is
 running before executing the following command):
 

@@ -5,7 +5,8 @@
 
 SHELL := /bin/bash
 
-MDSHOW_CONFIG := ${HOME}/.config/mdshow
+MDSHOW_CONFIG = ${HOME}/.config/mdshow
+SLIDES = slides.md
 
 VERSION := v0.1
 
@@ -130,22 +131,22 @@ $(MDSHOW_CONFIG)/reveal.js/dist/theme/%: $(MDSHOW_CONFIG)/theme/%/assets
 # {{{1 themes
 themes: $(MDSHOW_CONFIG)/reveal.js/dist $(wildcard $(MDSHOW_CONFIG)/reveal.js/dist/theme/*.css)
 	@ls -1 $(MDSHOW_CONFIG)/reveal.js/dist/theme/*.css | sed -ne 's/^.*\/\([^\/]*\).css$$/\1/p'
-	@echo "Change theme by adding the option 'theme: <name>' between the two --- .. --- delimiters at the top of slides.md."
+	@echo "Change theme by adding the option 'theme: <name>' between the two --- .. --- delimiters at the top of $(SLIDES)."
 
 # {{{1 scaffold
 $(MDSHOW_CONFIG)/scaffold.md:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
-		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/examples/slides.md -o $@
+		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/examples/$(SLIDES) -o $@
 
 scaffold: $(MDSHOW_CONFIG)/scaffold.md
-	@[ ! -e assets ] && [ ! -e slides.md ] && \
-		mkdir assets && cp $< slides.md && \
-		echo "Created 'slides.md' and folder 'assets'." && \
-		echo "- Start editing your slides in 'slides.md'" && \
+	@[ ! -e assets ] && [ ! -e $(SLIDES) ] && \
+		mkdir assets && cp $< $(SLIDES) && \
+		echo "Created '$(SLIDES)' and folder 'assets'." && \
+		echo "- Start editing your slides in '$(SLIDES)'" && \
 		echo "- Run 'mdshow serve' to live-preview the slides in the browser" && \
 		echo "- Run 'mdshow pdf' to store the slideshow in a PDF document" || \
-		echo "'slides.md' and or 'assets' already exists, nothing to do here."
+		echo "'$(SLIDES)' and or 'assets' already exists, nothing to do here."
 
 # {{{1 html
 html: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
@@ -183,11 +184,11 @@ assets:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s ../$< $@ || true
 
-.build/config.json: slides.md  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract
+.build/config.json: $(SLIDES)  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	pandoc --data-dir=$(MDSHOW_CONFIG)/pandoc --template=metadata.extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
 
-.build/index.html: slides.md .build/config.json .build/reveal.js .build/assets .build/.mdshow .build/reveal.js/defaults.css
+.build/index.html: $(SLIDES) .build/config.json .build/reveal.js .build/assets .build/.mdshow .build/reveal.js/defaults.css
 	PANDOC_ARGS=; \
 				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < .build/config.json)"; \
 				highlightStyle="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.highlightStyle' < .build/config.json)"; \
@@ -196,7 +197,7 @@ assets:
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
 				pandoc \
 				$(MDSHOW_CONFIG)/defaults.yaml \
-				slides.md \
+				$(SLIDES) \
 				--data-dir=$(MDSHOW_CONFIG)/pandoc \
 				-f markdown+yaml_metadata_block \
 				-t revealjs \
