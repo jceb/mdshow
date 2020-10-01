@@ -156,9 +156,9 @@ scaffold: $(MDSHOW_CONFIG)/scaffold.md
 html: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
 
 # {{{1 pdf
-pdf: html slides.pdf
+pdf: html $(basename $(SLIDES)).pdf
 
-slides.pdf: .build/index.html
+$(basename $(SLIDES)).pdf: .build/index.html
 	pdf_size="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_size' < .build/config.json)"; \
 		pdf_delay="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_delay' < .build/config.json)"; \
 		$(MDSHOW_CONFIG)/reveal.js/node_modules/.bin/decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:3000/ $@ || \
@@ -171,7 +171,7 @@ $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
-	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --root="${PWD}/.build"
+	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --slides="$(SLIDES)" --root="${PWD}/.build"
 
 # {{{1 local directory
 assets:

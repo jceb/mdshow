@@ -10,6 +10,7 @@ process.setMaxListeners(20);
 const root = yargs.argv.root || ".";
 const port = yargs.argv.port || 8000;
 const mdshow = yargs.argv.mdshow || "mdshow";
+const slides = yargs.argv.slides || "slides.md";
 
 function reload(cb) {
   gulp
@@ -19,7 +20,7 @@ function reload(cb) {
 }
 
 function rebuild(cb) {
-  const build = spawn(mdshow, ["html"], {
+  const build = spawn(mdshow, ["html", `SLIDES=${slides}`], {
     cwd: path.join(root, "..")
   });
   build.stdout.on("data", d => console.log(`${d}`));
@@ -48,8 +49,10 @@ exports.default = function() {
     reload
   );
 
+  // WARNING: gulp watch requires an asterisk (*) in the filename otherwise it
+  // will not work!
   gulp.watch(
-    ["../slides*.md", "assets/**", ".mdshow/**/*.html", ".mdshow/**/*.scss"].map(glob =>
+    [`../*${slides}`, "assets/**", ".mdshow/**/*.html", ".mdshow/**/*.scss"].map(glob =>
       path.join(root, glob)
     ),
     rebuild
