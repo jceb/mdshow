@@ -16,7 +16,8 @@ help:
 	@echo "$(VERSION)"
 	@echo ""
 	@echo "Commands:"
-	@echo "  html: convert presentation to HTML"
+	@echo "  build: build presentation"
+	@echo "  html: convert presentation to a single HTML file"
 	@echo "  pdf: convert presentation to PDF"
 	@echo "  scaffold: create an empty presentation in the current folder"
 	@echo "  serve: the HTML presentation at http://localhost:3000/"
@@ -55,6 +56,7 @@ programs:
 	@type pandoc || echo "pandoc is not installed, reqiured for converting markdown into a HTML presentation"
 	@type unzip || echo "unzip is not installed, required in the setup process"
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
+	@type monolith || echo "(optional) monolith is not installed, needed for creating a single file HTML presentation"
 
 .build/reveal.js/defaults.css: $(MDSHOW_CONFIG)/defaults.css
 	ln -s $< $@
@@ -153,12 +155,20 @@ scaffold: $(MDSHOW_CONFIG)/scaffold.md
 		echo "- Run 'mdshow pdf' to store the slideshow in a PDF document") || true\
 
 # {{{1 html
-html: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
+html: $(basename $(SLIDES)).html
+
+$(basename $(SLIDES)).html: serving build
+	@type monolith
+	@echo "WARNING: images aren't included in the output when they're referred to as slide backgrounds, background-image=/data-background-image=!"
+	monolith -o $@ http://localhost:3000
+
+# {{{1 build
+build: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
 
 # {{{1 pdf
-pdf: html $(basename $(SLIDES)).pdf
+pdf: $(basename $(SLIDES)).pdf
 
-$(basename $(SLIDES)).pdf: .build/index.html
+$(basename $(SLIDES)).pdf: serving build
 	pdf_size="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_size' < .build/config.json)"; \
 		pdf_delay="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_delay' < .build/config.json)"; \
 		$(MDSHOW_CONFIG)/reveal.js/node_modules/.bin/decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:3000/ $@ || \
@@ -170,8 +180,11 @@ $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
-serve: html $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
+serve: build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
 	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --slides="$(SLIDES)" --root="${PWD}/.build"
+
+serving:
+	@curl -s -I -o /dev/null http://localhost:3000
 
 # {{{1 local directory
 assets:

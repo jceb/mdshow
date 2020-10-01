@@ -20,7 +20,7 @@ function reload(cb) {
 }
 
 function rebuild(cb) {
-  const build = spawn(mdshow, ["html", `SLIDES=${slides}`], {
+  const build = spawn(mdshow, ["build", `SLIDES=${slides}`], {
     cwd: path.join(root, "..")
   });
   build.stdout.on("data", d => console.log(`${d}`));
