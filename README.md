@@ -55,6 +55,7 @@ heavy lifting of making text beautiful is left to
 ### Presentation
 
 - [Font Awesome](https://fontawesome.com/) integration
+- [chart.js](https://www.chartjs.org) integration
 - Multiple columns per slide
 - Syntax highlighting for source code
 - Incremental display of bullet points and other fragments

@@ -12,6 +12,7 @@ theme: simple
 # - Revealjs documentation: https://revealjs.com/
 # - Themes: ~/.config/mdshow/reveal.js/dist/theme/
 # - Font Awesome icons: https://fontawesome.com/
+# - Chart.js: https://www.chartjs.org/docs/
 # - Default settings: ~/.config/mdshow/defaults.yaml
 # - Default CSS: ~/.config/mdshow/defaults.css
 ---
@@ -301,6 +302,94 @@ Shadow bottom, left.
 <div class="box-12rem radius-30p overflow-hidden background-cover box-shadow-rb" style='background-image: url("https://images.unsplash.com/photo-1595586964632-b215dfbc064a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
 <div class="box-14rem radius-50p overflow-hidden background-cover box-shadow-bl" style='background-image: url("https://images.unsplash.com/photo-1595508064774-5ff825ff0f81?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
 ::::::
+
+# Charts
+
+via [chart.js](https://www.chartjs.org/)
+
+## Bar Chart
+
+<canvas id="9d3663d5deb049029436214b48685aab"></canvas>
+
+<script>
+var ctx = document.getElementById('9d3663d5deb049029436214b48685aab').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [
+        {
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+## Radar chart
+
+<canvas id="ec647c7adf104ff0a6c0ce7ca78a5665"></canvas>
+
+<script>
+var ctx = document.getElementById('ec647c7adf104ff0a6c0ce7ca78a5665').getContext('2d');
+var myRadarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['Running', 'Swimming', 'Eating', 'Cycling'],
+      datasets: [
+      {
+        label: 'First',
+        data: [20, 10, 4, 2],
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      },
+      {
+        label: 'Second',
+        data: [12, 12, 12, 3],
+        backgroundColor: 'rgba(75, 192, 192, 1)',
+      },
+      ]
+    },
+    options: {
+      scale: {
+          angleLines: {
+              display: false
+          },
+          ticks: {
+              suggestedMin: 0,
+              suggestedMax: 20
+          }
+      }
+    },
+});
+
+</script>
 
 # Thank you
 

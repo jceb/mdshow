@@ -48,6 +48,7 @@ setup: programs \
 	$(MDSHOW_CONFIG)/pandoc/templates/metadata.extract \
 	$(MDSHOW_CONFIG)/reveal.js/dist/fontawesome \
 	$(MDSHOW_CONFIG)/reveal.js/dist/plugin/highlight/styles/nord.css \
+	$(MDSHOW_CONFIG)/reveal.js/dist/Chart.bundle.min.js \
 	$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js \
 	$(MDSHOW_CONFIG)/scaffold.md
 
@@ -106,6 +107,11 @@ $(MDSHOW_CONFIG)/pandoc/templates/default.revealjs:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/pandoc/templates/default.revealjs -o $@
+
+$(MDSHOW_CONFIG)/reveal.js/dist/Chart.bundle.min.js:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
+	[ ! -e $@ ] && \
+		curl -L https://github.com/chartjs/Chart.js/releases/download/v2.9.3/Chart.bundle.min.js -o $@
 
 $(MDSHOW_CONFIG)/reveal.js/dist/plugin/highlight/styles/nord.css:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true

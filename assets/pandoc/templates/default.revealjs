@@ -45,6 +45,7 @@ $endfor$
 </head>
 <body>
   <script src="$revealjs-url$/reveal.js"></script>
+  <script src="$revealjs-url$/Chart.bundle.min.js"></script>
 
 $for(include-before)$
 $include-before$
