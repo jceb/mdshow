@@ -158,6 +158,16 @@ running before executing the following command):
 mdshow pdf
 ```
 
+Convert the presentation to a single, self-contained HTML file (make
+sure `mdshow serve` is running before executing the following command):
+
+ATTENTION: this command fails to include images that are added to a
+slide via `data-background-image` attribute.
+
+```
+mdshow html
+```
+
 More commands and information:
 
 ```
