@@ -18,6 +18,7 @@ $endif$
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="$revealjs-url$/reset.css">
   <link rel="stylesheet" href="$revealjs-url$/reveal.css">
+  <link rel="stylesheet" href="$revealjs-url$/plugin/highlight/styles/$highlightStyle$.css">
   <link rel="stylesheet" href="$revealjs-url$/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="$revealjs-url$/defaults.css">
   <style>
@@ -40,8 +41,11 @@ $endif$
 $for(header-includes)$
   $header-includes$
 $endfor$
+
 </head>
 <body>
+  <script src="$revealjs-url$/reveal.js"></script>
+
 $for(include-before)$
 $include-before$
 $endfor$
@@ -72,11 +76,11 @@ $body$
     </div>
   </div>
 
-  <script src="$revealjs-url$/reveal.js"></script>
   <script src="$revealjs-url$/plugin/math/math.js"></script>
   <script src="$revealjs-url$/plugin/zoom/zoom.js"></script>
   <script src="$revealjs-url$/plugin/search/search.js"></script>
   <script src="$revealjs-url$/plugin/notes/notes.js"></script>
+  <script src="$revealjs-url$/plugin/highlight/highlight.js"></script>
 
   <script>
 
@@ -282,7 +286,7 @@ $if(mathjax)$
 $endif$
 
         // Optional reveal.js plugins
-        plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMath ]
+        plugins: [ RevealHighlight, RevealZoom, RevealNotes, RevealSearch, RevealMath ]
       });
     </script>
   $for(include-after)$

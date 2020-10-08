@@ -47,6 +47,7 @@ setup: programs \
 	$(MDSHOW_CONFIG)/pandoc/templates/default.revealjs \
 	$(MDSHOW_CONFIG)/pandoc/templates/metadata.extract \
 	$(MDSHOW_CONFIG)/reveal.js/dist/fontawesome \
+	$(MDSHOW_CONFIG)/reveal.js/dist/plugin/highlight/styles/nord.css \
 	$(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js \
 	$(MDSHOW_CONFIG)/scaffold.md
 
@@ -105,6 +106,14 @@ $(MDSHOW_CONFIG)/pandoc/templates/default.revealjs:
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/pandoc/templates/default.revealjs -o $@
+
+$(MDSHOW_CONFIG)/reveal.js/dist/plugin/highlight/styles/nord.css:
+	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
+	[ ! -e $@ ] && \
+		cd $(dir $@) && \
+		curl -L https://github.com/highlightjs/highlight.js/archive/10.2.1.tar.gz -o - | tar xz && \
+		mv highlight.js-10.2.1/src/styles/*.css . && \
+		rm -rf highlight.js-10.2.1
 
 # {{{1 sass / theme builder
 sass: $(MDSHOW_CONFIG)/reveal.js \
@@ -208,7 +217,6 @@ assets:
 .build/index.html: $(SLIDES) .build/config.json .build/reveal.js .build/assets .build/.mdshow .build/reveal.js/defaults.css
 	PANDOC_ARGS=; \
 				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < .build/config.json)"; \
-				highlightStyle="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.highlightStyle' < .build/config.json)"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
@@ -221,8 +229,8 @@ assets:
 				--lua-filter fontawesome.lua \
 				--wrap=preserve \
 				--standalone \
+				--no-highlight \
 				--slide-level=2 \
-				--highlight-style="$${highlightStyle}" \
 				-V revealjs-url=reveal.js \
 				-o $@ \
 				$${PANDOC_ARGS}

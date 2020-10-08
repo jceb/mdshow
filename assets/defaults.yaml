@@ -3,9 +3,10 @@ title: Slides by mdshow
 # title-prefix:
 theme: black
 
-highlightStyle: pygments
-# list supported styles: pandoc --list-highlight-languages
-# pygments, kate, monochrome, breezeDark, espresso, zenburn, haddock, and tango
+highlightStyle: nord
+# Supported styles: https://highlightjs.org/static/demo/
+# File names: ~/.config/mdshow/reveal.js/dist/plugin/highlight/styles/
+# Examples: nord, monokai, zenburn, solarized-dark solarized-dark
 
 # custom css
 # css:
