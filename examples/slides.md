@@ -172,7 +172,7 @@ hello('world!');</code></pre>
 - `<Alt-Left Mouse Button>` or `<Ctrl-Left Mouse Button>` zoom into
   slide
 
-# Incremental Display
+# Animation
 
 ## Incremental Lists
 
@@ -200,6 +200,38 @@ hello('world!');</code></pre>
 
 - Item 2
 - Item 3
+
+## Animated List{data-auto-animate=1}
+
+- Item 1
+- Item 3
+- Item 4
+
+## Animated List{data-auto-animate=1}
+
+- Item 1
+- Item 2
+- Item 3
+- Item 4
+
+## Animated Colored Boxes
+
+## Animated Colored Boxes{data-auto-animate=1}
+
+:::::: {.flex .align-center .justify-around}
+<div data-id="1" class="box-8rem radius-10p" style="background-color: lightblue; color: yellow">App 1</div>
+<div data-id="2" class="box-10rem radius-20p" style="background-color: pink; color: darkred;">App 2</div>
+<div data-id="3" class="box-12rem radius-50p" style="background-color: lightgreen; color: darkgreen;">Circle</div>
+::::::
+
+## Animated Colored Boxes{data-auto-animate=1}
+
+:::::: {.flex .align-center .justify-around}
+<div data-id="3" class="box-12rem radius-50p" style="background-color: lightgreen; color: darkgreen;">Circle</div>
+<div data-id="2" class="box-10rem radius-20p" style="background-color: pink; color: darkred;">App 2</div>
+<div data-id="1" class="box-8rem radius-10p" style="background-color: lightblue; color: yellow">App 1</div>
+::::::
+
 
 # Backgrounds
 
