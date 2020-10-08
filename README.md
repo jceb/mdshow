@@ -35,7 +35,7 @@ heavy lifting of making text beautiful is left to
 ### Focus
 
 - Minimally invasive. All data is kept in `slides.md`, `assets/`, and a
-  temporay `.build/` folder
+  temporary `.build/` folder
 - Markdown as the sole markup to focus on
 
 ### Enterprise
@@ -62,7 +62,7 @@ heavy lifting of making text beautiful is left to
 - Zoom into slide (press `<Alt-Left Mouse Button>` or `<Ctrl-Left Mouse
   Button>` to zoom)
 - Separate speaker notes view (press `<s>` to show)
-- Slide overview and navication (press `<Esc>` to enter overview and
+- Slide overview and navigation (press `<Esc>` to enter overview and
   `<Esc>` to show selected slide)
 
 ## Background
@@ -93,7 +93,7 @@ opinionated path.
 
 ## Install
 
-### Prequisites
+### Prerequisites
 
 - `autoconf`
 - `automake`
@@ -145,7 +145,7 @@ mdshow serve
 ```
 
 If you want to use a different file name pass it to mdshow via the
-`SLIDES` paramter:
+`SLIDES` parameter:
 
 ```
 mdshow serve SLIDES=custom.md
