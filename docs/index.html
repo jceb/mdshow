@@ -12,6 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="reveal.js/reset.css">
   <link rel="stylesheet" href="reveal.js/reveal.css">
+  <link rel="stylesheet" href="reveal.js/plugin/highlight/styles/nord.css">
   <link rel="stylesheet" href="reveal.js/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="reveal.js/defaults.css">
   <style>
@@ -21,75 +22,18 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      {   }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code span.at { color: #7d9029; } /* Attribute */
-    code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #4070a0; } /* Char */
-    code span.cn { color: #880000; } /* Constant */
-    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code span.dt { color: #902000; } /* DataType */
-    code span.dv { color: #40a070; } /* DecVal */
-    code span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #40a070; } /* Float */
-    code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code span.op { color: #666666; } /* Operator */
-    code span.ot { color: #007020; } /* Other */
-    code span.pp { color: #bc7a00; } /* Preprocessor */
-    code span.sc { color: #4070a0; } /* SpecialChar */
-    code span.ss { color: #bb6688; } /* SpecialString */
-    code span.st { color: #4070a0; } /* String */
-    code span.va { color: #19177c; } /* Variable */
-    code span.vs { color: #4070a0; } /* VerbatimString */
-    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="reveal.js/theme/simple.css" id="theme">
   <!--[if lt IE 9]>
   <script src="reveal.js/lib/js/html5shiv.js"></script>
   <![endif]-->
+
 </head>
 <body>
+  <script src="reveal.js/reveal.js"></script>
+  <script src="reveal.js/Chart.bundle.min.js"></script>
+
   <div class="reveal">
     <div class="slides">
 
@@ -206,11 +150,29 @@ h2
 </section>
 <section id="code-highlighting" class="slide level2">
 <h2>Code Highlighting</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">function</span> <span class="fu">hello</span>(msg) {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="fu">alert</span>(<span class="vs">`Hello </span><span class="sc">${</span>msg<span class="sc">}</span><span class="vs">`</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>}</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="fu">hello</span>(<span class="st">&#39;world!&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<pre class="javascript"><code>function hello(msg) {
+  alert(`Hello ${msg}`)
+}
+
+hello(&#39;world!&#39;);</code></pre>
+</section>
+<section id="code-highlighting-with-line-numbers" class="slide level2">
+<h2>Code Highlighting with Line Numbers</h2>
+<pre>
+<code class="javascript" data-line-numbers>function hello(msg) {
+  alert(`Hello ${msg}`)
+}
+
+hello('world!');</code></pre>
+</section>
+<section id="code-highlighting-with-highlighted-line" class="slide level2">
+<h2>Code Highlighting with highlighted Line</h2>
+<pre>
+<code class="javascript" data-line-numbers=2>function hello(msg) {
+  alert(`Hello ${msg}`)
+}
+
+hello('world!');</code></pre>
 </section>
 <section id="math-formulas" class="slide level2">
 <h2>Math formulas</h2>
@@ -285,8 +247,8 @@ slide</li>
 </ul>
 </section></section>
 <section>
-<section id="incremental-display" class="title-slide slide level1">
-<h1>Incremental Display</h1>
+<section id="animation" class="title-slide slide level1">
+<h1>Animation</h1>
 
 </section>
 <section id="incremental-lists" class="slide level2">
@@ -318,6 +280,54 @@ slide</li>
 <li>Item 2</li>
 <li>Item 3</li>
 </ul>
+</div>
+</section>
+<section id="animated-list" class="slide level2" data-auto-animate="1">
+<h2 data-auto-animate="1">Animated List</h2>
+<ul>
+<li>Item 1</li>
+<li>Item 3</li>
+<li>Item 4</li>
+</ul>
+</section>
+<section id="animated-list-1" class="slide level2" data-auto-animate="1">
+<h2 data-auto-animate="1">Animated List</h2>
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+<li>Item 4</li>
+</ul>
+</section>
+<section id="animated-colored-boxes" class="slide level2">
+<h2>Animated Colored Boxes</h2>
+</section>
+<section id="animated-colored-boxes-1" class="slide level2" data-auto-animate="1">
+<h2 data-auto-animate="1">Animated Colored Boxes</h2>
+<div class="flex align-center justify-around">
+<div class="box-8rem radius-10p" data-id="1" style="background-color: lightblue; color: yellow">
+App 1
+</div>
+<div class="box-10rem radius-20p" data-id="2" style="background-color: pink; color: darkred;">
+App 2
+</div>
+<div class="box-12rem radius-50p" data-id="3" style="background-color: lightgreen; color: darkgreen;">
+Circle
+</div>
+</div>
+</section>
+<section id="animated-colored-boxes-2" class="slide level2" data-auto-animate="1">
+<h2 data-auto-animate="1">Animated Colored Boxes</h2>
+<div class="flex align-center justify-around">
+<div class="box-12rem radius-50p" data-id="3" style="background-color: lightgreen; color: darkgreen;">
+Circle
+</div>
+<div class="box-10rem radius-20p" data-id="2" style="background-color: pink; color: darkred;">
+App 2
+</div>
+<div class="box-8rem radius-10p" data-id="1" style="background-color: lightblue; color: yellow">
+App 1
+</div>
 </div>
 </section></section>
 <section>
@@ -418,6 +428,95 @@ Circle
 </div>
 </div>
 </section></section>
+<section>
+<section id="charts" class="title-slide slide level1">
+<h1>Charts</h1>
+<p>via <a href="https://www.chartjs.org/">chart.js</a></p>
+</section>
+<section id="bar-chart" class="slide level2">
+<h2>Bar Chart</h2>
+<canvas id="9d3663d5deb049029436214b48685aab">
+</canvas>
+<script>
+var ctx = document.getElementById('9d3663d5deb049029436214b48685aab').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [
+        {
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+</section>
+<section id="radar-chart" class="slide level2">
+<h2>Radar chart</h2>
+<canvas id="ec647c7adf104ff0a6c0ce7ca78a5665">
+</canvas>
+<script>
+var ctx = document.getElementById('ec647c7adf104ff0a6c0ce7ca78a5665').getContext('2d');
+var myRadarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['Running', 'Swimming', 'Eating', 'Cycling'],
+      datasets: [
+      {
+        label: 'First',
+        data: [20, 10, 4, 2],
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      },
+      {
+        label: 'Second',
+        data: [12, 12, 12, 3],
+        backgroundColor: 'rgba(75, 192, 192, 1)',
+      },
+      ]
+    },
+    options: {
+      scale: {
+          angleLines: {
+              display: false
+          },
+          ticks: {
+              suggestedMin: 0,
+              suggestedMax: 20
+          }
+      }
+    },
+});
+
+</script>
+</section></section>
 <section id="thank-you" class="title-slide slide level1">
 <h1>Thank you</h1>
 <h3>
@@ -427,11 +526,11 @@ for using <a href="https://github.com/jceb/mdshow">mdshow</a>
     </div>
   </div>
 
-  <script src="reveal.js/reveal.js"></script>
   <script src="reveal.js/plugin/math/math.js"></script>
   <script src="reveal.js/plugin/zoom/zoom.js"></script>
   <script src="reveal.js/plugin/search/search.js"></script>
   <script src="reveal.js/plugin/notes/notes.js"></script>
+  <script src="reveal.js/plugin/highlight/highlight.js"></script>
 
   <script>
 
@@ -525,7 +624,7 @@ for using <a href="https://github.com/jceb/mdshow">mdshow</a>
         // speaker view
         defaultTiming: 120,
         // Enable slide navigation via mouse wheel
-        mouseWheel: ('' === '' ? false : true),
+        mouseWheel: ('true' === '' ? false : true),
         // Opens links in an iframe preview overlay
         // Add `data-preview-link` and `data-preview-link="False"` to customise each link
         // individually
@@ -554,7 +653,7 @@ for using <a href="https://github.com/jceb/mdshow">mdshow</a>
 
 
         // Optional reveal.js plugins
-        plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMath ]
+        plugins: [ RevealHighlight, RevealZoom, RevealNotes, RevealSearch, RevealMath ]
       });
     </script>
     </body>
