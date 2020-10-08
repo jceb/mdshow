@@ -25,6 +25,7 @@ theme: simple
 4. Backgrounds
 5. Pictures and Icons
 6. Advanced Formatting
+7. Charts
 
 # Intro mdshow
 
