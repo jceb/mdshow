@@ -8,8 +8,13 @@ highlightStyle: nord
 # File names: ~/.config/mdshow/reveal.js/dist/plugin/highlight/styles/
 # Examples: nord, monokai, zenburn, solarized-dark solarized-dark
 
+# custom javascript
+# javascript:
+#   - URL/script.js
+
 # custom css
 # css:
+#   - URL/styles.css
 
 pdf_size: 1189x841  # 1024x768  # 1280x720
 pdf_delay: 100
