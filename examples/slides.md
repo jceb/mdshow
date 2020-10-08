@@ -45,7 +45,7 @@ choice to do just that!
 - Focus: stays out of the way
 - Enterprise: theming and PDF conversion
 - Setup: super fast
-- Presentation: looks great and offers the power of the browser to your
+- Presentation: looks great and offers the power of the browser at your
   fingertips
 
 ## Keybindings
