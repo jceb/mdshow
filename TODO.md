@@ -10,6 +10,7 @@
 
 # DONE
 
+- [x] use highlight.js, 2020-10-08
 - [x] make slides file configurable, 2020-08-19
 - [x] replace scaffold by example, 2020-06-27
 - [x] watch for all changes in the mdshow configuration folder, 2020-06-27
