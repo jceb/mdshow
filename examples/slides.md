@@ -106,6 +106,23 @@ function hello(msg) {
 hello('world!');
 ```
 
+## Code Highlighting with Line Numbers
+
+<pre>
+<code class="javascript" data-line-numbers>function hello(msg) {
+  alert(`Hello ${msg}`)
+}
+
+hello('world!');</code></pre>
+
+## Code Highlighting with highlighted Line
+
+<pre>
+<code class="javascript" data-line-numbers=2>function hello(msg) {
+  alert(`Hello ${msg}`)
+}
+
+hello('world!');</code></pre>
 ## Math formulas
 
 
