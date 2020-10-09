@@ -1,4 +1,5 @@
-#!/usr/bin/env -S make -f
+#!/usr/bin/make -f
+# TODO: newer versions of env support this: !/usr/bin/env -S make -f
 # Author: Jan Christoph Ebersbach <jceb@e-jc.de>
 # Copyright (c) 2020 Jan Christoph Ebersbach
 # License: Apache-2.0
