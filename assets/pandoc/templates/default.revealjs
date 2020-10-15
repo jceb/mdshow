@@ -19,7 +19,6 @@ $endif$
   <link rel="stylesheet" href="$revealjs-url$/reset.css">
   <link rel="stylesheet" href="$revealjs-url$/reveal.css">
   <link rel="stylesheet" href="$revealjs-url$/plugin/highlight/styles/$highlightStyle$.css">
-  <link rel="stylesheet" href="$revealjs-url$/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="$revealjs-url$/defaults.css">
   <!-- <style> -->
   <!--   $styles.html()$ -->
@@ -45,6 +44,7 @@ $endfor$
 </head>
 <body>
   <script src="$revealjs-url$/reveal.js"></script>
+  <script src="$revealjs-url$/fontawesome/js/all.min.js"></script>
   <script src="$revealjs-url$/Chart.bundle.min.js"></script>
 $for(javascript)$
   <script src="$javascript$"></script>
