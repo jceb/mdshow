@@ -83,6 +83,8 @@ See for yourself.
 
 No heading.
 
+## Hidden slide{data-visibility="hidden"}
+
 ## Text formatting
 
 Regluar, *italic*, **bold**, and <u>underlined</u>.
@@ -135,6 +137,7 @@ hello('world!');</code></pre>
 }
 
 hello('world!');</code></pre>
+
 ## Math formulas
 
 
