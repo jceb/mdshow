@@ -21,9 +21,9 @@ $endif$
   <link rel="stylesheet" href="$revealjs-url$/plugin/highlight/styles/$highlightStyle$.css">
   <link rel="stylesheet" href="$revealjs-url$/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="$revealjs-url$/defaults.css">
-  <style>
-    $styles.html()$
-  </style>
+  <!-- <style> -->
+  <!--   $styles.html()$ -->
+  <!-- </style> -->
 $if(theme)$
   <link rel="stylesheet" href="$revealjs-url$/theme/$theme$.css" id="theme">
 $else$
@@ -31,9 +31,6 @@ $else$
 $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$"/>
-$endfor$
-$for(javascript)$
-  <script src="$javascript$"></script>
 $endfor$
   <!--[if lt IE 9]>
   <script src="$revealjs-url$/lib/js/html5shiv.js"></script>
@@ -49,6 +46,9 @@ $endfor$
 <body>
   <script src="$revealjs-url$/reveal.js"></script>
   <script src="$revealjs-url$/Chart.bundle.min.js"></script>
+$for(javascript)$
+  <script src="$javascript$"></script>
+$endfor$
 
 $for(include-before)$
 $include-before$
