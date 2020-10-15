@@ -264,6 +264,31 @@ hello('world!');</code></pre>
 ![](fas fa-smile)
 </span>
 
+## Font Awesome Stacked Icons
+
+::: {.flex .justify-around .align-center}
+<span class="fa-stack fa-2x">
+  <i class="fas fa-square fa-stack-2x"></i>
+  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+</span>
+<span class="fa-stack fa-2x">
+  <i class="fas fa-circle fa-stack-2x"></i>
+  <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
+</span>
+<span class="fa-stack fa-2x">
+  <i class="fas fa-square-full fa-stack-2x"></i>
+  <i class="fas fa-terminal fa-stack-1x fa-inverse"></i>
+</span>
+<span class="fa-stack fa-4x">
+  <i class="fas fa-square fa-stack-2x"></i>
+  <i class="fas fa-terminal fa-stack-1x fa-inverse"></i>
+</span>
+<span class="fa-stack fa-2x">
+  <i class="fas fa-camera fa-stack-1x"></i>
+  <i class="fas fa-ban fa-stack-2x" style="color:Tomato"></i>
+</span>
+:::
+
 ## Box Shadow
 
 ::: {.box-shadow-trbl}
