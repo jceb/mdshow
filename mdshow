@@ -47,6 +47,7 @@ setup: programs \
 	$(MDSHOW_CONFIG)/pandoc/filters/fontawesome.lua \
 	$(MDSHOW_CONFIG)/pandoc/templates/default.revealjs \
 	$(MDSHOW_CONFIG)/pandoc/templates/metadata.extract \
+	$(MDSHOW_CONFIG)/reveal.js \
 	$(MDSHOW_CONFIG)/reveal.js/dist/fontawesome \
 	$(MDSHOW_CONFIG)/reveal.js/dist/plugin/highlight/styles/nord.css \
 	$(MDSHOW_CONFIG)/reveal.js/dist/Chart.bundle.min.js \
@@ -115,11 +116,10 @@ $(MDSHOW_CONFIG)/reveal.js/dist/Chart.bundle.min.js:
 		curl -L https://github.com/chartjs/Chart.js/releases/download/v2.9.3/Chart.bundle.min.js -o $@
 
 $(MDSHOW_CONFIG)/reveal.js/dist/plugin/highlight/styles/nord.css:
-	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	[ ! -e $@ ] && \
-		cd $(dir $@) && \
+		cd $(shell dirname $(shell dirname $@)) && \
 		curl -L https://github.com/highlightjs/highlight.js/archive/10.2.1.tar.gz -o - | tar xz && \
-		mv highlight.js-10.2.1/src/styles/*.css . && \
+		mv highlight.js-10.2.1/src/styles . && \
 		rm -rf highlight.js-10.2.1
 
 # {{{1 sass / theme builder
