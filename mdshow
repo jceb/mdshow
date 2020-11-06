@@ -8,6 +8,7 @@ SHELL := /bin/bash
 
 MDSHOW_CONFIG = ${HOME}/.config/mdshow
 SLIDES = slides.md
+PORT = 3000
 
 VERSION := v0.1
 
@@ -26,6 +27,11 @@ help:
 	@echo "  themes: list all installed themes"
 	@echo "  upgrade: upgrade mdshow to it's latest version"
 	@echo "  version: prints the current version"
+	@echo ""
+	@echo "Variables:"
+	@echo "  PORT=3000, defines the port"
+	@echo "  SLIDES=slides.md, defines the filename"
+	@echo "  Example: make serve PORT=3001 SLIDES=myslides.md"
 	@echo ""
 	@echo "Dependencies:"
 	@echo "  curl, pandoc, unzip, yarn"
@@ -176,7 +182,7 @@ html: $(basename $(SLIDES)).html
 $(basename $(SLIDES)).html: serving build
 	@type monolith
 	@echo "WARNING: images aren't included in the output when they're referred to as slide backgrounds, background-image=/data-background-image=!"
-	monolith -o $@ http://localhost:3000
+	monolith -o $@ http://localhost:$(PORT)
 
 # {{{1 build
 build: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
@@ -187,7 +193,7 @@ pdf: $(basename $(SLIDES)).pdf
 $(basename $(SLIDES)).pdf: serving build
 	pdf_size="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_size' < .build/config.json)"; \
 		pdf_delay="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_delay' < .build/config.json)"; \
-		$(MDSHOW_CONFIG)/reveal.js/node_modules/.bin/decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:3000/ $@ || \
+		$(MDSHOW_CONFIG)/reveal.js/node_modules/.bin/decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:$(PORT)/ $@ || \
 		echo "Failed to create $@. Is the mdshow server running? mdshow serve"
 
 # {{{1 serve
@@ -197,10 +203,10 @@ $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
-	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=3000 --slides="$(SLIDES)" --root="${PWD}/.build"
+	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=$(PORT) --slides="$(SLIDES)" --root="${PWD}/.build"
 
 serving:
-	@curl -s -I -o /dev/null http://localhost:3000
+	@curl -s -I -o /dev/null http://localhost:$(PORT)
 
 # {{{1 local directory
 assets:
