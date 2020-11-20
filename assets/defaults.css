@@ -417,6 +417,10 @@
   font-size: 0.8rem;
 }
 
+.fs-0-9 {
+  font-size: 0.9rem;
+}
+
 .fs-1 {
   font-size: 1rem;
 }
@@ -427,6 +431,10 @@
 
 .fs-1-5 {
   font-size: 1.5rem;
+}
+
+.fs-1-7 {
+  font-size: 1.7rem;
 }
 
 .fs-2 {
