@@ -8,6 +8,7 @@ SHELL := /bin/bash
 
 MDSHOW_CONFIG = ${HOME}/.config/mdshow
 SLIDES = slides.md
+BUILD_DIR = .build_$(basename $(SLIDES))
 PORT = 3000
 
 VERSION := v0.1
@@ -68,7 +69,7 @@ programs:
 	@type yarn || echo "yarn is not installed, required for serving the presentation"
 	@type monolith || echo "(optional) monolith is not installed, needed for creating a single file HTML presentation"
 
-.build/reveal.js/defaults.css: $(MDSHOW_CONFIG)/defaults.css
+$(BUILD_DIR)/reveal.js/defaults.css: $(MDSHOW_CONFIG)/defaults.css
 	ln -s $< $@
 
 $(MDSHOW_CONFIG)/defaults.css:
@@ -185,14 +186,14 @@ $(basename $(SLIDES)).html: serving build
 	monolith -o $@ http://localhost:$(PORT)
 
 # {{{1 build
-build: .build/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome .build/index.html
+build: $(BUILD_DIR)/config.json sass $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome $(BUILD_DIR)/index.html
 
 # {{{1 pdf
 pdf: $(basename $(SLIDES)).pdf
 
 $(basename $(SLIDES)).pdf: serving build
-	pdf_size="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_size' < .build/config.json)"; \
-		pdf_delay="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_delay' < .build/config.json)"; \
+	pdf_size="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_size' < $(BUILD_DIR)/config.json)"; \
+		pdf_delay="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_delay' < $(BUILD_DIR)/config.json)"; \
 		$(MDSHOW_CONFIG)/reveal.js/node_modules/.bin/decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:$(PORT)/ $@ || \
 		echo "Failed to create $@. Is the mdshow server running? mdshow serve"
 
@@ -203,7 +204,7 @@ $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
-	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=$(PORT) --slides="$(SLIDES)" --root="${PWD}/.build"
+	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=$(PORT) --slides="$(SLIDES)" --root="${PWD}/$(BUILD_DIR)"
 
 serving:
 	@curl -s -I -o /dev/null http://localhost:$(PORT)
@@ -212,24 +213,24 @@ serving:
 assets:
 	@[ ! -e $@ ] && mkdir $@
 
-.build/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist
+$(BUILD_DIR)/reveal.js: $(MDSHOW_CONFIG)/reveal.js/dist
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s $< $@ || true
 
-.build/.mdshow: $(MDSHOW_CONFIG)
+$(BUILD_DIR)/.mdshow: $(MDSHOW_CONFIG)
 	@[ ! -e $@ ] && ln -s $< $@ || true
 
-.build/assets: assets
+$(BUILD_DIR)/assets: assets
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	@[ ! -e $@ ] && ln -s ../$< $@ || true
 
-.build/config.json: $(SLIDES)  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract
+$(BUILD_DIR)/config.json: $(SLIDES)  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/pandoc/templates/metadata.extract
 	@[ ! -e $(dir $@) ] && mkdir -p $(dir $@) || true
 	pandoc --data-dir=$(MDSHOW_CONFIG)/pandoc --template=metadata.extract -f markdown+yaml_metadata_block $(MDSHOW_CONFIG)/defaults.yaml $< > $@
 
-.build/index.html: $(SLIDES) .build/config.json .build/reveal.js .build/assets .build/.mdshow .build/reveal.js/defaults.css
+$(BUILD_DIR)/index.html: $(SLIDES) $(BUILD_DIR)/config.json $(BUILD_DIR)/reveal.js $(BUILD_DIR)/assets $(BUILD_DIR)/.mdshow $(BUILD_DIR)/reveal.js/defaults.css
 	PANDOC_ARGS=; \
-				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < .build/config.json)"; \
+				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < $(BUILD_DIR)/config.json)"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
 				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
@@ -250,12 +251,12 @@ assets:
 
 # {{{1 cleanup
 clean:
-	rm -rf .build
+	rm -rf $(BUILD_DIR)
 
 distclean:
 	[ -e $(MDSHOW_CONFIG)/defaults.yaml ] && mv $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CONFIG)/defaults.yaml.bak || true
 	[ -e $(MDSHOW_CONFIG)/scaffold.md ] && mv $(MDSHOW_CONFIG)/scaffold.md $(MDSHOW_CONFIG)/scaffold.md.bak || true
-	rm -rf $(MDSHOW_CONFIG)/reveal.js $(MDSHOW_CONFIG)/pandoc
+	rm -rf $(MDSHOW_CONFIG)/reveal.js $(MDSHOW_CONFIG)/pandoc .build_*
 
 # {{{1 .PHONY
 .PHONY: \
