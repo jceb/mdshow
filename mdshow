@@ -1,12 +1,13 @@
 #!/usr/bin/make -f
 # TODO: newer versions of env support this: !/usr/bin/env -S make -f
+# NOTE Jürgen Haas: switched from yarn to npm, because yarn does not install node_modules/node-jp/bin
 # Author: Jan Christoph Ebersbach <jceb@e-jc.de>
 # Copyright (c) 2020 Jan Christoph Ebersbach
 # License: Apache-2.0
 
 SHELL := /bin/bash
 
-MDSHOW_CONFIG = ${HOME}/.config/mdshow
+MDSHOW_CONFIG = /opt/mdshow
 SLIDES = slides.md
 BUILD_DIR = .build_$(basename $(SLIDES))
 PORT = 3000
@@ -35,7 +36,7 @@ help:
 	@echo "  Example: make serve PORT=3001 SLIDES=myslides.md"
 	@echo ""
 	@echo "Dependencies:"
-	@echo "  curl, pandoc, unzip, yarn"
+	@echo "  curl, pandoc, unzip, npm"
 
 # {{{1 version
 version:
@@ -66,7 +67,7 @@ programs:
 	@type curl || echo "curl is not installed, required in the setup process"
 	@type pandoc || echo "pandoc is not installed, reqiured for converting markdown into a HTML presentation"
 	@type unzip || echo "unzip is not installed, required in the setup process"
-	@type yarn || echo "yarn is not installed, required for serving the presentation"
+	@type npm || echo "npm is not installed, required for serving the presentation"
 	@type monolith || echo "(optional) monolith is not installed, needed for creating a single file HTML presentation"
 
 $(BUILD_DIR)/reveal.js/defaults.css: $(MDSHOW_CONFIG)/defaults.css
@@ -96,7 +97,7 @@ $(MDSHOW_CONFIG)/reveal.js:
 	mv $@/reveal.js-4.1.0/.??* $@/reveal.js-4.1.0/* $@
 	rmdir $@/reveal.js-4.1.0
 	cd $@ && \
-		yarn && yarn add --dev node-jq decktape
+		npm install && npm add node-jq decktape gulp
 	# workarounds for the new reveal-js release
 	cd $@/dist && \
 		ln -s ../plugin .
@@ -137,6 +138,7 @@ sass: $(MDSHOW_CONFIG)/reveal.js \
 
 .sync-custom-themes: $(wildcard $(MDSHOW_CONFIG)/theme/*/source/*.scss)
 	@[ -n "$^" ] && rsync -u $^ $(MDSHOW_CONFIG)/reveal.js/css/theme/source/ || true
+	@[ -n "$^" ] && cd $(MDSHOW_CONFIG)/reveal.js && gulp css-themes || true
 
 .SECONDEXPANSION:
 .build-themes: $$(addprefix $(MDSHOW_CONFIG)/reveal.js/dist/theme/,$$(addsuffix .css,$$(basename $$(notdir $$(wildcard $(MDSHOW_CONFIG)/reveal.js/css/theme/source/*.scss)))))
@@ -145,13 +147,13 @@ sass: $(MDSHOW_CONFIG)/reveal.js \
 .link-theme-assets: $$(addprefix $(MDSHOW_CONFIG)/reveal.js/dist/theme/,$$(basename $$(notdir $$(wildcard $(MDSHOW_CONFIG)/reveal.js/css/theme/source/*.scss))))
 
 $(MDSHOW_CONFIG)/reveal.js/dist/theme/%.css: $(MDSHOW_CONFIG)/reveal.js/css/theme/source/%.scss
-	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp css-themes
+	cd $(MDSHOW_CONFIG)/reveal.js && gulp css-themes
 
 $(MDSHOW_CONFIG)/theme/%/assets:
 	mkdir -p $@
 
 $(MDSHOW_CONFIG)/reveal.js/dist/theme/%: $(MDSHOW_CONFIG)/theme/%/assets
-	ln -s $< $@
+	@cp $@.css $<
 
 # {{{1 themes
 themes: $(MDSHOW_CONFIG)/reveal.js/dist $(wildcard $(MDSHOW_CONFIG)/reveal.js/dist/theme/*.css)
@@ -194,7 +196,7 @@ pdf: $(basename $(SLIDES)).pdf
 $(basename $(SLIDES)).pdf: serving build
 	pdf_size="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_size' < $(BUILD_DIR)/config.json)"; \
 		pdf_delay="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.pdf_delay' < $(BUILD_DIR)/config.json)"; \
-		$(MDSHOW_CONFIG)/reveal.js/node_modules/.bin/decktape -p $${pdf_delay} -s $${pdf_size} http://localhost:$(PORT)/ $@ || \
+		$(MDSHOW_CONFIG)/reveal.js/node_modules/.bin/decktape -p $${pdf_delay} -s $${pdf_size} --chrome-arg="--no-sandbox" http://localhost:$(PORT)/ $@ || \
 		echo "Failed to create $@. Is the mdshow server running? mdshow serve"
 
 # {{{1 serve
@@ -204,7 +206,7 @@ $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js:
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/mdshow-gulp.js -o $@
 
 serve: build $(MDSHOW_CONFIG)/reveal.js/mdshow-gulp.js
-	cd $(MDSHOW_CONFIG)/reveal.js && yarn gulp -f mdshow-gulp.js --port=$(PORT) --slides="$(SLIDES)" --root="${PWD}/$(BUILD_DIR)"
+	cd $(MDSHOW_CONFIG)/reveal.js && gulp -f mdshow-gulp.js --port=$(PORT) --slides="$(SLIDES)" --root="${PWD}/$(BUILD_DIR)"
 
 serving:
 	@curl -s -I -o /dev/null http://localhost:$(PORT)
@@ -230,24 +232,24 @@ $(BUILD_DIR)/config.json: $(SLIDES)  $(MDSHOW_CONFIG)/defaults.yaml $(MDSHOW_CON
 
 $(BUILD_DIR)/index.html: $(SLIDES) $(BUILD_DIR)/config.json $(BUILD_DIR)/reveal.js $(BUILD_DIR)/assets $(BUILD_DIR)/.mdshow $(BUILD_DIR)/reveal.js/defaults.css
 	PANDOC_ARGS=; \
-				theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < $(BUILD_DIR)/config.json)"; \
-				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
-				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
-				[ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
-				pandoc \
-				$(MDSHOW_CONFIG)/defaults.yaml \
-				$(SLIDES) \
-				--data-dir=$(MDSHOW_CONFIG)/pandoc \
-				-f markdown+yaml_metadata_block \
-				-t revealjs \
-				--lua-filter fontawesome.lua \
-				--wrap=preserve \
-				--standalone \
-				--no-highlight \
-				--slide-level=2 \
-				-V revealjs-url=reveal.js \
-				-o $@ \
-				$${PANDOC_ARGS}
+    theme="$$($(MDSHOW_CONFIG)/reveal.js/node_modules/node-jq/bin/jq -r '.theme' < $(BUILD_DIR)/config.json)"; \
+    [ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-in-header=$(MDSHOW_CONFIG)/theme/$${theme}/include/in-header.html"; \
+    [ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/before-body.html"; \
+    [ -e "$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html" ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body=$(MDSHOW_CONFIG)/theme/$${theme}/include/after-body.html"; \
+    pandoc \
+    $(MDSHOW_CONFIG)/defaults.yaml \
+    $(SLIDES) \
+    --data-dir=$(MDSHOW_CONFIG)/pandoc \
+    -f markdown+yaml_metadata_block \
+    -t revealjs \
+    --lua-filter fontawesome.lua \
+    --wrap=preserve \
+    --standalone \
+    --no-highlight \
+    --slide-level=2 \
+    -V revealjs-url=reveal.js \
+    -o $@ \
+    $${PANDOC_ARGS}
 
 # {{{1 cleanup
 clean:

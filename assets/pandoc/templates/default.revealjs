@@ -24,9 +24,9 @@ $endif$
   <!--   $styles.html()$ -->
   <!-- </style> -->
 $if(theme)$
-  <link rel="stylesheet" href="$revealjs-url$/theme/$theme$.css" id="theme">
+  <link rel="stylesheet" href=".mdshow/theme/$theme$/assets/$theme$.css" id="theme">
 $else$
-  <link rel="stylesheet" href="$revealjs-url$/theme/black.css" id="theme">
+  <link rel="stylesheet" href=".mdshow/theme/black/assets/black.css" id="theme">
 $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$"/>
