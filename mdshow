@@ -1,13 +1,15 @@
 #!/usr/bin/make -f
 # TODO: newer versions of env support this: !/usr/bin/env -S make -f
-# NOTE Jürgen Haas: switched from yarn to npm, because yarn does not install node_modules/node-jp/bin
+# NOTE JH: switched from yarn to npm, because yarn does not install node_modules/node-jp/bin
 # Author: Jan Christoph Ebersbach <jceb@e-jc.de>
 # Copyright (c) 2020 Jan Christoph Ebersbach
 # License: Apache-2.0
 
 SHELL := /bin/bash
 
-MDSHOW_CONFIG = /opt/mdshow
+CONFIG_PATH = ${HOME}/.config
+MDSHOW_CONFIG = $(CONFIG_PATH)/mdshow
+
 SLIDES = slides.md
 BUILD_DIR = .build_$(basename $(SLIDES))
 PORT = 3000

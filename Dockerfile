@@ -24,8 +24,8 @@ RUN echo "Adding system components" && \
 ADD mdshow /usr/local/bin/
 ADD docker-entrypoint.sh /usr/local/bin/
 
-RUN echo "Setup MdShow" && \
-    mdshow setup && \
+RUN echo "Setup mdshow" && \
+    mdshow setup CONFIG_PATH=/opt && \
     ln -s /opt/mdshow/reveal.js/node_modules/gulp/bin/gulp.js /usr/bin/gulp && \
     mkdir -p /opt/mdshow/theme && \
     chmod -R a+rwx /opt/mdshow && \
@@ -41,5 +41,6 @@ RUN echo "Setup MdShow" && \
     rm -rf /root/.npm && \
     echo "Completed"
 
+WORKDIR /mdshow
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["/bin/bash"]
