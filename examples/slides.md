@@ -33,15 +33,14 @@ theme: simple
 
 ## Markdown
 
-`mdshow` is built to quickly turn ideas into beautiful presentations.
-The text-based [markdown
-format](https://daringfireball.net/projects/markdown/) is the tool of
-choice to do just that!
+`mdshow` is built to quickly turn ideas into beautiful presentations. The
+text-based [markdown format](https://daringfireball.net/projects/markdown/) is
+the tool of choice to do just that!
 
 ## Features
 
-- Built with [reveal.js 4.0](https://revealjs.com/) and [pandoc
-  2.9](https://pandoc.org/)
+- Built with [reveal.js 4.0](https://revealjs.com/) and
+  [pandoc 2.9](https://pandoc.org/)
 - Focus: stays out of the way
 - Enterprise: theming and PDF conversion
 - Setup: super fast
@@ -55,16 +54,14 @@ choice to do just that!
 - `<f>` enter full-screen mode
 - `<s>` show speaker notes
 - `<Esc>` enter slide overview and `<Esc>` to show selected slide
-- `<Alt-Left Mouse Button>` or `<Ctrl-Left Mouse Button>` zoom into
-  slide
+- `<Alt-Left Mouse Button>` or `<Ctrl-Left Mouse Button>` zoom into slide
 
 ## Examples
 
 - [Introduction video to mdshow](https://youtu.be/ZNXvQGsk_wA)
 - [Example HTML presentation](https://mdshow.e-jc.de/)
 - [Example PDF](./examples/slides.pdf)
-- [Example
-  Markdown](https://raw.githubusercontent.com/jceb/mdshow/master/examples/slides.md)
+- [Example Markdown](https://raw.githubusercontent.com/jceb/mdshow/master/examples/slides.md)
 
 ---
 
@@ -87,7 +84,7 @@ No heading.
 
 ## Text formatting
 
-Regluar, *italic*, **bold**, and <u>underlined</u>.
+Regluar, _italic_, **bold**, and <u>underlined</u>.
 
 ## Unordered List
 
@@ -104,7 +101,8 @@ Regluar, *italic*, **bold**, and <u>underlined</u>.
 ## Links
 
 - [Text link](https://github.com/jceb/mdshow)
-- Image link: [![](https://images.unsplash.com/photo-1595503240812-7286dafaddc1?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640){width=30%}](https://unsplash.com/photos/x9yfTxHpj5w)
+- Image link:
+  [![](https://images.unsplash.com/photo-1595503240812-7286dafaddc1?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640){width=30%}](https://unsplash.com/photos/x9yfTxHpj5w)
 
 ## Quotes
 
@@ -114,10 +112,10 @@ Regluar, *italic*, **bold**, and <u>underlined</u>.
 
 ```javascript
 function hello(msg) {
-  alert(`Hello ${msg}`)
+  alert(`Hello ${msg}`);
 }
 
-hello('world!');
+hello("world!");
 ```
 
 ## Code Highlighting with Line Numbers
@@ -140,39 +138,44 @@ hello('world!');</code></pre>
 
 ## Math formulas
 
-
 `$$ \sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6} $$`
 
 `$$ e^{\pi i}=-1 $$`
 
 ## Table
 
-| Tables        | Are             | Cool   |
-| ------------- | :-------------: | -----: |
-| col 3 is      | right-aligned   | $1600  |
-| col 2 is      | centered        | $12    |
-| zebra stripes | are neat        | $1     |
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
 
 ## Columns
 
 :::::: {.flex .align-center .justify-around}
 
 ::: Col1
+
 - Column 1
 - Column 1
 - Column 1
+
 :::
 
 ::: Col2
+
 - Column 2
 - Column 2
 - Column 2
+
 :::
 
 ::: Col3
+
 - Column 3
 - Column 3
 - Column 3
+
 :::
 
 ::::::
@@ -182,9 +185,11 @@ hello('world!');</code></pre>
 ## Incremental Lists
 
 ::: incremental
+
 - Item 1
 - Item 2
 - Item 3
+
 :::
 
 ## Fragments
@@ -195,6 +200,7 @@ hello('world!');</code></pre>
 ::: fragment
 ![](https://images.unsplash.com/photo-1587613864521-9ef8dfe617cc?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640){width=50%}
 :::
+
 ::::::
 
 ## Breaks
@@ -224,19 +230,22 @@ hello('world!');</code></pre>
 ## Animated Colored Boxes{data-auto-animate=1}
 
 :::::: {.flex .align-center .justify-around}
+
 <div data-id="1" class="box-8rem radius-10p" style="background-color: lightblue; color: yellow">App 1</div>
 <div data-id="2" class="box-10rem radius-20p" style="background-color: pink; color: darkred;">App 2</div>
 <div data-id="3" class="box-12rem radius-50p" style="background-color: lightgreen; color: darkgreen;">Circle</div>
+
 ::::::
 
 ## Animated Colored Boxes{data-auto-animate=1}
 
 :::::: {.flex .align-center .justify-around}
+
 <div data-id="3" class="box-12rem radius-50p" style="background-color: lightgreen; color: darkgreen;">Circle</div>
 <div data-id="2" class="box-10rem radius-20p" style="background-color: pink; color: darkred;">App 2</div>
 <div data-id="1" class="box-8rem radius-10p" style="background-color: lightblue; color: yellow">App 1</div>
-::::::
 
+::::::
 
 # Backgrounds
 
@@ -268,48 +277,71 @@ hello('world!');</code></pre>
 
 ::: {.flex .justify-around .align-center}
 <span class="fa-stack fa-2x">
-  <i class="fas fa-square fa-stack-2x"></i>
-  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+<i class="fas fa-square fa-stack-2x"></i>
+<i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
 </span>
 <span class="fa-stack fa-2x">
-  <i class="fas fa-circle fa-stack-2x"></i>
-  <i class="fas fa-flag fa-stack-1x fa-inverse"></i>
+<i class="fas fa-circle fa-stack-2x"></i>
+<i class="fas fa-flag fa-stack-1x fa-inverse"></i>
 </span>
 <span class="fa-stack fa-2x">
-  <i class="fas fa-square-full fa-stack-2x"></i>
-  <i class="fas fa-terminal fa-stack-1x fa-inverse"></i>
+<i class="fas fa-square-full fa-stack-2x"></i>
+<i class="fas fa-terminal fa-stack-1x fa-inverse"></i>
 </span>
 <span class="fa-stack fa-4x">
-  <i class="fas fa-square fa-stack-2x"></i>
-  <i class="fas fa-terminal fa-stack-1x fa-inverse"></i>
+<i class="fas fa-square fa-stack-2x"></i>
+<i class="fas fa-terminal fa-stack-1x fa-inverse"></i>
 </span>
 <span class="fa-stack fa-2x">
-  <i class="fas fa-camera fa-stack-1x"></i>
-  <i class="fas fa-ban fa-stack-2x" style="color:Tomato"></i>
+<i class="fas fa-camera fa-stack-1x"></i>
+<i class="fas fa-ban fa-stack-2x" style="color:Tomato"></i>
 </span>
+
 :::
+
+## FontAwesome Bullet Icons
+
+<ul class="fa-ul" style="list-style-type: none;">
+  <li><span class="fa-li c-primary">![](fad fa-badge-check)</span> Regular bullet icon</li>
+  <li><span class="fa-li c-primary">![](fad fa-recycle)</span> Regular bullet icon</li>
+  <li><span class="fa-li" style="font-size: 0.7em; left: -2.5em;">
+    <span class="fa-stack c-primary" >
+    <i class="fad fa-digging fa-stack-1x"></i>
+    <i class="fas fa-ban fa-stack-2x" style="color: Tomato; opacity: 0.8;"></i>
+    </span>
+    </span> Stacked bullet icon</li>
+</ul>
 
 ## Box Shadow
 
 ::: {.box-shadow-trbl}
+
 Shadow top, right, bottom, left.
+
 :::
 
 ::: {.box-shadow-rbl}
+
 Shadow right, bottom, left.
+
 :::
 
 ::: {.box-shadow-rb}
+
 Shadow right, bottom.
+
 :::
 
 ::: {.box-shadow-bl}
+
 Shadow bottom, left.
+
 :::
 
 ## Colored Boxes
 
 :::::: {.flex .align-center .justify-around}
+
 <div class="box-8rem radius-10p" style="background-color: lightblue; color: yellow">App 1</div>
 <div class="box-10rem radius-20p" style="background-color: pink; color: darkred;">App 2</div>
 <div class="box-12rem radius-50p" style="background-color: lightgreen; color: darkgreen;">Circle</div>
@@ -318,6 +350,7 @@ Shadow bottom, left.
 ## Font Awesome Buttons
 
 :::::: {.flex .align-center .justify-around .margin-tb-5rem}
+
 <div class="flex align-center justify-around box-8rem radius-10p box-shadow-trbl" style=" background-color: lightblue; color: yellow">![](fas fa-thumbs-up)</div>
 <div class="fs-4 flex align-center justify-around box-10rem radius-20p box-shadow-rbl" style=" background-color: pink; color: darkred;">![](fas fa-thumbtack)</div>
 <div class="fs-7 flex align-center justify-around box-12rem radius-50p box-shadow-rb" style=" background-color: lightgreen; color: darkgreen;">![](fas fa-headphones)</div>
@@ -326,6 +359,7 @@ Shadow bottom, left.
 ## Picture Buttons
 
 :::::: {.flex .align-center .justify-around .margin-tb-6rem}
+
 <div class="box-8rem radius-10p overflow-hidden background-cover box-shadow-trbl" style='background-image: url("https://images.unsplash.com/photo-1595537725181-0f127e2feeb2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
 <div class="box-10rem radius-20p overflow-hidden background-cover box-shadow-rbl" style='background-image: url("https://images.unsplash.com/photo-1595589982168-77b64bc1b485?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
 <div class="box-12rem radius-30p overflow-hidden background-cover box-shadow-rb" style='background-image: url("https://images.unsplash.com/photo-1595586964632-b215dfbc064a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640");'></div>
