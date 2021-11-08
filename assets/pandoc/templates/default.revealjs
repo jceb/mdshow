@@ -92,73 +92,73 @@ $body$
       // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
         // Display controls in the bottom right corner
-        controls: ('$controls$' === '' ? false : true),
+        controls: Boolean(JSON.parse('$controls$')),
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: ('$controlsTutorial$' === '' ? false : true),
+        controlsTutorial: Boolean(JSON.parse('$controlsTutorial$')),
         // Display a presentation progress bar
-        progress: ('$progress$' === '' ? false : true),
+        progress: Boolean(JSON.parse('$progress$')),
         // Display the page number of the current slide
-        slideNumber: ('$slideNumber$' === '' ? false : '$slideNumber$' === 'true' ? true : '$slideNumber$'),
+        slideNumber: Boolean(JSON.parse('$slideNumber$')),
         // Use 1 based indexing for # links to match slide number (default is zero
         // based)
-        hashOneBasedIndex: ('$hashOneBasedIndex$' === '' ? false : true),
+        hashOneBasedIndex: Boolean(JSON.parse('$hashOneBasedIndex$')),
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: ('$hash$' === '' ? false : true),
+        hash: Boolean(JSON.parse('$hash$')),
         // Flags if we should monitor the hash and change slides accordingly
-        respondToHashChanges: ('$respondToHashChanges$' === '' ? false : true),
+        respondToHashChanges: Boolean(JSON.parse('$respondToHashChanges$')),
         // Push each slide change to the browser history
-        history: ('$history$' === '' ? false : true),
+        history: Boolean(JSON.parse('$history$')),
         // Enable keyboard shortcuts for navigation
-        keyboard: ('$keyboard$' === '' ? false : true),
+        keyboard: Boolean(JSON.parse('$keyboard$')),
         // Disables the default reveal.js slide layout (scaling and centering)
         // so that you can use custom CSS layout
-        disableLayout: ('$disableLayout$' === '' ? false : true),
+        disableLayout: Boolean(JSON.parse('$disableLayout$')),
         // Enable the slide overview mode
-        overview: ('$overview$' === '' ? false : true),
+        overview: Boolean(JSON.parse('$overview$')),
         // Vertical centering of slides
-        center: ('$center$' === '' ? false : true),
+        center: Boolean(JSON.parse('$center$')),
         // Enables touch navigation on devices with touch input
-        touch: ('$touch$' === '' ? false : true),
+        touch: Boolean(JSON.parse('$touch$')),
         // Loop the presentation
-        loop: ('$loop$' === '' ? false : true),
+        loop: Boolean(JSON.parse('$loop$')),
         // Change the presentation direction to be RTL
-        rtl: ('$rtl$' === '' ? false : true),
+        rtl: Boolean(JSON.parse('$rtl$')),
 $if(navigationMode)$
         // see https://github.com/hakimel/reveal.js/#navigation-mode
         navigationMode: '$navigationMode$',
 $endif$
         // Randomizes the order of slides each time the presentation loads
-        shuffle: ('$shuffle$' === '' ? false : true),
+        shuffle: Boolean(JSON.parse('$shuffle$')),
         // Turns fragments on and off globally
-        fragments: ('$fragments$' === '' ? false : true),
+        fragments: Boolean(JSON.parse('$fragments$')),
         // Flags whether to include the current fragment in the URL
         // so that reloading brings you to the same fragment position
-        fragmentInURL: ('$fragmentInURL$' === '' ? false : true),
+        fragmentInURL: Boolean(JSON.parse('$fragmentInURL$')),
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
-        embedded: ('$embedded$' === '' ? false : true),
+        embedded: Boolean(JSON.parse('$embedded$')),
         // Flags if we should show a help overlay when the questionmark
         // key is pressed
-        help: ('$help$' === '' ? false : true),
+        help: Boolean(JSON.parse('$help$')),
         // Flags if it should be possible to pause the presentation (blackout)
-        pause: ('$pause$' === '' ? false : true),
+        pause: Boolean(JSON.parse('$pause$')),
         // Flags if speaker notes should be visible to all viewers
-        showNotes: ('$showNotes$' === '' ? false : true),
+        showNotes: Boolean(JSON.parse('$showNotes$')),
         // Global override for autolaying embedded media (video/audio/iframe)
         // - null:   Media will only autoplay if data-autoplay is present
         // - True:   All media will autoplay, regardless of individual setting
         // - False:  No media will autoplay, regardless of individual setting
-        autoPlayMedia: ('$autoPlayMedia$' === 'null' ? null : '$autoPlayMedia$' === '' ? false : true),
+        autoPlayMedia: Boolean(JSON.parse('$autoPlayMedia$')),
         // Global override for preloading lazy-loaded iframes
         // - null:   Iframes with data-src AND data-preload will be loaded when within
         //           the viewDistance, iframes with only data-src will be loaded when visible
         // - True:   All iframes with data-src will be loaded when within the viewDistance
         // - False:  All iframes with data-src will be loaded only when visible
-        preloadIframes: ('$preloadIframes$' === 'null' ? null : '$preloadIframes$' === '' ? false : true),
+        preloadIframes: Boolean(JSON.parse('$preloadIframes$')),
         // Can be used to globally disable auto-animation
-        autoAnimate: ('$autoAnimate$' === '' ? false : true),
+        autoAnimate: Boolean(JSON.parse('$autoAnimate$')),
 $if(autoAnimateMatcher)$
         // Optionally provide a custom element matcher that will be
         // used to dictate which elements we can animate between.
@@ -172,13 +172,13 @@ $endif$
 $if(autoAnimateDuration)$
         autoAnimateDuration: $autoAnimateDuration$,
 $endif$
-        autoAnimateUnmatched: ('$autoAnimateUnmatched$' === '' ? false : true),
+        autoAnimateUnmatched: Boolean(JSON.parse('$autoAnimateUnmatched$')),
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
         autoSlide: ('$autoSlide$' === '' ? false : parseInt('$autoSlide$')),
         // Stop auto-sliding after user input
-        autoSlideStoppable: ('$autoSlideStoppable$' === '' ? false : true),
+        autoSlideStoppable: Boolean(JSON.parse('$autoSlideStoppable$')),
 $if(autoSlideMethod)$
         // Use this method for navigation when auto-sliding (defaults to navigateNext)
         autoSlideMethod: ('$autoSlideMethod$' === 'null' ? null : '$autoSlideMethod$'), // none/fade/slide/convex/concave/zoom
@@ -190,24 +190,19 @@ $if(defaultTiming)$
         defaultTiming: $defaultTiming$,
 $endif$
         // Enable slide navigation via mouse wheel
-        mouseWheel: ('$mouseWheel$' === '' ? false : true),
+        mouseWheel: Boolean(JSON.parse('$mouseWheel$')),
         // Opens links in an iframe preview overlay
         // Add `data-preview-link` and `data-preview-link="False"` to customise each link
         // individually
-        previewLinks: ('$previewLinks$' === '' ? false : true),
+        previewLinks: Boolean(JSON.parse('$previewLinks$')),
         // Exposes the reveal.js API through window.postMessage
-        postMessage: ('$postMessage$' === '' ? false : true),
+        postMessage: Boolean(JSON.parse('$postMessage$')),
         // Dispatches all reveal.js events to the parent window through postMessage
-        postMessageEvents: ('$postMessageEvents$' === '' ? false : true),
+        postMessageEvents: Boolean(JSON.parse('$postMessageEvents$')),
           // Focuses body when page changes visibility to ensure keyboard shortcuts work
-        focusBodyOnPageVisibilityChange: ('$focusBodyOnPageVisibilityChange$' === '' ? false : true),
-        // Apply a 3D roll to links on hover
-        // TODO check if still in use
-        rollingLinks: ('$rollingLinks$' === '' ? false : true),
+        focusBodyOnPageVisibilityChange: Boolean(JSON.parse('$focusBodyOnPageVisibilityChange$')),
         // Hides the address bar on mobile devices
-        hideAddressBar: ('$controls$' === '' ? false : true),
-        // Opens links in an iframe preview overlay
-        previewLinks: ('$controls$' === '' ? false : true)$previewLinks$,
+        hideAddressBar: Boolean(JSON.parse('$controls$')),
 $if(transition)$
         // Transition style
         transition: '$transition$', // none/fade/slide/convex/concave/zoom
