@@ -88,18 +88,18 @@ $(MDSHOW_CONFIG)/defaults.yaml:
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
 
 $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome:
-	curl -L https://use.fontawesome.com/releases/v5.15.1/fontawesome-free-5.15.1-web.zip -o $(dir $@)/fontawesome-free-web.zip
+	curl -L https://use.fontawesome.com/releases/v5.15.4/fontawesome-free-5.15.4-web.zip -o $(dir $@)/fontawesome-free-web.zip
 	unzip $(dir $@)/fontawesome-free-web.zip -d $(dir $@)
-	mv $(dir $@)/fontawesome-free-5.15.1-web $@
+	mv $(dir $@)/fontawesome-free-5.15.4-web $@
 	rm $(dir $@)/fontawesome-free-web.zip
 
 $(MDSHOW_CONFIG)/reveal.js:
 	mkdir -p $@
-	curl -L https://github.com/hakimel/reveal.js/archive/4.1.0.zip -o $@/revealjs.zip
+	curl -L https://github.com/hakimel/reveal.js/archive/4.2.0.zip -o $@/revealjs.zip
 	unzip $@/revealjs.zip -d $@
 	rm $@/revealjs.zip
-	mv $@/reveal.js-4.1.0/.??* $@/reveal.js-4.1.0/* $@
-	rmdir $@/reveal.js-4.1.0
+	mv $@/reveal.js-4.2.0/.??* $@/reveal.js-4.2.0/* $@
+	rmdir $@/reveal.js-4.2.0
 	cd $@ && \
 		yarn && yarn add --dev node-jq decktape
 	# workarounds for the new reveal-js release
