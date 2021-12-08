@@ -95,11 +95,11 @@ $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome:
 
 $(MDSHOW_CONFIG)/reveal.js:
 	mkdir -p $@
-	curl -L https://github.com/hakimel/reveal.js/archive/4.2.0.zip -o $@/revealjs.zip
+	curl -L https://github.com/hakimel/reveal.js/archive/4.2.1.zip -o $@/revealjs.zip
 	unzip $@/revealjs.zip -d $@
 	rm $@/revealjs.zip
-	mv $@/reveal.js-4.2.0/.??* $@/reveal.js-4.2.0/* $@
-	rmdir $@/reveal.js-4.2.0
+	mv $@/reveal.js-4.2.1/.??* $@/reveal.js-4.2.1/* $@
+	rmdir $@/reveal.js-4.2.1
 	cd $@ && \
 		yarn && yarn add --dev node-jq decktape
 	# workarounds for the new reveal-js release
