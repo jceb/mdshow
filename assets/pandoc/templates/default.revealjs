@@ -150,20 +150,18 @@ $endif$
         // - null:   Media will only autoplay if data-autoplay is present
         // - True:   All media will autoplay, regardless of individual setting
         // - False:  No media will autoplay, regardless of individual setting
-        autoPlayMedia: Boolean(JSON.parse('$autoPlayMedia$')),
+        autoPlayMedia: '$autoPlayMedia$'.length > 0 ? Boolean(JSON.parse('$autoPlayMedia$')) : null,
         // Global override for preloading lazy-loaded iframes
         // - null:   Iframes with data-src AND data-preload will be loaded when within
         //           the viewDistance, iframes with only data-src will be loaded when visible
         // - True:   All iframes with data-src will be loaded when within the viewDistance
         // - False:  All iframes with data-src will be loaded only when visible
-        preloadIframes: Boolean(JSON.parse('$preloadIframes$')),
+        preloadIframes: '$preloadIframes$'.length > 0 ? Boolean(JSON.parse('$preloadIframes$')) : null,
         // Can be used to globally disable auto-animation
         autoAnimate: Boolean(JSON.parse('$autoAnimate$')),
-$if(autoAnimateMatcher)$
         // Optionally provide a custom element matcher that will be
         // used to dictate which elements we can animate between.
-        autoAnimateMatcher: ('$autoAnimateMatcher$' === 'null' ? null : '$autoAnimateMatcher$'), // none/fade/slide/convex/concave/zoom
-$endif$
+        autoAnimateMatcher: ('$autoAnimateMatcher$'.length > 0 ? '$autoAnimateMatcher$' : null), // none/fade/slide/convex/concave/zoom
 $if(autoAnimateEasing)$
         // Default settings for our auto-animate transitions, can be
         // overridden per-slide or per-element via data arguments
@@ -179,10 +177,8 @@ $endif$
         autoSlide: ('$autoSlide$' === '' ? false : parseInt('$autoSlide$')),
         // Stop auto-sliding after user input
         autoSlideStoppable: Boolean(JSON.parse('$autoSlideStoppable$')),
-$if(autoSlideMethod)$
         // Use this method for navigation when auto-sliding (defaults to navigateNext)
-        autoSlideMethod: ('$autoSlideMethod$' === 'null' ? null : '$autoSlideMethod$'), // none/fade/slide/convex/concave/zoom
-$endif$
+        autoSlideMethod: ('$autoSlideMethod$'.length > 0 ? '$autoSlideMethod$' : null), // none/fade/slide/convex/concave/zoom
 $if(defaultTiming)$
         // Specify the average time in seconds that you think you will spend
         // presenting each slide. This is used to show a pacing timer in the
