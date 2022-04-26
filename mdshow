@@ -88,9 +88,9 @@ $(MDSHOW_CONFIG)/defaults.yaml:
 		curl -L https://raw.githubusercontent.com/jceb/mdshow/master/assets/defaults.yaml -o $@
 
 $(MDSHOW_CONFIG)/reveal.js/dist/fontawesome:
-	curl -L https://use.fontawesome.com/releases/v5.15.4/fontawesome-free-5.15.4-web.zip -o $(dir $@)/fontawesome-free-web.zip
+	curl -L https://use.fontawesome.com/releases/v6.1.1/fontawesome-free-6.1.1-web.zip -o $(dir $@)/fontawesome-free-web.zip
 	unzip $(dir $@)/fontawesome-free-web.zip -d $(dir $@)
-	mv $(dir $@)/fontawesome-free-5.15.4-web $@
+	mv $(dir $@)/fontawesome-free-6.1.1-web $@
 	rm $(dir $@)/fontawesome-free-web.zip
 
 $(MDSHOW_CONFIG)/reveal.js:
