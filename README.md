@@ -1,3 +1,7 @@
+# WARNING: This project is discontinued.
+
+A replacement has been started with https://github.com/jceb/slidesdown.
+
 # `mdshow`
 
 > Turn markdown files into beautiful presentations quickly.
